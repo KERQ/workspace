@@ -1,5 +1,5 @@
 # draft — manual_only unless explicitly approved
-# draft — verify playbook path: homeserver-services/playbooks/g2.yml may be missing locally; confirm before Etap 1 deploy orchestration
+# draft — homeserver-services/playbooks/g2.yml added in SPEC-003B
 host: g2
 
 full_deploy_order:

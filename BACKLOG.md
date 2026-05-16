@@ -4,14 +4,15 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez EPIC → SPEC zani
 
 ## Now
 
-- [ ] EPIC-002 (draft): deploy orchestration dla multi-repo Ansible
+- [ ] (pusty — wybierz kolejny EPIC/SPEC z Later lub Icebox)
 
 ## Next
 
-- [ ] Uporządkować deploy orchestration — skrypty w workspace, check granic, bez deployu na hostach
+- [ ] Runbooki: zamiana `homeserver-ansible` → `homeserver-services` w ścieżkach
 
 ## Done (ostatnio)
 
+- [x] EPIC-002: deploy orchestration (workspace deploy/, syntax-check default)
 - [x] SPEC-003C: deploy-g2.sh, deploy-t630-safe.sh, check-compose (homeserver-services)
 - [x] SPEC-003B: `playbooks/g2.yml` w homeserver-services
 - [x] SPEC-003: ansible playbook sanity check (`homeserver-services`)

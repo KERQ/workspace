@@ -34,6 +34,7 @@ Wspólny kontekst pracy nad systemem domowym i research bez scalania repozytori�
 | Decyzje architektoniczne | [`docs/adr/`](docs/adr/) |
 | Procedury operacyjne | [`docs/runbooks/`](docs/runbooks/) |
 | Checki diagnostyczne | [`scripts/checks/`](scripts/checks/) |
+| Deploy orchestration | [`deploy/`](deploy/) |
 
 ## Jak zacząć pracę
 
