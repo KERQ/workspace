@@ -2,7 +2,16 @@
 # EPIC-005 — audyt SSH 2026-05-16 (t630@192.168.1.20, g2@192.168.1.19)
 
 runtime_paths:
-  ansible_variable: homeserver_runtime_root
+  ansible_variables:
+    - homeserver_runtime_root
+    - homeserver_g2_config_dir
+    - homeserver_infisical_path
+    - homeserver_legacy_g2_config_dir
+
+  ansible_phase1_defaults:
+    homeserver_runtime_root: /opt/homeserver-ansible-repo
+    homeserver_infisical_path: /opt/homeserver-ansible/infisical
+    homeserver_legacy_g2_config_dir: /opt/homeserver-ansible/g2-config
 
   target:
     root: /opt/homeserver-services
