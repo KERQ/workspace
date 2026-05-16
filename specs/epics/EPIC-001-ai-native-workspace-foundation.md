@@ -1,6 +1,6 @@
 # EPIC-001: AI-Native Workspace foundation
 
-Status: in_progress
+Status: done
 Owner: karolkurek
 Risk: low
 Repos: workspace (meta), brak zmian w repo domenowych w tej fazie
@@ -39,8 +39,7 @@ Ustanowić root workspace: pliki operacyjne, specs, contracts MVP, szablony ADR/
 
 - Deploy, restart usług, Ansible w repo domenowych
 - Forgejo, OpenClaw `/v1`, difit
-- `git init` / commit workspace (bez osobnej zgody)
-- Realizacja pierwszej „prawdziwej” zmiany produktowej (→ SPEC-001E)
+- Zmiany w repo domenowych (→ osobny SPEC poza EPIC-001)
 
 ## Kontrakty między repo
 
@@ -57,7 +56,8 @@ Ustanowić root workspace: pliki operacyjne, specs, contracts MVP, szablony ADR/
 2. SPEC-001B — contracts MVP
 3. SPEC-001C — templates SPEC/EPIC
 4. SPEC-001D — AGENTS.md
-5. SPEC-001E — wybór pierwszej realnej zmiany (później)
+5. SPEC-001E — spełnione przez SPEC-002 (pierwszy realny SPEC workspace)
+6. SPEC-002 — consistency checks + commit/push workspace
 
 ## Global Definition of Done
 
@@ -65,8 +65,8 @@ Ustanowić root workspace: pliki operacyjne, specs, contracts MVP, szablony ADR/
 - [x] Pliki bazowe i templates istnieją
 - [x] Kontrakty MVP istnieją (draft)
 - [x] Symlinki do 5 repo działają
-- [ ] SPEC-001E — wybrany pierwszy realny SPEC (Later)
-- [ ] Opcjonalnie: `git init` workspace po approval
+- [x] SPEC-001E — spełnione przez SPEC-002 (zmiana domenowa → osobny SPEC, BACKLOG Next)
+- [x] `git init` + commit + push `origin` (https://github.com/KERQ/workspace.git)
 
 ## Global test plan
 
@@ -85,7 +85,7 @@ Usunięcie katalogów/plików utworzonych w workspace (poza istniejącym `PLAN.m
 |------|--------|
 | Start Fazy 1 | zaakceptowany plan |
 | Deploy | N/A w tym EPIC |
-| Commit workspace | wymaga osobnej zgody |
+| Commit workspace | done (`ef7e011`, push `87800f5`) |
 
 ## Child SPECs
 
@@ -96,4 +96,4 @@ Usunięcie katalogów/plików utworzonych w workspace (poza istniejącym `PLAN.m
 | SPEC-001C-spec-templates | workspace | done | EPIC/SPEC templates |
 | SPEC-001D-agent-rules | workspace | done | AGENTS.md |
 | SPEC-001E-first-real-change-selection | workspace | done | Zastąpione przez SPEC-002 (pierwszy realny SPEC workspace) |
-| SPEC-002-workspace-consistency-checks | workspace | in_progress | Check struktury + przygotowanie do commita |
+| SPEC-002-workspace-consistency-checks | workspace | done | Check struktury, commit, push GitHub |

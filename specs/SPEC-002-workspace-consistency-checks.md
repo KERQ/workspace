@@ -1,7 +1,7 @@
 # SPEC-002: Workspace consistency checks
 
 Parent: EPIC-001
-Status: in_progress
+Status: done
 Repo: workspace
 Owner: karolkurek
 Risk: low
@@ -70,7 +70,7 @@ Dodać pierwszy trwały check w `scripts/checks/workspace/`, który waliduje str
 - [x] `repositories.yml`: 5 kluczy repo
 - [x] Root: brak oczywistych sekretów (maxdepth 1, tylko nazwy plików)
 - [x] Uruchomić skrypt lokalnie — exit 0
-- [ ] Commit workspace (osobna zgoda użytkownika)
+- [x] Commit workspace + push `origin/main`
 
 ## Definition of Ready
 
@@ -85,7 +85,7 @@ Dodać pierwszy trwały check w `scripts/checks/workspace/`, który waliduje str
 - [x] Skrypt nie wchodzi rekurencyjnie w repo domenowe
 - [x] Dokumentacja uruchomienia w README checka
 - [x] Brak zmian w repo domenowych
-- [ ] `git init` wykonany — tak; commit — czeka na approval
+- [x] `git init`, commit (`ef7e011`), merge i push GitHub (`87800f5`)
 
 ## Test plan
 

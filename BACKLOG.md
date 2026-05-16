@@ -4,14 +4,19 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez EPIC → SPEC zani
 
 ## Now
 
-- [ ] SPEC-002: workspace consistency checks (implementacja + pierwszy commit workspace po approval)
-- [ ] EPIC-001: domknięcie po commicie workspace (SPEC-001E → done)
+- [ ] SPEC-003: pierwsza mała zmiana w **jednym** repo domenowym (pełny flow spec → patch → review)
+- [ ] EPIC-002 (draft): deploy orchestration dla multi-repo Ansible
 
 ## Next
 
-- [ ] Pierwszy commit workspace (`.gitignore`, skeleton, symlinki, check script)
-- [ ] Uporządkować deploy orchestration dla multi-repo Ansible
-- [ ] Pierwsza zmiana w repo domenowym przez osobny SPEC (poza workspace)
+- [ ] Uporządkować deploy orchestration — skrypty w workspace, check granic, bez deployu na hostach w pierwszej iteracji
+- [ ] Zweryfikować drift: `homeserver-services/playbooks/g2.yml` vs `contracts/deploy/g2-deploy-order.yml`
+
+## Done (ostatnio)
+
+- [x] EPIC-001: AI-Native Workspace foundation
+- [x] SPEC-002: workspace consistency checks + commit/push
+- [x] Workspace na GitHub: https://github.com/KERQ/workspace
 
 ## Later
 
