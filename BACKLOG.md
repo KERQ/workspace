@@ -9,10 +9,10 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez EPIC → SPEC zani
 ## Next
 
 - [ ] Uporządkować deploy orchestration — skrypty w workspace, check granic, bez deployu na hostach
-- [ ] SPEC-003C: `scripts/deploy-g2.sh` (brak; `ops-run.sh` woła nieistniejący skrypt)
 
 ## Done (ostatnio)
 
+- [x] SPEC-003C: deploy-g2.sh, deploy-t630-safe.sh, check-compose (homeserver-services)
 - [x] SPEC-003B: `playbooks/g2.yml` w homeserver-services
 - [x] SPEC-003: ansible playbook sanity check (`homeserver-services`)
 - [x] EPIC-001: AI-Native Workspace foundation
