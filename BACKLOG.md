@@ -4,7 +4,6 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez EPIC → SPEC zani
 
 ## Now
 
-- [ ] SPEC-003: pierwsza mała zmiana w **jednym** repo domenowym (pełny flow spec → patch → review)
 - [ ] EPIC-002 (draft): deploy orchestration dla multi-repo Ansible
 
 ## Next
@@ -14,6 +13,7 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez EPIC → SPEC zani
 
 ## Done (ostatnio)
 
+- [x] SPEC-003: ansible playbook sanity check (`homeserver-services`)
 - [x] EPIC-001: AI-Native Workspace foundation
 - [x] SPEC-002: workspace consistency checks + commit/push
 - [x] Workspace na GitHub: https://github.com/KERQ/workspace
