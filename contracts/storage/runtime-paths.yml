@@ -17,7 +17,8 @@ runtime_paths:
     file: inventory/group_vars/g2_servers.yml
     homeserver_runtime_root: /opt/homeserver-services
     homeserver_infisical_path: /opt/homeserver-services/infisical
-    status: coded_pending_deploy_apply
+    status: active_on_g2
+    deployed: "2026-05-16"
 
   target:
     root: /opt/homeserver-services

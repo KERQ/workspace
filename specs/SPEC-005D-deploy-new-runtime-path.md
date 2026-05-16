@@ -1,7 +1,7 @@
 # SPEC-005D: Ansible — docelowe ścieżki runtime + deploy G2
 
 Parent: [EPIC-005](epics/EPIC-005-runtime-path-migration.md)  
-Status: in_progress (kod OK — czeka deploy apply)  
+Status: done  
 Repos: homeserver-core, homeserver-services, workspace  
 Host: g2@192.168.1.19  
 Owner: karolkurek  
@@ -117,10 +117,16 @@ Pełny rollback filesystem: `migrate-g2-runtime-path.sh rollback` (tylko jeśli 
 
 - [x] `g2_servers.yml` w core + services z docelowymi ścieżkami
 - [x] Szablony CLI używają `homeserver_g2_config_dir` (aktywny `.env`)
-- [ ] `deploy-g2-full.sh --apply` wykonany z `APPROVE_DEPLOY=yes`
-- [ ] Smoke G2 PASS
+- [x] `deploy-g2-full.sh --apply` — core OK; services OK po fix Jupyter (2026-05-16)
+- [x] Smoke G2 PASS (trading 13/13; LiteLLM health WARN — znany endpoint)
 - [x] Kontrakt `runtime-paths.yml` zaktualizowany
-- [ ] EPIC-005: SPEC-005D → done (po deploy + smoke)
+- [x] EPIC-005: SPEC-005D → done
+
+## Uwagi operacyjne (deploy)
+
+- Pierwszy apply: błąd ścieżki Infisical (`playbook_dir/../g2-config`) — naprawione w `homeserver-core` (`infisical_compose_source_dir`)
+- Services apply: fatal na brak `notebooks/` — naprawione (`jupyter.yml` skip gdy brak źródła)
+- Compose labels na G2 wskazują `/opt/homeserver-services/...`
 
 ## Approval gates
 
