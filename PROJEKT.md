@@ -66,7 +66,7 @@ BACKLOG → EPIC → SPEC → PROMPT → PATCH → TEST → REVIEW → ADR / RUN
 
 - **Faza 1 (done):** standard pracy — workspace, specs, contracts MVP, templates.
 - **Deploy orchestration (done):** `deploy/` w workspace (EPIC-002).
-- **Runtime path (plan):** EPIC-005 `/opt/homeserver-ansible-repo` → `/opt/homeserver-services-repo` na hostach.
+- **Runtime path (plan):** EPIC-005 G2: `/opt/homeserver-ansible-repo` + `/opt/homeserver-ansible/infisical` → `/opt/homeserver-services` (T630 out of scope).
 - **Później:** Forgejo MVP, OpenClaw `/v1`, difit, bot Forgejo — każdy etap osobno, z approval.
 
 ## Dokumenty nadrzędne

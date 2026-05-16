@@ -1,4 +1,4 @@
-# EPIC-005: Migracja runtime path na hostach
+# EPIC-005: Migracja runtime path na hostach (G2)
 
 Status: draft
 Owner: karolkurek
@@ -7,93 +7,118 @@ Repos: homeserver-core, homeserver-services, workspace (docs/contracts)
 
 ## Cel
 
-Zmienić kanoniczną ścieżkę runtime na hostach z `/opt/homeserver-ansible-repo` na `/opt/homeserver-services-repo`, z zachowaniem działania stacków G2/T630 i możliwości rollbacku.
+Ustawić kanoniczną ścieżkę runtime na **G2** na `/opt/homeserver-services`, konsolidując obecny aktywny layout (`homeserver-ansible-repo`) oraz osobny katalog Infisical (`homeserver-ansible/infisical`), z możliwością rollbacku.
+
+## Decyzja nazewnicza
+
+**Docelowy root:** `/opt/homeserver-services` (bez sufiksu `-repo`) — zgodność z nazwą repo Git `homeserver-services`.
+
+Podkatalog `g2-config/` **bez zmiany nazwy**.
 
 ## Kontekst
 
-- Repo Git nazywa się `homeserver-services` (i `homeserver-core` dla warstwy infra).
-- Na hostach katalog `/opt/homeserver-ansible-repo` pochodzi z monorepo — nadal używany przez Ansible, Docker Compose, OpenClaw, runbooki operacyjne.
-- SPEC-004 naprawił tylko **lokalne** ścieżki dev (`~/repos/...`).
-- Pełna zmiana wymaga koordynacji **core + services + deploy na hostach**.
+- SPEC-004: lokalne ścieżki dev → `~/repos/homeserver-services`.
+- Ansible w repo nadal hardcoded `/opt/homeserver-ansible-repo` i `/opt/homeserver-ansible`.
+- Pełna zmiana wymaga **homeserver-core** (stack + infisical) i **homeserver-services** (trading, openclaw, plane).
 
-## Stan obecny (audyt 2026-05-16)
+## Audyt SSH (2026-05-16)
 
-| Obszar | Pliki z `/opt/homeserver-ansible-repo` (orientacyjnie) |
-|--------|--------------------------------------------------------|
-| `homeserver-core` | ~21 trafień — gł. `roles/homeserver-stack/` |
-| `homeserver-services` | ~38 plików — `roles/trading/defaults`, `openclaw`, `plane`, skrypty, runbooki |
-| Wyjątki | `/opt/homeserver-ansible` (bez `-repo`) w starych ADR/template — do weryfikacji |
+### T630 (`t630@192.168.1.20`)
 
-**Nie zmieniamy w tej migracji:** nazwy podkatalogu `g2-config/` (bundle konfiguracji).
+| Ścieżka | Stan |
+|---------|------|
+| `/opt/homeserver-ansible` | **brak** |
+| `/opt/homeserver-ansible-repo` | **brak** |
+| `/opt/life-platform-t630/t630-config/` | **istnieje** — smart home (kanon life-platform) |
+| `/opt/openclaw-control-plane/` | **istnieje** — osobny checkout |
+
+**Wniosek:** EPIC-005 **nie obejmuje T630** dla ścieżek `homeserver-ansible*`.
+
+### G2 (`g2@192.168.1.19`)
+
+Dwa **osobne** katalogi (nie symlinki):
+
+| Ścieżka | Zawartość | Produkcja |
+|---------|-----------|-----------|
+| `/opt/homeserver-ansible-repo` | `g2-config/` (pełny: minio, airflow, grafana, jupyter, plane, …), `scripts/trading/` | **tak** — Docker: airflow, litellm, minio → `...-repo/g2-config/...` |
+| `/opt/homeserver-ansible` | `g2-config/` **stary** (mniejszy zestaw usług), `infisical/` osobno | **Infisical** → `working_dir` = `/opt/homeserver-ansible/infisical`; stary `g2-config` prawdopodobnie nieużywany |
+
+Docelowy layout G2:
+
+```text
+/opt/homeserver-services/
+├── g2-config/       ← z ...-ansible-repo
+├── scripts/trading/
+└── infisical/        ← z /opt/homeserver-ansible/infisical
+```
 
 ## Docelowa zmienna Ansible
 
 ```yaml
-# group_vars/all.yml (per repo) lub wspólny kontrakt workspace
-homeserver_runtime_root: /opt/homeserver-services-repo
+homeserver_runtime_root: /opt/homeserver-services
 ```
 
-Wszystkie hardcoded `/opt/homeserver-ansible-repo` → `{{ homeserver_runtime_root }}`.
+- `homeserver-core`: `homeserver-stack`, `infisical_install_path`, szablony CLI
+- `homeserver-services`: `trading`, `openclaw`, `plane`, skrypty
 
-Kontrakt workspace (nowy lub rozszerzenie): `contracts/storage/runtime-paths.yml` — dokumentacja ścieżek bez sekretów.
+Kontrakt: [`contracts/storage/runtime-paths.yml`](../../contracts/storage/runtime-paths.yml)
 
 ## Fazy wdrożenia
 
-### Faza 1 — Refactor bez zmiany zachowania (low risk)
+### Faza 1 — Refactor Ansible (low risk, bez hostów)
 
-**Cel:** Jedna zmienna, nadal stara wartość domyślna.
+**Cel:** `{{ homeserver_runtime_root }}` w kodzie; domyślna wartość **nadal stara** (`/opt/homeserver-ansible-repo`) do momentu Fazy 3.
 
-| Repo | Zakres |
-|------|--------|
-| homeserver-core | `homeserver-stack`, group_vars |
-| homeserver-services | `trading`, `openclaw`, `plane`, skrypty z defaultami |
-| workspace | ADR draft, `contracts/storage/runtime-paths.yml` |
+Osobna zmienna dla Infisical w core (Faza 1b lub część 005A):
 
-**Test:** `ansible-playbook --syntax-check`, `deploy/*/full.sh` (syntax), brak deploy apply.
+```yaml
+homeserver_infisical_path: /opt/homeserver-ansible/infisical  # do Fazy 2
+```
 
 **Child SPEC:** `SPEC-005A-ansible-runtime-variable`
 
 ---
 
-### Faza 2 — Przygotowanie hostów (medium risk, maintenance)
+### Faza 2 — Migracja na G2 (medium/high, maintenance)
 
-**Cel:** Na G2 i T630 przygotować nową ścieżkę bez przestoju lub z krótkim oknem.
+**Tylko host G2.** Sekwencja (runbook):
 
-Proponowana sekwencja (do zatwierdzenia w runbooku):
+1. Backup: `rsync` obu drzew `/opt/homeserver-ansible-repo` i `/opt/homeserver-ansible`.
+2. Utworzyć `/opt/homeserver-services/`:
+   - `rsync` `...-ansible-repo/` → `/opt/homeserver-services/`
+   - `rsync` `.../homeserver-ansible/infisical/` → `/opt/homeserver-services/infisical/`
+3. Symlinki wsteczne (okno przejściowe):
+   - `/opt/homeserver-ansible-repo` → `homeserver-services`
+   - `/opt/homeserver-ansible/infisical` → `homeserver-services/infisical` (lub cały `/opt/homeserver-ansible` → TBD)
+4. Restart Infisical + smoke trading/Airflow/LiteLLM.
+5. Po weryfikacji: archiwum/usunięcie starego `/opt/homeserver-ansible/g2-config` (stale).
 
-1. Maintenance: zatrzymać lub wstrzymać krytyczne DAG (G2) / OpenClaw gateway (T630) — według runbooka.
-2. `rsync -a /opt/homeserver-ansible-repo/ /opt/homeserver-services-repo/` (lub `mv` jeśli dysk ten sam).
-3. Symlink wsteczny: `/opt/homeserver-ansible-repo` → `homeserver-services-repo` (okno przejściowe).
-4. Smoke: Airflow, MinIO, OpenClaw, LiteLLM — read-only checki.
+**Child SPEC:** `SPEC-005B-host-path-migration-g2`
 
-**Child SPEC:** `SPEC-005B-host-path-migration-g2`, `SPEC-005C-host-path-migration-t630`
+**Wymaga:** `APPROVE_DEPLOY=yes`, okno maintenance.
 
-**Wymaga:** `APPROVE_DEPLOY=yes`, runbook rollback, backup ścieżki.
+**Anulowane:** ~~SPEC-005C-host-path-migration-t630~~ — brak ścieżek na T630.
 
 ---
 
-### Faza 3 — Ansible na nową ścieżkę (high risk)
+### Faza 3 — Ansible → nowa ścieżka (high risk)
 
-**Cel:** `homeserver_runtime_root: /opt/homeserver-services-repo`, deploy warstwami.
+**Cel:** `homeserver_runtime_root: /opt/homeserver-services`, `infisical` pod nowym rootem.
 
-Kolejność (zgodna z `contracts/deploy/`):
+Deploy warstwami na G2 (`contracts/deploy/g2-deploy-order.yml`):
 
-1. `homeserver-core` → G2 (i T630 jeśli dotyczy stacku)
-2. `homeserver-services` → G2 / T630
-
-**Test po każdej warstwie:** smoke scripts, health, `scripts/trading/smoke.sh` na G2.
+1. `homeserver-core`
+2. `homeserver-services`
 
 **Child SPEC:** `SPEC-005D-deploy-new-runtime-path`
 
 ---
 
-### Faza 4 — Cleanup (medium risk)
+### Faza 4 — Cleanup
 
-**Cel:** Usunąć symlink wsteczny, zaktualizować runbooki/ADR operacyjne, stare odniesienia.
-
-- Runbooki: zamienić SSH ścieżki na nowy root
-- Usunąć symlink `/opt/homeserver-ansible-repo` gdy nic nie korzysta
-- Opcjonalnie: archiwum starego katalogu → backup
+- Usunąć symlinki wsteczne
+- Zaktualizować runbooki SSH (`/opt/homeserver-ansible-repo` → `/opt/homeserver-services`)
+- Usunąć puste `/opt/homeserver-ansible`, `/opt/homeserver-ansible-repo` po weryfikacji
 
 **Child SPEC:** `SPEC-005E-runtime-path-cleanup`
 
@@ -101,56 +126,40 @@ Kolejność (zgodna z `contracts/deploy/`):
 
 ## Repo impact matrix
 
-| Repo | Faza 1 | Faza 2 | Faza 3 | Faza 4 |
-|------|--------|--------|--------|--------|
-| workspace | ADR, contract | runbook | — | docs |
-| homeserver-core | vars + roles | host ops | deploy | docs |
-| homeserver-services | vars + roles | host ops | deploy | docs |
-| life-platform | — | — | — | — |
+| Repo | Faza 1–4 |
+|------|----------|
+| workspace | ADR, contract, runbook G2 |
+| homeserver-core | vars, infisical path, homeserver-stack |
+| homeserver-services | vars, trading, openclaw, plane, skrypty |
+| life-platform | **out of scope** (`/opt/life-platform-t630` osobno) |
 
 ## Global Definition of Done
 
-- [ ] Brak hardcoded `/opt/homeserver-ansible-repo` w Ansible (poza ADR historycznymi)
-- [ ] Hosty G2/T630 używają `/opt/homeserver-services-repo` jako kanon
-- [ ] Smoke testy przechodzą
-- [ ] Rollback przetestowany lub udokumentowany
-- [ ] ADR `accepted` w workspace
-
-## Global test plan
-
-1. Faza 1: syntax-check wszystkich playbooków (workspace deploy scripts).
-2. Faza 2: `mc`, `airflow dags list`, `curl` OpenClaw gateway — bez regresji.
-3. Faza 3: pełny smoke trading + OpenClaw po deploy.
-4. Faza 4: `grep -r homeserver-ansible-repo` w repo (poza ADR) → 0 w kodzie operacyjnym.
-
-## Rollback
-
-| Faza | Rollback |
-|------|----------|
-| 1 | revert PR Ansible |
-| 2 | usuń nowy katalog / symlink, przywróć stary layout z backupu |
-| 3 | revert zmiany vars + redeploy ze starą ścieżką |
-| 4 | przywróć symlink jeśli usunięty za wcześnie |
+- [ ] G2: Docker stacki działają z `/opt/homeserver-services/...`
+- [ ] Brak hardcoded `/opt/homeserver-ansible-repo` w Ansible (poza ADR)
+- [ ] Infisical pod `/opt/homeserver-services/infisical`
+- [ ] Stary `/opt/homeserver-ansible/g2-config` usunięty lub zarchiwizowany
+- [ ] T630 bez regresji (life-platform, openclaw-control-plane nietknięte)
+- [ ] ADR accepted
 
 ## Approval gates
 
 | Gate | Wymaganie |
 |------|-----------|
-| Faza 1 merge | review PR |
-| Faza 2+ na hostach | explicit `APPROVE_DEPLOY=yes` + okno maintenance |
-| Faza 3 apply | deploy per warstwa + smoke |
-| EPIC done | ADR accepted |
+| Faza 1 | review PR |
+| Faza 2–3 G2 | `APPROVE_DEPLOY=yes` + maintenance |
+| EPIC done | ADR + smoke G2 |
 
-## Child SPECs (plan)
+## Child SPECs
 
 | SPEC | Faza | Status |
 |------|------|--------|
 | SPEC-005A-ansible-runtime-variable | 1 | planned |
 | SPEC-005B-host-path-migration-g2 | 2 | planned |
-| SPEC-005C-host-path-migration-t630 | 2 | planned |
+| ~~SPEC-005C-host-path-migration-t630~~ | — | **cancelled** (brak ścieżek na T630) |
 | SPEC-005D-deploy-new-runtime-path | 3 | planned |
 | SPEC-005E-runtime-path-cleanup | 4 | planned |
 
 ## Następny krok
 
-Zatwierdzić EPIC → rozpocząć **SPEC-005A** (tylko refactor zmiennej, stara wartość, bez deployu na hostach).
+Zatwierdzić EPIC → **SPEC-005A** (zmienne Ansible, stare wartości domyślne, bez deployu).

@@ -1,22 +1,41 @@
 # draft — runtime paths on hosts (no secrets)
-# EPIC-005 target state
+# EPIC-005 — audyt SSH 2026-05-16 (t630@192.168.1.20, g2@192.168.1.19)
 
 runtime_paths:
-  current:
-    root: /opt/homeserver-ansible-repo
-    g2_config: /opt/homeserver-ansible-repo/g2-config
-    trading_scripts: /opt/homeserver-ansible-repo/scripts/trading
-    t630_openclaw_repo: /opt/homeserver-ansible-repo
+  ansible_variable: homeserver_runtime_root
 
   target:
-    root: /opt/homeserver-services-repo
-    g2_config: /opt/homeserver-services-repo/g2-config
-    trading_scripts: /opt/homeserver-services-repo/scripts/trading
-    t630_openclaw_repo: /opt/homeserver-services-repo
+    root: /opt/homeserver-services
+    g2_config: /opt/homeserver-services/g2-config
+    trading_scripts: /opt/homeserver-services/scripts/trading
+    infisical: /opt/homeserver-services/infisical
 
-  ansible_variable: homeserver_runtime_root
+  g2_current:
+    active_repo_root: /opt/homeserver-ansible-repo
+    active_g2_config: /opt/homeserver-ansible-repo/g2-config
+    active_trading_scripts: /opt/homeserver-ansible-repo/scripts/trading
+    legacy_root: /opt/homeserver-ansible
+    legacy_g2_config: /opt/homeserver-ansible/g2-config
+    legacy_infisical: /opt/homeserver-ansible/infisical
+    docker_working_dirs_verified:
+      - /opt/homeserver-ansible-repo/g2-config/airflow
+      - /opt/homeserver-ansible-repo/g2-config
+      - /opt/homeserver-ansible-repo/g2-config/minio
+      - /opt/homeserver-ansible/infisical
+
+  t630_current:
+    homeserver_ansible_paths: absent
+    smart_home_root: /opt/life-platform-t630
+    smart_home_config: /opt/life-platform-t630/t630-config
+    openclaw_control_plane: /opt/openclaw-control-plane
+    note: EPIC-005 nie migruje life-platform-t630 ani openclaw-control-plane
 
 migration:
   strategy: phased_with_backward_symlink
+  primary_host: g2
+  hosts_in_scope: [g2]
+  hosts_out_of_scope: [t630]
   g2_config_dir_rename: false
-  hosts: [g2, t630]
+  merge_legacy_homeserver_ansible:
+    - move infisical from /opt/homeserver-ansible/infisical
+    - archive or remove stale /opt/homeserver-ansible/g2-config after verification
