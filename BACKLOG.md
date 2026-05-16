@@ -8,10 +8,11 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez EPIC → SPEC zani
 
 ## Next
 
-- [ ] Runbooki: zamiana `homeserver-ansible` → `homeserver-services` w ścieżkach
+- [ ] Migracja runtime path `/opt/homeserver-ansible-repo` na hostach (osobny SPEC/infra)
 
 ## Done (ostatnio)
 
+- [x] SPEC-004: runbook local paths → homeserver-services
 - [x] EPIC-002: deploy orchestration (workspace deploy/, syntax-check default)
 - [x] SPEC-003C: deploy-g2.sh, deploy-t630-safe.sh, check-compose (homeserver-services)
 - [x] SPEC-003B: `playbooks/g2.yml` w homeserver-services
