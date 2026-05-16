@@ -4,11 +4,13 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez EPIC → SPEC zani
 
 ## Now
 
-- [ ] (pusty — wybierz kolejny EPIC/SPEC z Later lub Icebox)
+- [ ] EPIC-005: migracja runtime path → `/opt/homeserver-services-repo` (draft — zatwierdzić, potem SPEC-005A)
+- [ ] SPEC-005A: zmienna `homeserver_runtime_root` w Ansible (bez zmiany hostów)
 
 ## Next
 
-- [ ] Migracja runtime path `/opt/homeserver-ansible-repo` na hostach (osobny SPEC/infra)
+- [ ] SPEC-005B/C: migracja ścieżek na G2 i T630 (maintenance, APPROVE_DEPLOY)
+- [ ] SPEC-005D/E: deploy + cleanup
 
 ## Done (ostatnio)
 

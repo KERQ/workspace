@@ -33,6 +33,10 @@ Obecnie utrzymujemy tylko:
 - [`secrets/`](secrets/)
 - [`repos/`](repos/)
 
+Rozszerzenia (EPIC-005):
+
+- [`storage/runtime-paths.yml`](storage/runtime-paths.yml) — ścieżki runtime na hostach (draft migracji)
+
 ## Czego NIE trzymamy w contracts/
 
 - wartości sekretów, tokenów, haseł

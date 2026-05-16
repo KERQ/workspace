@@ -1,0 +1,22 @@
+# draft — runtime paths on hosts (no secrets)
+# EPIC-005 target state
+
+runtime_paths:
+  current:
+    root: /opt/homeserver-ansible-repo
+    g2_config: /opt/homeserver-ansible-repo/g2-config
+    trading_scripts: /opt/homeserver-ansible-repo/scripts/trading
+    t630_openclaw_repo: /opt/homeserver-ansible-repo
+
+  target:
+    root: /opt/homeserver-services-repo
+    g2_config: /opt/homeserver-services-repo/g2-config
+    trading_scripts: /opt/homeserver-services-repo/scripts/trading
+    t630_openclaw_repo: /opt/homeserver-services-repo
+
+  ansible_variable: homeserver_runtime_root
+
+migration:
+  strategy: phased_with_backward_symlink
+  g2_config_dir_rename: false
+  hosts: [g2, t630]
