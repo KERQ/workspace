@@ -28,6 +28,10 @@ APPROVE_DEPLOY=yes ./deploy/scripts/migrate-g2-runtime-path.sh cutover --apply
 ./deploy/scripts/migrate-g2-runtime-path.sh smoke
 ```
 
+## Znane pułapki
+
+- **`cp -a dir/*`** nie kopiuje `.env` — skrypt od 005B używa `dotglob`; przy cutover brak `.env` Infisical → skopiuj z `.bak-*` lub uruchom ponownie `cutover` po aktualizacji skryptu.
+
 ## Po 005B (przed 005D)
 
 - Fizyczne dane: `/opt/homeserver-services/`

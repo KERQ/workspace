@@ -43,7 +43,14 @@ migration:
   g2_phase2_status:
     backup: /mnt/seagate/backups/epic-005-g2-runtime-path/20260516-211159
     target_synced: true
-    cutover: pending
+    cutover: done
+    cutover_timestamp: "20260516-211434"
+    backward_symlinks:
+      - /opt/homeserver-ansible-repo -> /opt/homeserver-services
+      - /opt/homeserver-ansible/infisical -> /opt/homeserver-services/infisical
+    cutover_bak_dirs:
+      - /opt/homeserver-ansible-repo.bak-20260516-211434
+      - /opt/homeserver-ansible-infisical.bak-20260516-211434
   strategy: phased_with_backward_symlink
   primary_host: g2
   hosts_in_scope: [g2]

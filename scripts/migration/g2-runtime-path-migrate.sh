@@ -43,7 +43,17 @@ sync_tree() {
     if [[ "${SYNC_DELETE:-0}" == "1" && -d "${dest}" ]]; then
       find "${dest}" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
     fi
-    cp -a "${src}"* "${dest}/"
+    # shellcheck disable=SC2086
+    cp -a "${src}"* "${dest}/" 2>/dev/null || true
+    # Dotfiles (.env etc.) — glob * skips them
+    shopt -s dotglob nullglob
+    for f in "${src}".*; do
+      [[ -e "${f}" ]] || continue
+      base="$(basename "${f}")"
+      [[ "${base}" == "." || "${base}" == ".." ]] && continue
+      cp -a "${f}" "${dest}/"
+    done
+    shopt -u dotglob nullglob
   fi
 }
 
@@ -167,6 +177,11 @@ cmd_cutover() {
   run_priv mv "${SOURCE_INFISICAL}" "${bak_infisical}"
   run_priv ln -sfn "${TARGET_INFISICAL}" "${SOURCE_INFISICAL}"
   run_priv chown -h g2:g2 "${SOURCE_INFISICAL}" 2>/dev/null || true
+
+  if [[ ! -f "${TARGET_INFISICAL}/.env" && -f "${bak_infisical}/.env" ]]; then
+    log "restore infisical dotfiles from backup (cp without dotglob misses .env)"
+    cp -a "${bak_infisical}/." "${TARGET_INFISICAL}/"
+  fi
 
   log "backups of replaced dirs: ${bak_repo} ${bak_infisical}"
   log "starting stacks via backward symlinks"
