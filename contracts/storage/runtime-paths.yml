@@ -40,6 +40,10 @@ runtime_paths:
     note: EPIC-005 nie migruje life-platform-t630 ani openclaw-control-plane
 
 migration:
+  g2_phase2_status:
+    backup: /mnt/seagate/backups/epic-005-g2-runtime-path/20260516-211159
+    target_synced: true
+    cutover: pending
   strategy: phased_with_backward_symlink
   primary_host: g2
   hosts_in_scope: [g2]

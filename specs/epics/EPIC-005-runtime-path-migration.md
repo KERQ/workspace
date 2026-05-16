@@ -155,7 +155,7 @@ Deploy warstwami na G2 (`contracts/deploy/g2-deploy-order.yml`):
 | SPEC | Faza | Status |
 |------|------|--------|
 | SPEC-005A-ansible-runtime-variable | 1 | done |
-| SPEC-005B-host-path-migration-g2 | 2 | planned |
+| SPEC-005B-host-path-migration-g2 | 2 | in_progress (sync done) |
 | ~~SPEC-005C-host-path-migration-t630~~ | — | **cancelled** (brak ścieżek na T630) |
 | SPEC-005D-deploy-new-runtime-path | 3 | planned |
 | SPEC-005E-runtime-path-cleanup | 4 | planned |
