@@ -157,7 +157,7 @@ Deploy warstwami na G2 (`contracts/deploy/g2-deploy-order.yml`):
 | SPEC-005A-ansible-runtime-variable | 1 | done |
 | SPEC-005B-host-path-migration-g2 | 2 | done |
 | ~~SPEC-005C-host-path-migration-t630~~ | — | **cancelled** (brak ścieżek na T630) |
-| SPEC-005D-deploy-new-runtime-path | 3 | draft (spec ready) |
+| SPEC-005D-deploy-new-runtime-path | 3 | in_progress (deploy pending) |
 | SPEC-005E-runtime-path-cleanup | 4 | planned |
 
 ## Następny krok

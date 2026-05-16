@@ -13,6 +13,12 @@ runtime_paths:
     homeserver_infisical_path: /opt/homeserver-ansible/infisical
     homeserver_legacy_g2_config_dir: /opt/homeserver-ansible/g2-config
 
+  ansible_g2_overrides:
+    file: inventory/group_vars/g2_servers.yml
+    homeserver_runtime_root: /opt/homeserver-services
+    homeserver_infisical_path: /opt/homeserver-services/infisical
+    status: coded_pending_deploy_apply
+
   target:
     root: /opt/homeserver-services
     g2_config: /opt/homeserver-services/g2-config

@@ -1,7 +1,7 @@
 # SPEC-005D: Ansible — docelowe ścieżki runtime + deploy G2
 
 Parent: [EPIC-005](epics/EPIC-005-runtime-path-migration.md)  
-Status: draft (gotowy do startu)  
+Status: in_progress (kod OK — czeka deploy apply)  
 Repos: homeserver-core, homeserver-services, workspace  
 Host: g2@192.168.1.19  
 Owner: karolkurek  
@@ -12,7 +12,7 @@ Type: config + deploy
 
 - [x] [SPEC-005B](SPEC-005B-host-path-migration-g2.md) — cutover done
 - [x] Kanon na hoście: `/opt/homeserver-services` (+ symlinki wsteczne)
-- [ ] Akceptacja tego SPEC → implementacja + deploy
+- [x] Akceptacja tego SPEC → implementacja (2026-05-16)
 
 ## Cel
 
@@ -115,12 +115,12 @@ Pełny rollback filesystem: `migrate-g2-runtime-path.sh rollback` (tylko jeśli 
 
 ## Definition of Done
 
-- [ ] `g2_servers.yml` w core + services z docelowymi ścieżkami
-- [ ] Szablony CLI używają `homeserver_g2_config_dir` (aktywny `.env`)
+- [x] `g2_servers.yml` w core + services z docelowymi ścieżkami
+- [x] Szablony CLI używają `homeserver_g2_config_dir` (aktywny `.env`)
 - [ ] `deploy-g2-full.sh --apply` wykonany z `APPROVE_DEPLOY=yes`
 - [ ] Smoke G2 PASS
-- [ ] Kontrakt `runtime-paths.yml` zaktualizowany
-- [ ] EPIC-005: SPEC-005D → done
+- [x] Kontrakt `runtime-paths.yml` zaktualizowany
+- [ ] EPIC-005: SPEC-005D → done (po deploy + smoke)
 
 ## Approval gates
 
