@@ -1,0 +1,53 @@
+# draft — ownership Ansible roles per repo
+roles:
+  base:
+    owner_repo: homeserver-core
+    allowed_hosts: [t630, g2]
+
+  docker:
+    owner_repo: homeserver-core
+    allowed_hosts: [t630, g2]
+
+  tailscale:
+    owner_repo: homeserver-core
+    allowed_hosts: [t630, g2]
+
+  monitoring:
+    owner_repo: homeserver-core
+    allowed_hosts: [t630, g2]
+
+  backup:
+    owner_repo: homeserver-core
+    allowed_hosts: [t630, g2]
+
+  home-assistant:
+    owner_repo: life-platform
+    allowed_hosts: [t630]
+
+  mosquitto:
+    owner_repo: life-platform
+    allowed_hosts: [t630]
+
+  zigbee2mqtt:
+    owner_repo: life-platform
+    allowed_hosts: [t630]
+
+  esphome:
+    owner_repo: life-platform
+    allowed_hosts: [t630]
+
+  openclaw:
+    owner_repo: homeserver-services
+    allowed_hosts: [t630]
+
+  paperclip:
+    owner_repo: homeserver-services
+    allowed_hosts: [t630]
+
+  litellm:
+    owner_repo: homeserver-services
+    allowed_hosts: [g2]
+
+  airflow:
+    owner_repo: homeserver-services
+    allowed_hosts: [g2]

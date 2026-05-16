@@ -1,0 +1,21 @@
+# draft — manual_only unless explicitly approved
+host: t630
+
+full_deploy_order:
+  - repo: homeserver-core
+    playbook: playbooks/t630.yml
+    purpose: infra/base/docker/tailscale/monitoring/backup
+
+  - repo: life-platform
+    working_dir: domains/home/ansible
+    playbook: playbooks/t630.yml
+    purpose: home-assistant/mqtt/zigbee/esphome
+
+  - repo: homeserver-services
+    playbook: playbooks/t630.yml
+    purpose: openclaw/paperclip/services
+
+rules:
+  - homeserver-core must run before life-platform
+  - homeserver-core must run before homeserver-services
+  - deploy is manual_only unless explicitly approved

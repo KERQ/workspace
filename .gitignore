@@ -1,0 +1,67 @@
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+
+# --- IDE / Cursor ---
+.idea/
+.vscode/
+*.code-workspace
+.cursor/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# --- Node (jeśli kiedyś w workspace) ---
+node_modules/
+
+# --- Logi / cache / tymczasowe ---
+*.log
+logs/
+.local/
+tmp/
+temp/
+.cache/
+
+# --- Sekrety (nazwy — bez wartości) ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+*credentials*
+credentials.json
+# Lokalny katalog sekretów tylko w root workspace (nie contracts/secrets/)
+/secrets/
+# Wzorce w root (nie w contracts/)
+/*.token
+token.json
+
+# --- Ansible / vault (gdyby trafiły do workspace) ---
+**/vault.yml
+**/vault.yaml
+*.vault
+
+# --- Duże / lokalne artefakty ---
+*.zip
+*.tar.gz
+*.sqlite
+*.db-journal
+
+# --- Nie ignorujemy: specs/, contracts/, docs/, scripts/ ---
+# --- Symlinki repo domenowych: NIE w .gitignore (commitowalne jako 120000) ---

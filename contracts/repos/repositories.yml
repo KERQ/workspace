@@ -1,0 +1,29 @@
+repos:
+  homeserver-core:
+    type: infra_stateful
+    risk: high
+    github_mirror: true
+    deploy: manual_only
+
+  homeserver-services:
+    type: services_runtime
+    risk: high
+    github_mirror: true
+    deploy: manual_only
+
+  life-platform:
+    type: personal_domain
+    risk: medium_high
+    github_mirror: optional
+    deploy: manual_only
+
+  investment-research:
+    type: research_ip
+    risk: critical
+    github_mirror: false
+    human_approval_for_all_writes: true
+
+  openclaw-control-plane:
+    type: governance_policy_memory
+    risk: high
+    policy_changes_require_adr: true

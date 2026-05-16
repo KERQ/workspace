@@ -1,0 +1,17 @@
+# draft — manual_only unless explicitly approved
+# draft — verify playbook path: homeserver-services/playbooks/g2.yml may be missing locally; confirm before Etap 1 deploy orchestration
+host: g2
+
+full_deploy_order:
+  - repo: homeserver-core
+    playbook: playbooks/g2.yml
+    purpose: infra/base/docker/tailscale/monitoring/backup/storage
+
+  - repo: homeserver-services
+    playbook: playbooks/g2.yml
+    purpose: litellm/airflow/ml-runtime/services
+
+rules:
+  - homeserver-core must run before homeserver-services
+  - life-platform does not deploy to g2 by default
+  - deploy is manual_only unless explicitly approved

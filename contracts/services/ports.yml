@@ -1,0 +1,45 @@
+# draft — no secret values
+services:
+  openclaw_gateway:
+    owner_repo: homeserver-services
+    default_host: t630
+    port: 18789
+    exposure: tailnet_only
+    auth_required: true
+
+  litellm:
+    owner_repo: homeserver-services
+    default_host: g2
+    port: 4000
+    exposure: internal_or_tailnet
+    auth_required: true
+
+  forgejo_web:
+    owner_repo: homeserver-services
+    default_host: t630
+    port: 3000
+    exposure: tailnet_only
+    auth_required: true
+    status: planned
+
+  librechat:
+    owner_repo: homeserver-services
+    default_host: t630
+    port: 3080
+    exposure: tailnet_only
+    auth_required: true
+    status: planned
+
+  difit:
+    owner_repo: homeserver-services
+    default_host: t630
+    port: 4966
+    exposure: tailnet_only
+    auth_required: true
+    status: planned
+
+  home_assistant:
+    owner_repo: life-platform
+    default_host: t630
+    exposure: local_or_tailnet
+    auth_required: true
