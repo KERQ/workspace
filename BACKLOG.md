@@ -4,7 +4,8 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez EPIC → SPEC zani
 
 ## Now
 
-- [ ] EPIC-005: migracja runtime path G2 → `/opt/homeserver-services` (005B done — następny 005D Ansible)
+- [ ] EPIC-005: migracja runtime path G2 → `/opt/homeserver-services` (005D spec ready — czeka akceptacja/deploy)
+- [ ] SPEC-005D: Ansible docelowe ścieżki + deploy G2 ([spec](specs/SPEC-005D-deploy-new-runtime-path.md))
 - [x] SPEC-005A: zmienna `homeserver_runtime_root` w Ansible (bez zmiany hostów)
 
 ## Next
