@@ -11,7 +11,7 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez EPIC → SPEC zani
 ## Next
 
 - [x] SPEC-005B: migracja ścieżek na G2 only
-- [ ] SPEC-005E: cleanup symlinków + runbooki
+- [ ] SPEC-005E: cleanup symlinków + runbooki ([spec](specs/SPEC-005E-runtime-path-cleanup.md))
 
 ## Done (ostatnio)
 

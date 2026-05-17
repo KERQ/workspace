@@ -158,8 +158,8 @@ Deploy warstwami na G2 (`contracts/deploy/g2-deploy-order.yml`):
 | SPEC-005B-host-path-migration-g2 | 2 | done |
 | ~~SPEC-005C-host-path-migration-t630~~ | — | **cancelled** (brak ścieżek na T630) |
 | SPEC-005D-deploy-new-runtime-path | 3 | done |
-| SPEC-005E-runtime-path-cleanup | 4 | planned |
+| SPEC-005E-runtime-path-cleanup | 4 | draft (spec ready) |
 
 ## Następny krok
 
-**SPEC-005E** — cleanup symlinków, runbooki SSH, archiwum `.bak-*`.
+**SPEC-005E** — [spec start](SPEC-005E-runtime-path-cleanup.md): cleanup G2 + runbooki + ADR.
