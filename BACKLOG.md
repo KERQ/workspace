@@ -10,13 +10,19 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 
 ## Now
 
-- [ ] EPIC-006: Forgejo MVP / lokalny Git system of record dla jednego repo
+- [ ] [EPIC-014](specs/epics/EPIC-014-restic-minio-offbox-backup.md): Restic → MinIO + zwolnienie miejsca na T630 *(draft, blokuje cutover Forgejo)*
+  - Audyt: ~91% `/`, ~44G w `/opt/backups` (HA ~40G), ~16G reclaimable Docker images.
+  - **Faza 0:** retencja HA, opcj. prune/legacy — cel **≥20 GB wolne** na `/`.
+  - **Faza 1:** Restic → MinIO na G2 (`/mnt/seagate`), restore drill, potem skrócenie lokalnej retencji.
+- [ ] [EPIC-006](specs/epics/EPIC-006-forgejo-mvp.md): Forgejo MVP / lokalny Git system of record dla jednego repo *(draft, cutover po EPIC-014)*
   - Forgejo + PostgreSQL przez Tailscale/Caddy.
   - Organizacja `KERQ`, wyłączona publiczna rejestracja.
   - Repo pilotażowe: `homeserver-services`.
   - `origin = Forgejo`, `github = GitHub` jako ręczny remote bez automatycznego mirror.
   - SSH push/pull smoke test, branch testowy i PR.
-  - Backup Forgejo DB + data.
+  - **Must-have:** backup Forgejo (DB dump + data) przez **Restic → MinIO** (docelowo G2 lub dedykowany bucket), nie tylko lokalne tar w `/opt/backups`.
+  - Lokalny dump awaryjny krótkiej retencji OK; kanoniczny backup off-box = Restic/MinIO.
+  - Audyt miejsca na dysku T630 przed cutover (obecnie ~91% `/`, głównie `/opt/backups`).
 - [ ] EPIC-007: OpenClaw Gateway `/v1` + LibreChat/LobeChat
   - `/v1/models` i `/v1/chat/completions`.
   - Dostęp tylko loopback/tailnet/private ingress + Caddy auth.
@@ -79,6 +85,7 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 - [ ] EPIC-013: domenowe backlogi dla `life-platform`, `investment-research`, `openclaw-control-plane`
   - Dodać tylko po osobnych analizach w `docs/ideas/`.
   - `investment-research` zachowuje hard privacy i nie dostaje domyślnego GitHub mirror.
+- [ ] Przegląd zainstalowanych/działając usług i aplikacji na T630 i G2. Weryfikacja/przygotowanie dashboardu (one-pager) pokazującego linki do uruchomienia jeśli webowa oraz stan palikacji/suługi. 
 
 ## Icebox
 

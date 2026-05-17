@@ -57,7 +57,7 @@ IDEA → BACKLOG → EPIC → SPEC → PROMPT → PATCH → TEST → REVIEW → 
 
 ## Najbliższe EPIC
 
-Aktualna kolejka jest w [`BACKLOG.md`](BACKLOG.md). Najbliższe prace to Forgejo MVP, OpenClaw Gateway `/v1`, worktree + `difit` oraz approval-first PR workflow.
+Aktualna kolejka jest w [`BACKLOG.md`](BACKLOG.md). Priorytet: [`EPIC-014`](specs/epics/EPIC-014-restic-minio-offbox-backup.md) (miejsce na dysku + Restic/MinIO), potem [`EPIC-006`](specs/epics/EPIC-006-forgejo-mvp.md) (Forgejo).
 
 ## Uwaga o PLAN.md
 
