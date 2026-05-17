@@ -15,7 +15,7 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
   - Audyt: ~91% `/`, ~44G w `/opt/backups` (HA ~40G), ~16G reclaimable Docker images.
   - **Faza 0:** retencja HA, opcj. prune/legacy — cel **≥20 GB wolne** na `/`.
   - **Faza 1:** Restic → MinIO na G2 (`/mnt/seagate`), restore drill, potem skrócenie lokalnej retencji.
-- [ ] [EPIC-006](specs/epics/EPIC-006-forgejo-mvp.md): Forgejo MVP / lokalny Git system of record dla jednego repo *(draft, cutover po EPIC-014)*
+- [ ] [EPIC-006](specs/epics/EPIC-006-forgejo-mvp.md): Forgejo MVP / lokalny Git system of record dla jednego repo *(draft, cutover po EPIC-014 + SPEC-016)*
   - Forgejo + PostgreSQL przez Tailscale/Caddy.
   - Organizacja `KERQ`, wyłączona publiczna rejestracja.
   - Repo pilotażowe: `homeserver-services`.
@@ -33,6 +33,10 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 
 ## Next
 
+- [ ] **Dashboard web (T630/G2):** aplikacja WWW ze stanem usług (nie one-pager)
+  - Wejście z audytu [SPEC-015](specs/SPEC-015-t630-g2-service-dashboard.md) — dane: `docker ps`, porty, health, host T630+G2.
+  - Read-only MVP; auth przez Tailscale/Caddy; bez deployu z UI.
+  - Osobny SPEC po SPEC-016 (ingress pod jednym Caddy).
 - [ ] EPIC-008: worktree + `difit` preview przed commitem
   - Ustalić `/srv/worktrees` albo lokalny odpowiednik w workspace.
   - Procedura worktree per task.
@@ -86,7 +90,8 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 - [ ] EPIC-013: domenowe backlogi dla `life-platform`, `investment-research`, `openclaw-control-plane`
   - Dodać tylko po osobnych analizach w `docs/ideas/`.
   - `investment-research` zachowuje hard privacy i nie dostaje domyślnego GitHub mirror.
-- [x] [SPEC-015](specs/SPEC-015-t630-g2-service-dashboard.md): przegląd usług T630/G2 + one-pager dashboard ([runbook](docs/runbooks/t630-g2-service-dashboard.md))
+- [x] [SPEC-015](specs/SPEC-015-t630-g2-service-dashboard.md): audyt usług T630/G2 + one-pager ([runbook](docs/runbooks/t630-g2-service-dashboard.md)) — **nie** aplikacja web
+- [x] [SPEC-016](specs/SPEC-016-t630-caddy-unify-docker.md): T630 — jeden Caddy (Docker), `caddy.service` wyłączony ([worklog](docs/worklog/OPS/SPEC-016-2026-05-17-t630-caddy-unify.md))
 
 ## Icebox
 

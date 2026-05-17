@@ -1,12 +1,12 @@
 # T630/G2 Service Dashboard
 
-Stan z audytu: **2026-05-17 10:45 CEST**. Dokument jest one-pagerem operacyjnym, nie dashboardem live.
+Stan z audytu: **2026-05-17** (Caddy zaktualizowany po SPEC-016). One-pager operacyjny — **dashboard web** to osobny backlog (aplikacja WWW).
 
 ## Skrót
 
 | Host | Ogólny stan | Najważniejszy problem | Dysk |
 |------|-------------|-----------------------|------|
-| T630 | Usługi główne działają; `caddy` kontener w restart loop | Konflikt portu `:80`: hostowy `caddy.service` vs kontener `caddy` | `/`: 55G wolne, 49% użycia |
+| T630 | Usługi główne działają; Caddy Docker **Up** | `caddy.service` wyłączony (SPEC-016, 2026-05-17) | `/`: 55G wolne, 49% użycia |
 | G2 | Usługi główne działają | Brak failed systemd units; Caddy działa | `/mnt/seagate`: ~21T wolne |
 
 ## T630
@@ -25,7 +25,7 @@ Host: `t630@192.168.1.20`
 | Paperclip | `http://192.168.1.20:3002/` | Redirect (`302`) | `0.0.0.0:3002` | User service `paperclip` |
 | OpenClaw Gateway | local: `http://127.0.0.1:18789/` | OK (`200`) | `127.0.0.1:18789`, `[::1]:18789` | Internal/API |
 | cAdvisor | `http://192.168.1.20:9080/` | Redirect (`307`) | `0.0.0.0:9080` | Healthy |
-| Caddy host | `http://192.168.1.20/` | Responds (`404`) | `*:80` | Host `caddy.service`, not Docker |
+| Caddy (Docker) | `http://192.168.1.20/` | OK (`200` root) | `*:80` | Kontener `caddy`, `network_mode: host` |
 
 ### Containers
 
@@ -42,39 +42,24 @@ Host: `t630@192.168.1.20`
 | `plane-plane-minio-1` | Up 3 days | `9001`, `9002` | OK |
 | `plane-datalake-minio-1` | Up 3 days | `9011`, `9012` | OK |
 | `timescaledb` | Restarting | none | Follow-up: sprawdzić osobno |
-| `caddy` | Restarting | none | Konflikt z hostowym `caddy.service` na `:80` |
+| `caddy` | Up | `*:80` | Docker, `network_mode: host` (SPEC-016) |
 
 ### Systemd / User Services
 
 | Service | Status | Uwagi |
 |---------|--------|-------|
-| `caddy.service` | active | `/usr/bin/caddy run --config /etc/caddy/Caddyfile`, zajmuje `*:80` |
+| `caddy.service` | **disabled** | Wyłączony SPEC-016; ingress = kontener Docker |
 | `openclaw-studio.service` | active | User service |
 | `clawsuite.service` | active | User service |
 | `paperclip.service` | active | User service |
 | Failed units | 0 | OK |
 
-### Caddy Follow-up
+### Caddy (SPEC-016 done)
 
-Problem:
-
-```text
-docker container caddy -> Restarting
-Error: listening on :80: bind: address already in use
-```
-
-Właściciel portu:
-
-```text
-systemd caddy.service -> /usr/bin/caddy ... /etc/caddy/Caddyfile -> *:80
-```
-
-W repo `life-platform` compose ma też kontener `caddy` z `network_mode: host`, więc oba modele walczą o ten sam port. Następny SPEC powinien wybrać jeden model:
-
-- **wariant A:** Caddy jako systemd service i usunięcie/wyłączenie kontenera `caddy`,
-- **wariant B:** Caddy jako kontener i wyłączenie hostowego `caddy.service`.
-
-Do Forgejo rekomendowany będzie jeden centralny reverse proxy, nie dwa.
+- Właściciel `:80`: kontener Docker `caddy` (`life-platform`).
+- `caddy.service`: disabled.
+- Runbook operacyjny: [t630-caddy-unify.md](t630-caddy-unify.md).
+- Vhost Forgejo (EPIC-006): ten sam `Caddyfile` w `life-platform`.
 
 ## G2
 
@@ -120,7 +105,7 @@ Host: `g2@192.168.1.19`
 
 | Port | T630 | G2 | Uwagi |
 |------|------|----|-------|
-| `80` | Host `caddy.service`; Docker `caddy` conflict | Docker `caddy` OK | T630 wymaga decyzji przed Forgejo |
+| `80` | Docker `caddy` OK | Docker `caddy` OK | Gotowe pod Forgejo vhost |
 | `443` | Tailscale/listener active | Docker `caddy` OK | |
 | `3000` | `openclaw-studio` on `127.0.0.1` | internal Plane/Presidio containers | Forgejo web nie powinien bindwać host `3000` |
 | `3001` | ClawSuite | Grafana | |
@@ -130,6 +115,6 @@ Host: `g2@192.168.1.19`
 
 ## Next
 
-- Utworzyć SPEC dla Caddy T630: wybrać systemd vs Docker jako jedyny reverse proxy.
+- Dashboard **web** (aplikacja) — backlog Next, osobny SPEC.
 - Kontynuować EPIC-014B: MinIO bucket + dostęp T630 -> G2.
 - Przed EPIC-006: zarezerwować docelowe porty Forgejo (`2222` SSH, web przez Caddy bez host bind `3000`).

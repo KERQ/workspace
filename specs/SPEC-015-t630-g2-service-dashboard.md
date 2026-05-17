@@ -1,4 +1,4 @@
-# SPEC-015: T630/G2 — przegląd usług i one-pager operacyjny
+# SPEC-015: T630/G2 — audyt usług i one-pager operacyjny (nie aplikacja web)
 
 Parent: BACKLOG
 Status: done
@@ -110,5 +110,5 @@ Zmiana dokumentacyjna. Rollback: revert commit w workspace.
 
 ## Na później
 
-- SPEC dla Caddy na T630: wybrać jeden model reverse proxy (`systemd caddy` albo `docker caddy`), usunąć konflikt `:80`.
-- Rozważyć automatyczny generator dashboardu ze stanu `docker ps` / `ss`.
+- [SPEC-016](SPEC-016-t630-caddy-unify-docker.md): ujednolicenie Caddy na T630 (Docker `life-platform`).
+- **Dashboard web:** backlog — aplikacja WWW (osobny SPEC); ten dokument to tylko statyczny one-pager z audytu.

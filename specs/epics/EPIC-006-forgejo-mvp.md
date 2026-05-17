@@ -5,7 +5,7 @@ Owner: karolkurek
 Risk: medium
 Repos: homeserver-core, homeserver-services, workspace (docs/contracts)
 Blokuje: —
-Zablokowany przez: [EPIC-014](EPIC-014-restic-minio-offbox-backup.md) (cutover produkcyjny — po Restic/MinIO i ≥20 GB wolne na T630 `/`)
+Zablokowany przez: [EPIC-014](EPIC-014-restic-minio-offbox-backup.md) (cutover produkcyjny — po Restic/MinIO i ≥20 GB wolne na T630 `/`); [SPEC-016](../SPEC-016-t630-caddy-unify-docker.md) (stabilny reverse proxy na T630 przed vhost Forgejo)
 
 ## Cel
 
@@ -45,7 +45,7 @@ Po zakończeniu epiku:
 | `homeserver-core` | write | Caddy vhost `git.*`, ewentualnie firewall/Tailscale |
 | `homeserver-services` | write | Compose Forgejo + PostgreSQL, role/playbook T630 |
 | `workspace` | write | Ten EPIC, child SPECs, runbook, aktualizacja `contracts/` |
-| `life-platform` | none | Poza zakresem MVP |
+| `life-platform` | write (Caddyfile) | Właściciel ingress `:80` na T630 po SPEC-016; vhost `git.*` w 006B |
 | `investment-research` | none | Poza zakresem MVP; mirror GitHub wyłączony na stałe |
 | `openclaw-control-plane` | read | Polityki repo — bez zmian w MVP |
 
@@ -175,7 +175,7 @@ Pełny rollback hosta poza zakresem — osobny runbook disaster recovery.
 | SPEC | Repo | Status | Opis |
 |------|------|--------|------|
 | SPEC-006A | homeserver-services (+ core jeśli wspólny stack) | planned | Compose Forgejo + PostgreSQL, zmienne Ansible, `--syntax-check` |
-| SPEC-006B | homeserver-core | planned | Caddy vhost `git.*`, Tailscale, wyłączona rejestracja publiczna |
+| SPEC-006B | life-platform (+ homeserver-services dla backend URL) | planned | Vhost `git.*` w `life-platform/.../caddy/Caddyfile`; Forgejo backend w sieci Docker/host — bez drugiego Caddy na `:80` |
 | SPEC-006C | workspace + manual ops | planned | Org `KERQ`, import `homeserver-services`, ustawienia instancji |
 | SPEC-006D | workspace runbook | planned | `origin`/`github` remotes, SSH smoke, branch testowy + PR |
 | SPEC-006E | workspace + homeserver-services | planned | Backup DB+data, runbook, aktualizacja `contracts/services/ports.yml` |
