@@ -14,12 +14,13 @@
 | `curl http://127.0.0.1:3030/` | OK (200/302) |
 | `:3030` bind | 127.0.0.1 |
 | `:2222` bind | *:2222 |
-| Dane | `/srv/ai-stack/forgejo/data`, `.../postgres` |
+| Dane | `/srv/ai-stack/forgejo/data` UID 1000, `.../postgres` UID/GID 70 |
 
 ## Uwagi
 
 - Domena env placeholder: `git.t630.homelab.local` — **006B** powinien ustawić tailnet FQDN (np. `git.t630.colobus-micro.ts.net`).
 - `forgejo_db_password` tylko w lokalnym host_vars — nie commitować.
+- `postgres:16-alpine` działa jako UID/GID 70; katalog `/srv/ai-stack/forgejo/postgres` nie może być właścicielem UID 1000, bo PostgreSQL zgłasza `global/pg_filenode.map: Permission denied`.
 
 ## Następne
 

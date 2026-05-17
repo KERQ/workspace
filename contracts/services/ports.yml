@@ -19,10 +19,11 @@ services:
     default_host: t630
     port: 3000
     host_port: 3030
-    note: "Container HTTP 3000; host bind 127.0.0.1:3030 (3000 used by openclaw-studio)"
+    url: "https://t630.colobus-micro.ts.net/git/"
+    note: "Container HTTP 3000; host bind 127.0.0.1:3030 (3000 used by openclaw-studio); Caddy/Tailscale path /git/"
     exposure: tailnet_only
     auth_required: true
-    status: planned
+    status: active
 
   librechat:
     owner_repo: homeserver-services

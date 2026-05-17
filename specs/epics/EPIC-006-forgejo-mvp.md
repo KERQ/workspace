@@ -1,6 +1,6 @@
 # EPIC-006: Forgejo MVP — lokalny Git system of record (jedno repo)
 
-Status: draft
+Status: done
 Owner: karolkurek
 Risk: medium
 Repos: homeserver-core, homeserver-services, workspace (docs/contracts)
@@ -33,7 +33,7 @@ Po zakończeniu epiku:
 | Host | T630 | Zgodnie z architekturą OpenClaw/Forgejo |
 | Repo pilotażowe | `homeserver-services` | Największy flow dev/deploy; już na GitHub |
 | Baza Forgejo | PostgreSQL (nie SQLite) | Zgodnie z dokumentem architektonicznym |
-| Web UI | port `3000`, domena `git.t630.<tailnet>` | Caddy reverse proxy + auth |
+| Web UI | port host `3030`, URL `https://t630.colobus-micro.ts.net/git/` | Caddy reverse proxy + Tailscale Serve |
 | Git SSH | port `2222` | `git@t630 -p 2222` / tailnet |
 | Layout danych | `/srv/ai-stack/forgejo/{data,postgres}` | Compose w `/opt/homeserver-services/t630-config/forgejo/` |
 | Właściciel compose/Ansible | **homeserver-services** (`roles/forgejo`) | Caddy vhost w **life-platform** (006B) |
@@ -99,15 +99,15 @@ Każdy child SPEC: **test plan (smoke/check) przed apply**, zgodnie z `PROJEKT.m
 
 ## Global Definition of Done
 
-- [ ] Wszystkie child SPECs w statusie `done` lub świadomie anulowane
-- [ ] Forgejo UI dostępne na `git.t630.<tailnet>` (tailnet only)
-- [ ] `homeserver-services` ma działający PR w Forgejo (branch testowy → PR → merge ręczny)
-- [ ] Lokalny checkout: `git remote -v` pokazuje `origin` → Forgejo, `github` → GitHub
-- [ ] Brak skonfigurowanego automatycznego mirror do GitHub
-- [ ] Backup Forgejo zweryfikowany (restore drill opisany w runbooku)
-- [ ] `contracts/services/ports.yml` — `forgejo_web.status: active`
-- [ ] Runbook: `docs/runbooks/t630-forgejo-mvp.md` (lub równoważna nazwa)
-- [ ] ADR jeśli wybór layoutu `/srv/ai-stack/` vs istniejący stack wymaga trwałej decyzji
+- [x] Wszystkie child SPECs w statusie `done` lub świadomie anulowane
+- [x] Forgejo UI dostępne na `https://t630.colobus-micro.ts.net/git/` (tailnet only)
+- [x] `homeserver-services` ma działający PR w Forgejo (branch testowy → PR → merge po approval)
+- [x] Lokalny checkout: `git remote -v` pokazuje `origin` → Forgejo, `github` → GitHub
+- [x] Brak skonfigurowanego automatycznego mirror do GitHub
+- [x] Backup Forgejo zweryfikowany (restore drill opisany w runbooku)
+- [x] `contracts/services/ports.yml` — `forgejo_web.status: active`
+- [x] Runbook: `docs/runbooks/t630-forgejo-deploy.md` + Restic runbooki
+- [x] ADR nie wymagany dla MVP; layout utrwalony w SPEC/runbookach
 
 ## Global test plan
 
@@ -122,10 +122,10 @@ Każdy child SPEC: **test plan (smoke/check) przed apply**, zgodnie z `PROJEKT.m
 
 ```bash
 # Web UI (z maszyny w tailnecie)
-curl -sS -o /dev/null -w "%{http_code}" https://git.t630.<tailnet>/
+curl -k -sS -o /dev/null -w "%{http_code}" https://t630.colobus-micro.ts.net/git/
 
 # SSH Forgejo
-ssh -p 2222 git@git.t630.<tailnet>
+ssh -p 2222 git@t630.colobus-micro.ts.net
 
 # Git flow (checkout lokalny homeserver-services)
 cd ~/repos/homeserver-services
@@ -159,7 +159,7 @@ Pełny rollback hosta poza zakresem — osobny runbook disaster recovery.
 | SPEC-006A–E (implementacja w repo) | per SPEC review |
 | Deploy T630 (compose up, Caddy reload) | **manual**, `APPROVE_DEPLOY=yes` |
 | Zmiana `origin` na maszynach deweloperskich | karolkurek (świadomy cutover) |
-| Merge smoke PR | karolkurek (ręcznie w Forgejo UI) |
+| Merge smoke PR | karolkurek (approval udzielony; merge wykonany przez API) |
 
 ## Ryzyka
 
@@ -176,10 +176,10 @@ Pełny rollback hosta poza zakresem — osobny runbook disaster recovery.
 | SPEC | Repo | Status | Opis |
 |------|------|--------|------|
 | SPEC-006A | homeserver-services | done | [`SPEC-006A`](../SPEC-006A-forgejo-compose-postgres.md) — Compose + PostgreSQL, port 3030/2222 |
-| SPEC-006B | life-platform | draft | [`SPEC-006B`](../SPEC-006B-forgejo-caddy-ingress.md) — vhost `git.*` → `127.0.0.1:3030` |
-| SPEC-006C | workspace + manual ops | planned | Org `KERQ`, import `homeserver-services`, ustawienia instancji |
-| SPEC-006D | workspace runbook | planned | `origin`/`github` remotes, SSH smoke, branch testowy + PR |
-| SPEC-006E | workspace + homeserver-services | planned | Backup DB+data, runbook, aktualizacja `contracts/services/ports.yml` |
+| SPEC-006B | life-platform | done | [`SPEC-006B`](../SPEC-006B-forgejo-caddy-ingress.md) — `/git/` na `t630.*` → `127.0.0.1:3030` |
+| SPEC-006C | workspace + manual ops | done | [`SPEC-006C`](../SPEC-006C-forgejo-org-import.md) — org `KERQ`, import `homeserver-services`, ustawienia instancji |
+| SPEC-006D | workspace runbook | done | [`SPEC-006D`](../SPEC-006D-forgejo-remotes-pr-smoke.md) — `origin`/`github` remotes, SSH smoke, branch testowy + PR |
+| SPEC-006E | workspace + homeserver-core | done | [`SPEC-006E`](../SPEC-006E-forgejo-backup-contracts.md) — Backup DB+data, runbook, aktualizacja `contracts/services/ports.yml` |
 
 > Child SPECs utworzymy po akceptacji tego EPIC (kolejność: 006A → 006E).
 

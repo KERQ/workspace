@@ -127,7 +127,7 @@ forgejo_db_password: "<generated>"
 
 ## Definition of Done
 
-- [x] Katalogi `/srv/ai-stack/forgejo/{data,postgres}` — UID 1000
+- [x] Katalogi `/srv/ai-stack/forgejo/data` — UID 1000; `/srv/ai-stack/forgejo/postgres` — UID/GID 70 (`postgres:16-alpine`)
 - [x] `forgejo`, `forgejo-db` Up (healthy)
 - [x] HTTP loopback 3030 OK
 - [x] `:3030` loopback, `:2222` nasłuch

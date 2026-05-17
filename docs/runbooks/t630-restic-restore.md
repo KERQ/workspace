@@ -40,6 +40,24 @@ sudo bash -c 'set -a; . /etc/restic/credentials.env; set +a; export AWS_S3_FORCE
 
 **Nie** nadpisuj produkcyjnych ścieżek bez zatrzymania usług i kopii lokalnej.
 
+## Restore Forgejo dump drill
+
+```bash
+ssh t630@192.168.1.20 'sudo bash -c "
+set -euo pipefail
+set -a; . /etc/restic/credentials.env; set +a
+export AWS_S3_FORCE_PATH_STYLE=true
+TARGET=/tmp/restic-forgejo-restore-test
+rm -rf \"\$TARGET\" && mkdir -p \"\$TARGET\"
+restic restore latest --tag t630-forgejo --target \"\$TARGET\" \
+  --include /opt/backups/forgejo/*.sql.gz
+find \"\$TARGET/opt/backups/forgejo\" -type f -name \"*.sql.gz\" -exec gzip -t {} \;
+echo FORGEJO_RESTORE_DRILL_OK
+"'
+```
+
+Do restore produkcyjnego DB użyj najpierw dumpu `forgejo-*.sql.gz`; live katalog PostgreSQL w `/srv/ai-stack/forgejo/postgres` jest backupowany jako dodatkowy stan wolumenu, nie jako preferowany punkt odtwarzania DB.
+
 ## Po skróceniu lokalnej retencji HA
 
 Lokalne pliki starsze niż `backup_ha_retention_days` są usuwane przez `backup-ha.sh`. Odtworzenie archiwów: restore z tagu `t630-backups` jak wyżej.

@@ -35,6 +35,14 @@ ssh t630@192.168.1.20 'sudo bash -c "
 
 `forget --prune`: 7 daily, 4 weekly, 6 monthly (zmienne `restic_forget_*` w Ansible).
 
+## Zestawy
+
+- `t630-backups`: `/opt/backups`
+- `t630-config`: `/opt/life-platform-t630`, `/opt/homeassistant`, `/opt/t630-data`
+- `t630-openclaw`: `/home/t630/.openclaw`, `/opt/openclaw`
+- `t630-paperclip`: `/home/t630/.paperclip`, `/opt/paperclip-workspaces`
+- `t630-forgejo`: `/opt/backups/forgejo`, `/srv/ai-stack/forgejo`
+
 ## Deploy Ansible
 
 ```bash

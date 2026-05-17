@@ -10,16 +10,6 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 
 ## Now
 
-- [ ] [EPIC-006](specs/epics/EPIC-006-forgejo-mvp.md): Forgejo MVP / lokalny Git system of record dla jednego repo *(draft; EPIC-014 + SPEC-016 done)*
-  - [x] [SPEC-006A](specs/SPEC-006A-forgejo-compose-postgres.md) — Compose Forgejo + PostgreSQL ([worklog](docs/worklog/EPIC-006/SPEC-006A-2026-05-17-forgejo-compose-deploy.md))
-  - Forgejo + PostgreSQL przez Tailscale/Caddy.
-  - Organizacja `KERQ`, wyłączona publiczna rejestracja.
-  - Repo pilotażowe: `homeserver-services`.
-  - `origin = Forgejo`, `github = GitHub` jako ręczny remote bez automatycznego mirror.
-  - SSH push/pull smoke test, branch testowy i PR.
-  - **Must-have:** backup Forgejo (DB dump + data) przez **Restic → MinIO** (docelowo G2 lub dedykowany bucket), nie tylko lokalne tar w `/opt/backups`.
-  - Lokalny dump awaryjny krótkiej retencji OK; kanoniczny backup off-box = Restic/MinIO.
-  - Audyt miejsca na dysku T630 przed cutover (obecnie ~91% `/`, głównie `/opt/backups`).
 - [ ] EPIC-007: OpenClaw Gateway `/v1` + LibreChat/LobeChat
   - `/v1/models` i `/v1/chat/completions`.
   - Dostęp tylko loopback/tailnet/private ingress + Caddy auth.
@@ -56,6 +46,7 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 
 ## Done (ostatnio)
 
+- [x] [EPIC-006](specs/epics/EPIC-006-forgejo-mvp.md): Forgejo MVP / lokalny Git system of record dla `homeserver-services` (006A–E, PR smoke merged, backup Restic active)
 - [x] [EPIC-014](specs/epics/EPIC-014-restic-minio-offbox-backup.md): Restic → MinIO G2 + reclaim T630 (014A–E, 59G wolne na `/`)
 - [x] EPIC-005: migracja runtime path G2 -> `/opt/homeserver-services`
 - [x] SPEC-005E: cleanup symlinków + runbooki
@@ -101,3 +92,4 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 - [ ] Quota widget / push notifications.
 - [ ] SwarmClaw ops dashboard / council / autoloop.
 - [ ] GitHub mirror tylko po merge/status pass.
+- [ ] Wprowadzić zmiany w reutingu dla aplikjacji web aby linki https://t630.colobus-micro.ts.net/git/ działały tak: https://git.t630.colobus-micro.ts.net/
