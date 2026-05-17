@@ -5,7 +5,7 @@ Owner: karolkurek
 Risk: medium
 Repos: homeserver-core, homeserver-services, workspace (docs/contracts)
 Blokuje: —
-Zablokowany przez: [EPIC-014](EPIC-014-restic-minio-offbox-backup.md) (cutover produkcyjny — po Restic/MinIO i ≥20 GB wolne na T630 `/`); [SPEC-016](../SPEC-016-t630-caddy-unify-docker.md) (stabilny reverse proxy na T630 przed vhost Forgejo)
+Zablokowany przez: [SPEC-016](../SPEC-016-t630-caddy-unify-docker.md) (stabilny reverse proxy na T630 przed vhost Forgejo) — [EPIC-014](EPIC-014-restic-minio-offbox-backup.md) **done** (2026-05-17)
 
 ## Cel
 

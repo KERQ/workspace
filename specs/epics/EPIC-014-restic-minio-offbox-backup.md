@@ -121,12 +121,12 @@ Wykluczenia jawne: `node_modules`, `.npm`, cache przeglądarek, `*.legacy-*` (po
 
 ## Global Definition of Done
 
-- [ ] Na T630: `df /` pokazuje **≥20G Avail** (lub uzasadniony niższy próg zapisany w ADR)
-- [ ] Restic repo na MinIO G2 istnieje; `restic snapshots` pokazuje ≥1 snapshot per zestaw P0/P1
-- [ ] Restore drill udokumentowany i wykonany (wynik w SPEC-014E)
-- [ ] Lokalna retencja HA skrócona; rozmiar `/opt/backups/home-assistant` maleje w czasie
-- [ ] Runbook: `docs/runbooks/t630-restic-minio-backup.md`
-- [ ] EPIC-006 może przejść do cutover (backup off-box gotowy)
+- [x] Na T630: `df /` **59G Avail** (≥20G)
+- [x] Restic repo na MinIO G2; snapshots P0/P1/P2 (014C–D)
+- [x] Restore drill — [SPEC-014E](../SPEC-014E-restic-restore-retention.md)
+- [x] Lokalna retencja HA **3 dni**; `/opt/backups/home-assistant` **9.3G** (było 14G)
+- [x] Runbooki: [restore](../docs/runbooks/t630-restic-restore.md), [cron](../docs/runbooks/t630-restic-cron.md), [first backup](../docs/runbooks/t630-restic-first-backup.md)
+- [x] EPIC-006 cutover backupowo odblokowany
 
 ## Global test plan
 
@@ -190,7 +190,7 @@ restic check
 | SPEC-014B | homeserver-services (+ homeserver-core creds) | done | [`SPEC-014B`](../SPEC-014B-restic-minio-bucket-access.md) — bucket, user, LAN T630→G2 |
 | SPEC-014C | homeserver-core | done | [`SPEC-014C`](../SPEC-014C-restic-init-first-backup.md) — install, init, pierwszy backup P0 (~18 GiB) |
 | SPEC-014D | homeserver-core | done | [`SPEC-014D`](../SPEC-014D-restic-cron-paths.md) — cron 04:30, P1/P2, forget 7/4/6 |
-| SPEC-014E | workspace + homeserver-core | planned | Restore drill, skrócenie lokalnej retencji, runbook |
+| SPEC-014E | workspace + homeserver-core | done | [`SPEC-014E`](../SPEC-014E-restic-restore-retention.md) — restore drill, retencja HA 3d |
 
 ## Powiązanie z EPIC-006
 

@@ -10,15 +10,7 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 
 ## Now
 
-- [ ] [EPIC-014](specs/epics/EPIC-014-restic-minio-offbox-backup.md): Restic → MinIO + zwolnienie miejsca na T630 *(draft, blokuje cutover Forgejo)*
-  - [x] [SPEC-014A](specs/SPEC-014A-t630-disk-reclaim-phase0.md) — Faza 0 done (55G wolne na `/`)
-  - Audyt: ~91% `/`, ~44G w `/opt/backups` (HA ~40G), ~16G reclaimable Docker images.
-  - **Faza 0:** retencja HA, opcj. prune/legacy — cel **≥20 GB wolne** na `/`.
-  - **Faza 1:** Restic → MinIO na G2 (`/mnt/seagate`), restore drill, potem skrócenie lokalnej retencji.
-  - [x] [SPEC-014B](specs/SPEC-014B-restic-minio-bucket-access.md) — bucket `restic-backups`, user `restic-t630`, LAN T630→G2 ([worklog](docs/worklog/EPIC-014/SPEC-014B-2026-05-17-restic-minio-bucket-access.md))
-  - [x] [SPEC-014C](specs/SPEC-014C-restic-init-first-backup.md) — restic init + pierwszy backup P0 ([worklog](docs/worklog/EPIC-014/SPEC-014C-2026-05-17-restic-init-first-backup.md))
-  - [x] [SPEC-014D](specs/SPEC-014D-restic-cron-paths.md) — cron 04:30, P1/P2, forget 7/4/6 ([worklog](docs/worklog/EPIC-014/SPEC-014D-2026-05-17-restic-cron-paths.md))
-- [ ] [EPIC-006](specs/epics/EPIC-006-forgejo-mvp.md): Forgejo MVP / lokalny Git system of record dla jednego repo *(draft, cutover po EPIC-014 + SPEC-016)*
+- [ ] [EPIC-006](specs/epics/EPIC-006-forgejo-mvp.md): Forgejo MVP / lokalny Git system of record dla jednego repo *(draft; EPIC-014 + SPEC-016 done)*
   - Forgejo + PostgreSQL przez Tailscale/Caddy.
   - Organizacja `KERQ`, wyłączona publiczna rejestracja.
   - Repo pilotażowe: `homeserver-services`.
@@ -63,6 +55,7 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 
 ## Done (ostatnio)
 
+- [x] [EPIC-014](specs/epics/EPIC-014-restic-minio-offbox-backup.md): Restic → MinIO G2 + reclaim T630 (014A–E, 59G wolne na `/`)
 - [x] EPIC-005: migracja runtime path G2 -> `/opt/homeserver-services`
 - [x] SPEC-005E: cleanup symlinków + runbooki
 - [x] SPEC-005D: Ansible docelowe ścieżki + deploy G2
