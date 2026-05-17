@@ -38,6 +38,18 @@ Ten plik jest głównym kontekstem dla agentów uruchamianych z root workspace (
 - Mała zmiana w jednym repo → pojedynczy SPEC.
 - Większy plan multi-repo → EPIC + osobne child SPEC (szablon: `specs/epics/EPIC-000-template.md`).
 
+## Test-first w praktyce
+
+Sekwencja w trakcie SPEC (zgodnie z `PROJEKT.md` §test-first):
+
+1. Test plan w SPEC (komendy/scenariusze, oczekiwany wynik).
+2. **Kod aplikacyjny** → najpierw napisz test, uruchom (musi być czerwony), potem minimalny patch, potem zielony.
+3. **Infra** → najpierw zdefiniuj smoke/check (`--syntax-check`, `--check`, `compose config`, healthcheck, skrypt w `scripts/checks/`); potem zmiana, potem ponowny smoke.
+4. **Dokumenty/kontrakty** → najpierw checklist DoR/DoD, potem treść, potem weryfikacja (lint, link check, własny check).
+5. Po zakończeniu uzupełnij sekcję „Test plan (wykonany)” w SPEC.
+
+Bez testu/check przed zmianą — nie commitujemy.
+
 ## EPIC vs SPEC
 
 | Sytuacja | Artefakt |

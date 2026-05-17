@@ -39,6 +39,10 @@ Lokalne checkouty są podpięte symlinkami w katalogu workspace (bez zmiany remo
 1. Każdy SPEC ma **test plan** przed implementacją.
 2. Definition of Done wymaga przejścia testów z planu (lub jawnego uzasadnienia wyjątku).
 3. Diagnostyka powtarzalna trafia do `scripts/checks/`, nie zostaje tylko w historii czatu.
+4. **Kod aplikacyjny** (Python, TypeScript itp.): testy jednostkowe/integracyjne piszemy **przed** implementacją; cykl **Red → Green → Refactor**. Test musi najpierw oblać, dopiero potem powstaje minimalny patch.
+5. **Infra / Ansible / compose / bash**: rolę testów pełnią `--syntax-check`, `--check`, `docker compose config`, healthcheck, smoke commands i skrypty z `scripts/checks/`. Test plan w SPEC wskazuje konkretne komendy.
+6. **Dokumenty / kontrakty**: testem jest checklist z DoR/DoD oraz weryfikacja linków/struktury (np. lint, własny check w `scripts/checks/`).
+7. Wynik testów (czerwony przed, zielony po) **dokumentujemy w SPEC** w sekcji „Test plan (wykonany)”.
 
 ## Zasady approval-first
 
