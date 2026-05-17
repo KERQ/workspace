@@ -2,7 +2,7 @@
 
 **Data:** 2026-05-17  
 **SPEC:** [SPEC-007B](../../specs/SPEC-007B-openclaw-caddy-ingress.md)  
-**Status:** draft — Caddyfile w repo; deploy Caddy **pending** (`APPROVE_DEPLOY`)
+**Status:** done — Caddy wdrożony 2026-05-17 (`APPROVE_DEPLOY=yes`)
 
 ## Zmiany w repo
 
@@ -21,9 +21,13 @@
 
 | Test | Status | Uwagi |
 |------|--------|-------|
-| `curl …/chat/` tailnet | pending | Oczekiwane 502 do 007C |
-| Regresja `/git/`, `/clawsuite/` | pending | Po deploy |
+| `curl …/chat/` tailnet | **PASS** | **502** — LibreChat jeszcze nie działa (OK przed 007C) |
+| `curl …/chat` → redirect | **PASS** | 200 |
+| Regresja `/git/` | **PASS** | 200 |
+| Regresja `/clawsuite/` | **PASS** | 307 |
+| Regresja `/openclaw/` | **PASS** | 200 |
+| `/v1/models` bez auth | **PASS** | 401 |
 
 ## Deploy
 
-- [ ] `APPROVE_DEPLOY=yes` → recreate `caddy` na T630
+- [x] `APPROVE_DEPLOY=yes` — `ansible-playbook playbooks/t630.yml -l t630 --tags caddy` (life-platform); kontener `caddy` recreated

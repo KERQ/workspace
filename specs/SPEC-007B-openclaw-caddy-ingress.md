@@ -1,7 +1,7 @@
 # SPEC-007B: T630 — Caddy ingress `/v1` (audyt) + `/chat/` pod LibreChat
 
 Parent: [EPIC-007](epics/EPIC-007-openclaw-gateway-librechat.md)
-Status: draft
+Status: done
 Repo: life-platform, workspace
 Owner: karolkurek
 Risk: medium
@@ -152,13 +152,13 @@ ansible-playbook domains/home/ansible/... -l t630 --tags caddy
 
 ## Definition of Done
 
-- [ ] Caddyfile z `/chat/` w repo `life-platform`.
-- [ ] Caddy zredeployowany na T630 (`APPROVE_DEPLOY=yes`).
-- [ ] Smoke `/v1` — PASS (jak 007A).
-- [ ] `curl https://t630.../chat/` — 502 **lub** 200 (502 dozwolone przed 007C).
-- [ ] Regresja `/git/`, `/clawsuite/`, `/openclaw/` — bez regresji.
-- [ ] Worklog SPEC-007B + runbook sekcja URL-e.
-- [ ] EPIC-007 child SPEC-007B → `done`.
+- [x] Caddyfile z `/chat/` w repo `life-platform`.
+- [x] Caddy zredeployowany na T630 (`APPROVE_DEPLOY=yes`, 2026-05-17).
+- [x] Smoke `/v1` — PASS (jak 007A).
+- [x] `curl https://t630.../chat/` — **502** (OK przed 007C).
+- [x] Regresja `/git/`, `/clawsuite/`, `/openclaw/` — bez regresji.
+- [x] Worklog SPEC-007B + runbook sekcja URL-e.
+- [x] EPIC-007 child SPEC-007B → `done`.
 
 ## Następne
 
