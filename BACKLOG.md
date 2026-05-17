@@ -16,6 +16,7 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
   - **Faza 0:** retencja HA, opcj. prune/legacy — cel **≥20 GB wolne** na `/`.
   - **Faza 1:** Restic → MinIO na G2 (`/mnt/seagate`), restore drill, potem skrócenie lokalnej retencji.
   - [ ] [SPEC-014B](specs/SPEC-014B-restic-minio-bucket-access.md) — bucket `restic-backups`, user `restic-t630`, LAN T630→G2 *(draft)*
+  - [ ] [SPEC-014C](specs/SPEC-014C-restic-init-first-backup.md) — restic init + pierwszy backup `/opt/backups` *(draft, po 014B)*
 - [ ] [EPIC-006](specs/epics/EPIC-006-forgejo-mvp.md): Forgejo MVP / lokalny Git system of record dla jednego repo *(draft, cutover po EPIC-014 + SPEC-016)*
   - Forgejo + PostgreSQL przez Tailscale/Caddy.
   - Organizacja `KERQ`, wyłączona publiczna rejestracja.

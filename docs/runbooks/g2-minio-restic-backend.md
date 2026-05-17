@@ -55,4 +55,4 @@ ssh t630@192.168.1.20 'set -a; . /etc/restic/credentials.env; set +a; \
 
 ## Następny krok
 
-**SPEC-014C** (planowany) — `restic` na T630, `restic init`, pierwszy ręczny backup zestawu P0.
+[SPEC-014C](../../specs/SPEC-014C-restic-init-first-backup.md) — `restic` na T630, init, pierwszy backup P0 — [runbook](t630-restic-first-backup.md).

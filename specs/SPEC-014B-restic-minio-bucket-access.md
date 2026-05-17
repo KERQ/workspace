@@ -6,7 +6,7 @@ Repo: homeserver-services (+ homeserver-core: zmienne T630, connectivity)
 Owner: karolkurek
 Risk: medium
 Type: infra
-Blokuje: **SPEC-014C** *(planowany)* — init Restic i pierwszy backup
+Blokuje: [SPEC-014C](SPEC-014C-restic-init-first-backup.md) — init Restic i pierwszy backup
 
 ## Cel
 
