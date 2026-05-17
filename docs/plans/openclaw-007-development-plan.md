@@ -87,10 +87,21 @@ Sekrety: Infisical → `homeserver-services/inventory/host_vars/t630.yml` (git-c
 | OCP kontenery na T630 | **Częściowe** | Postgres + Redis; **brak** UI/API |
 | `openclaw_enabled` w inventory | **true** | `host_vars/t630.yml` |
 
-Inne porty: 3000 OpenClaw Studio, 3002 ClawSuite, 3030 Forgejo — bez kolizji z LibreChat `:3080` (plan).
+Inne porty: 3000 OpenClaw Studio (**loopback only**), 3002 ClawSuite, 3030 Forgejo — **3080** LibreChat (Caddy `/chat/` w 007B).
 
 ## 8. Rekomendacja OCP runtime na T630
 
 **Rekomendacja:** **(b) stop compose** `openclaw-control-plane-postgres` + `openclaw-control-plane-redis` w **SPEC-007E**, po udanym smoke LibreChat (007C). UI/API OCP i tak nie działają — zostają tylko DB/cache bez konsumenta.
 
 **Nie usuwać** wolumenów w 007E bez osobnego backupu/approval. **Nie** restartować `openclaw-gateway` w ramach audytu.
+
+## 9. URL-e ingress (SPEC-007B)
+
+| Usługa | URL |
+|--------|-----|
+| Gateway UI | `https://t630.colobus-micro.ts.net/openclaw/` |
+| API `/v1` | `https://t630.colobus-micro.ts.net/v1/` (+ Bearer) |
+| ClawSuite | `https://t630.colobus-micro.ts.net/clawsuite/` — **nie** `:3002` bez Caddy |
+| LibreChat | `https://t630.colobus-micro.ts.net/chat/` → `127.0.0.1:3080` |
+| Forgejo | `https://t630.colobus-micro.ts.net/git/` |
+| OpenClaw Studio | `127.0.0.1:3000` na hoście lub tunel SSH |
