@@ -152,6 +152,10 @@ restic check
 # restore drill — pojedynczy plik do /tmp/restic-restore-test
 ```
 
+## Work log
+
+- [SPEC-014A — 2026-05-17 — T630 disk reclaim phase0](../../docs/worklog/EPIC-014/SPEC-014A-2026-05-17-t630-disk-reclaim.md)
+
 ## Rollback
 
 | Poziom | Działanie |

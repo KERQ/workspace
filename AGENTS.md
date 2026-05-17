@@ -13,8 +13,9 @@ Ten plik jest głównym kontekstem dla agentów uruchamianych z root workspace (
 3. Sprawdź [`BACKLOG.md`](BACKLOG.md) — czy zadanie ma priorytet i kontekst.
 4. Sprawdź relevant [`specs/`](specs/) — EPIC, SPEC, templates.
 5. Sprawdź relevant [`contracts/`](contracts/) — deploy, ansible, services, secrets, repos.
-6. Jeśli zmiana dotyczy operacji — sprawdź [`docs/runbooks/`](docs/runbooks/).
-7. Jeśli zmiana architektoniczna — sprawdź [`docs/adr/`](docs/adr/).
+6. Sprawdź relevant [`docs/worklog/`](docs/worklog/) — jeśli kontynuujesz istniejący SPEC/EPIC.
+7. Jeśli zmiana dotyczy operacji — sprawdź [`docs/runbooks/`](docs/runbooks/).
+8. Jeśli zmiana architektoniczna — sprawdź [`docs/adr/`](docs/adr/).
 
 ## Zakazy bez explicit approval
 
@@ -47,6 +48,7 @@ Sekwencja w trakcie SPEC (zgodnie z `PROJEKT.md` §test-first):
 3. **Infra** → najpierw zdefiniuj smoke/check (`--syntax-check`, `--check`, `compose config`, healthcheck, skrypt w `scripts/checks/`); potem zmiana, potem ponowny smoke.
 4. **Dokumenty/kontrakty** → najpierw checklist DoR/DoD, potem treść, potem weryfikacja (lint, link check, własny check).
 5. Po zakończeniu uzupełnij sekcję „Test plan (wykonany)” w SPEC.
+6. Dodaj albo zaktualizuj wpis w `docs/worklog/` i podlinkuj go z SPEC/EPIC.
 
 Bez testu/check przed zmianą — nie commitujemy.
 
@@ -63,6 +65,8 @@ Bez testu/check przed zmianą — nie commitujemy.
 - Jeśli zmiana **architektoniczna** → dodaj lub zaktualizuj ADR (`docs/adr/`).
 - Jeśli zmiana **operacyjna** (deploy, recovery, diagnostyka) → dodaj lub zaktualizuj runbook (`docs/runbooks/`).
 - Jeśli zmiana dotyczy **`contracts/`** → oceń wpływ na repo domenowe i wskaż w SPEC/PR.
+- Jeśli SPEC/EPIC został wykonany, zmienił status albo miał ważną sesję operacyjną → dodaj wpis w `docs/worklog/`.
+- SPEC/EPIC ma pozostać zwięzły: linkuje do worklogu, ale nie przechowuje pełnej historii sesji.
 
 ## Granice edycji
 
@@ -73,7 +77,7 @@ Bez testu/check przed zmianą — nie commitujemy.
 ## Flow (skrót)
 
 ```text
-IDEA → BACKLOG → EPIC → SPEC → PROMPT → PATCH → TEST → REVIEW → ADR/RUNBOOK
+IDEA → BACKLOG → EPIC → SPEC → PROMPT → PATCH → TEST → REVIEW → WORKLOG → ADR/RUNBOOK
 ```
 
 ## Hosty i deploy (informacyjnie)

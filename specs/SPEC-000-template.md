@@ -63,6 +63,12 @@ Type: feature | fix | refactor | docs | infra | chore
 
 1.
 
+## Work log
+
+<!-- Linki do dziennika wykonania w docs/worklog/<EPIC>/<SPEC>-YYYY-MM-DD-*.md -->
+
+-
+
 ## Rollback
 
 <!-- Jak cofnąć zmianę bez deployu lub z deployem — zgodnie z ryzykiem -->

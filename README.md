@@ -8,6 +8,7 @@ Wspólny kontekst pracy nad systemem domowym i research bez scalania repozytori�
 
 - **specs** — co i jak zmieniamy (EPIC, SPEC)
 - **docs/ideas** — analizy i rozpisane pomysły przed backlogiem
+- **docs/worklog** — dziennik wykonania prac SPEC/EPIC
 - **contracts** — techniczne umowy między repo
 - **docs/adr** — decyzje architektoniczne
 - **docs/runbooks** — procedury operacyjne
@@ -32,6 +33,7 @@ Wspólny kontekst pracy nad systemem domowym i research bez scalania repozytori�
 | Analizy przed backlogiem | [`docs/ideas/`](docs/ideas/) |
 | Kolejka pracy | [`BACKLOG.md`](BACKLOG.md) |
 | Specyfikacje | [`specs/`](specs/) |
+| Log wykonania SPEC/EPIC | [`docs/worklog/`](docs/worklog/) |
 | Kontrakty między repo | [`contracts/`](contracts/) |
 | Decyzje architektoniczne | [`docs/adr/`](docs/adr/) |
 | Procedury operacyjne | [`docs/runbooks/`](docs/runbooks/) |
@@ -47,12 +49,13 @@ Wspólny kontekst pracy nad systemem domowym i research bez scalania repozytori�
 5. Dla większej zmiany: utwórz lub otwórz **EPIC** w `specs/epics/`.
 6. Dla implementacji: jeden **SPEC** w `specs/` (szablon: `SPEC-000-template.md`).
 7. Po zatwierdzeniu SPEC → prompt → patch w repo domenowym → test → review.
-8. W razie potrzeby: ADR lub runbook.
+8. Po zakończeniu pracy dopisz wpis w `docs/worklog/` i link w SPEC/EPIC.
+9. W razie potrzeby: ADR lub runbook.
 
 ## Flow pracy
 
 ```text
-IDEA → BACKLOG → EPIC → SPEC → PROMPT → PATCH → TEST → REVIEW → ADR/RUNBOOK
+IDEA → BACKLOG → EPIC → SPEC → PROMPT → PATCH → TEST → REVIEW → WORKLOG → ADR/RUNBOOK
 ```
 
 ## Najbliższe EPIC

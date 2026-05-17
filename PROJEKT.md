@@ -2,7 +2,7 @@
 
 ## Cel workspace
 
-`~/repos/workspace/` to wspólny punkt wejścia dla człowieka i agentów AI pracujących nad systemem multi-repo. Workspace daje jeden kontekst (ideas, backlog, specs, contracts, ADR, runbooki), podczas gdy wykonanie zmian pozostaje w osobnych repozytoriach domenowych.
+`~/repos/workspace/` to wspólny punkt wejścia dla człowieka i agentów AI pracujących nad systemem multi-repo. Workspace daje jeden kontekst (ideas, backlog, specs, worklog, contracts, ADR, runbooki), podczas gdy wykonanie zmian pozostaje w osobnych repozytoriach domenowych.
 
 ## Dlaczego nie big-bang monorepo
 
@@ -55,7 +55,7 @@ Lokalne checkouty są podpięte symlinkami w katalogu workspace (bez zmiany remo
 ## Architektura pracy
 
 ```text
-IDEA → BACKLOG → EPIC → SPEC → PROMPT → PATCH → TEST → REVIEW → ADR / RUNBOOK
+IDEA → BACKLOG → EPIC → SPEC → PROMPT → PATCH → TEST → REVIEW → WORKLOG → ADR / RUNBOOK
 ```
 
 | Artefakt | Rola |
@@ -64,6 +64,7 @@ IDEA → BACKLOG → EPIC → SPEC → PROMPT → PATCH → TEST → REVIEW → 
 | `BACKLOG.md` | Priorytetyzacja idei |
 | `specs/epics/` | Koordynacja multi-repo |
 | `specs/` | Konkretna zmiana do wykonania |
+| `docs/worklog/` | Dziennik wykonania SPEC/EPIC: podsumowania sesji, komendy, wyniki, commity, follow-upy |
 | `contracts/` | Techniczne umowy między repo |
 | `docs/adr/` | Dlaczego podjęliśmy decyzję architektoniczną |
 | `docs/runbooks/` | Jak coś wykonać operacyjnie |
@@ -81,6 +82,7 @@ IDEA → BACKLOG → EPIC → SPEC → PROMPT → PATCH → TEST → REVIEW → 
 - [`README.md`](README.md) — mapa workspace
 - [`AGENTS.md`](AGENTS.md) — reguły dla agentów
 - [`docs/ideas/`](docs/ideas/) — analizy i pomysły przed backlogiem (m.in. plany AI-Native i OpenClaw/Forgejo)
+- [`docs/worklog/`](docs/worklog/) — log wykonania prac SPEC/EPIC
 - [`BACKLOG.md`](BACKLOG.md) — kolejka pracy
 
 `PLAN.md` w tym katalogu to starszy dokument eksploracyjny (meta-repo/submodules). Źródłem prawdy operacyjnego jest ten plik oraz `AGENTS.md`.

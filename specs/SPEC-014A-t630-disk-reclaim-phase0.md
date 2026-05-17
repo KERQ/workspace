@@ -125,6 +125,10 @@ ssh t630@192.168.1.20 'df -h /; ls -1 /opt/backups/home-assistant | wc -l; du -s
 
 **Uwaga:** kontener `caddy` w pętli restart (`:80 address already in use`) — istniejący problem infra, nie wynik backupu; do osobnego SPEC/fix.
 
+## Work log
+
+- [2026-05-17 — T630 disk reclaim phase0](../docs/worklog/EPIC-014/SPEC-014A-2026-05-17-t630-disk-reclaim.md)
+
 ## Rollback
 
 | Zmiana | Cofnięcie |

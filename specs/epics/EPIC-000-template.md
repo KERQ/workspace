@@ -48,6 +48,12 @@ Repos:
 
 1.
 
+## Work log
+
+<!-- Linki do dziennika wykonania epiku i child SPECs w docs/worklog/<EPIC>/ -->
+
+-
+
 ## Rollback
 
 <!-- Plan cofnięcia na poziomie epiku — per child SPEC może mieć własny rollback -->
