@@ -1,7 +1,7 @@
 # SPEC-014A: T630 — zwolnienie miejsca (Faza 0 EPIC-014)
 
 Parent: [EPIC-014](epics/EPIC-014-restic-minio-offbox-backup.md)
-Status: in_progress
+Status: done
 Repo: homeserver-core (+ workspace: runbook)
 Owner: karolkurek
 Risk: medium
@@ -53,27 +53,27 @@ Audyt 2026-05-17: `/` 91% (95G/110G), `/opt/backups` ~44G (HA ~40G, `t630-data-*
 ## Do zrobienia
 
 - [x] SPEC-014A utworzony
-- [ ] Zmiany Ansible (retencja + `backup_ha_include_t630_data`)
-- [ ] Runbook phase0 w workspace
-- [ ] `ansible-playbook --syntax-check` (T630 playbook)
-- [ ] Deploy roli backup na T630 (`APPROVE_DEPLOY=yes`) — po approval
-- [ ] Jednorazowe sprzątanie starych archiwów HA (runbook) — po approval
-- [ ] Opcjonalnie: `docker image prune`, usunięcie legacy — po osobnym approval
-- [ ] Post-check: `df /` ≥20G Avail
+- [x] Zmiany Ansible (retencja + `backup_ha_include_t630_data`) — `homeserver-core` `9476de1`
+- [x] Runbook phase0 w workspace
+- [x] `ansible-playbook --syntax-check` (T630 playbook)
+- [x] Deploy roli backup na T630 (`APPROVE_DEPLOY=yes`, 2026-05-17)
+- [x] Jednorazowe sprzątanie starych archiwów HA (60 plików, ~25G)
+- [x] `docker image prune` (~4,7G) + legacy OpenClaw (`sudo rm`, ~4,4G)
+- [x] Post-check: `df /` **55G Avail** (cel ≥20G)
 
 ## Definition of Ready
 
 - [x] Cel i zakres jasne
 - [x] Test plan zdefiniowany
-- [ ] Approval na deploy T630
+- [x] Approval na deploy T630
 
 ## Definition of Done
 
-- [ ] Ansible wdrożony na T630 (skrypt backup-ha z nowymi zmiennymi)
-- [ ] Jednorazowe usunięcie archiwów HA starszych niż 5 dni (lub zgodnie z nową retencją)
-- [ ] `df -h /` pokazuje ≥20G Available
-- [ ] Wyniki test plan w sekcji poniżej
-- [ ] Runbook opublikowany
+- [x] Ansible wdrożony na T630 (skrypt backup-ha z nowymi zmiennymi)
+- [x] Jednorazowe usunięcie archiwów HA starszych niż 5 dni
+- [x] `df -h /` pokazuje ≥20G Available (**55G**)
+- [x] Wyniki test plan w sekcji poniżej
+- [x] Runbook opublikowany
 
 ## Test plan
 
@@ -113,7 +113,17 @@ ssh t630@192.168.1.20 'df -h /; ls -1 /opt/backups/home-assistant | wc -l; du -s
 
 ## Test plan (wykonany)
 
-<!-- Uzupełnić po deploy i sprzątaniu -->
+**Baseline:** 95G used, 10G avail (91%), `/opt/backups/home-assistant` ~40G.
+
+| Krok | Wynik |
+|------|--------|
+| Deploy `--tags backup` | `backup-ha.sh` changed; `RETENTION_DAYS=5`; brak bloku `t630-data` |
+| `find -mtime +5 -delete` | 60 plików, ~25G zwolnione → **36G avail** (67%) |
+| `docker image prune` | ~4,7G → **50G avail** (53%) |
+| `sudo rm` legacy OpenClaw | ~4,4G → **55G avail** (49%) |
+| `/opt/backups/home-assistant` | 14G (6 plików pozostałych) |
+
+**Uwaga:** kontener `caddy` w pętli restart (`:80 address already in use`) — istniejący problem infra, nie wynik backupu; do osobnego SPEC/fix.
 
 ## Rollback
 
