@@ -11,6 +11,7 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 ## Now
 
 - [ ] [EPIC-014](specs/epics/EPIC-014-restic-minio-offbox-backup.md): Restic → MinIO + zwolnienie miejsca na T630 *(draft, blokuje cutover Forgejo)*
+  - [SPEC-014A](specs/SPEC-014A-t630-disk-reclaim-phase0.md) *in_progress* — retencja HA, runbook phase0
   - Audyt: ~91% `/`, ~44G w `/opt/backups` (HA ~40G), ~16G reclaimable Docker images.
   - **Faza 0:** retencja HA, opcj. prune/legacy — cel **≥20 GB wolne** na `/`.
   - **Faza 1:** Restic → MinIO na G2 (`/mnt/seagate`), restore drill, potem skrócenie lokalnej retencji.
