@@ -17,6 +17,7 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
   - **Faza 1:** Restic → MinIO na G2 (`/mnt/seagate`), restore drill, potem skrócenie lokalnej retencji.
   - [x] [SPEC-014B](specs/SPEC-014B-restic-minio-bucket-access.md) — bucket `restic-backups`, user `restic-t630`, LAN T630→G2 ([worklog](docs/worklog/EPIC-014/SPEC-014B-2026-05-17-restic-minio-bucket-access.md))
   - [x] [SPEC-014C](specs/SPEC-014C-restic-init-first-backup.md) — restic init + pierwszy backup P0 ([worklog](docs/worklog/EPIC-014/SPEC-014C-2026-05-17-restic-init-first-backup.md))
+  - [x] [SPEC-014D](specs/SPEC-014D-restic-cron-paths.md) — cron 04:30, P1/P2, forget 7/4/6 ([worklog](docs/worklog/EPIC-014/SPEC-014D-2026-05-17-restic-cron-paths.md))
 - [ ] [EPIC-006](specs/epics/EPIC-006-forgejo-mvp.md): Forgejo MVP / lokalny Git system of record dla jednego repo *(draft, cutover po EPIC-014 + SPEC-016)*
   - Forgejo + PostgreSQL przez Tailscale/Caddy.
   - Organizacja `KERQ`, wyłączona publiczna rejestracja.
