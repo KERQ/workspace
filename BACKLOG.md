@@ -10,12 +10,13 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 
 ## Now
 
-- [ ] EPIC-007: OpenClaw Gateway `/v1` + LibreChat/LobeChat
-  - `/v1/models` i `/v1/chat/completions`.
-  - Dostęp tylko loopback/tailnet/private ingress + Caddy auth.
-  - LibreChat/LobeChat jako custom OpenAI endpoint do `openclaw/default`.
-  - Wyłączona memory/RAG po stronie UI; OpenClaw memory jako jedyne źródło pamięci agentów.
-  - Ograniczone tools: bez sekretów, deployu, merge i protected push.
+- [ ] [EPIC-007](specs/epics/EPIC-007-openclaw-gateway-librechat.md): OpenClaw Gateway `/v1` + LibreChat/LobeChat *(zastępuje zarchiwizowany EPIC-OCP-1 / `apps/ui`)*
+  - [ ] [SPEC-007A](specs/SPEC-007A-openclaw-audit-and-plan.md) — audyt OpenClaw + plan; gateway `/v1` smoke; inwentaryzacja OCP runtime
+  - [ ] SPEC-007B — Caddy ingress (`/v1` audit, `/chat/` pod LibreChat)
+  - [ ] SPEC-007C — LibreChat Compose → `openclaw/default`, RAG/memory OFF
+  - [ ] SPEC-007D — LobeChat (opcjonalnie)
+  - [ ] SPEC-007E — tool policies, runbook, contracts
+  - Gateway już na T630 (`:18789`, `chatCompletions` w szablonie); Caddy `/v1*` istnieje — epic domyka LibreChat + auth + dokumentację.
 
 ## Next
 
@@ -65,6 +66,7 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 ## Later
 
 - [ ] EPIC-011: selektywny GitHub backup/mirror
+  - Refaktor dokumentacji repozytoriów raz struktury plikjów
   - Najpierw ręczny `git push github main --tags`.
   - Test mirror na pustym repo testowym.
   - Push mirror dla `homeserver-core` i `homeserver-services`.
@@ -85,6 +87,7 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 
 ## Icebox
 
+- [x] **EPIC-OCP-1** (Personal Control Plane `apps/ui`+`apps/api`) — **zarchiwizowany 2026-05-17**; delegacja UI → EPIC-007 / LibreChat. Kod w `openclaw-control-plane/apps/` zamrożony; ADR w tym repo.
 - [ ] Git submodules zamiast symlinków (jeśli okaże się potrzebne)
 - [ ] Nix devshell dla narzędzi agentów (bez zmiany OS)
 - [ ] `/openclaw fix` z PR comment.
