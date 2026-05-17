@@ -2,7 +2,7 @@
 
 **EPIC:** [EPIC-009](../../specs/epics/EPIC-009-forgejo-bot.md)  
 **SPEC:** [SPEC-009A](../../specs/SPEC-009A-forgejo-bot-user-token.md)  
-**Status:** 009A (konto i tokeny ręcznie; serwis webhook → [SPEC-009B](../../specs/SPEC-009B-forgejo-bot-service-webhook.md))
+**Status:** 009A done, 009B (serwis `:8091` + Caddy) — patrz sekcja Deploy 009B
 
 ## Kontekst
 
@@ -98,7 +98,7 @@ openssl rand -hex 32
 
 Zapisz wynik jako `forgejo_webhook_secret` — **nie** commituj do Git.
 
-Konfiguracja webhooka w Forgejo UI nastąpi w **009B** (`https://t630.colobus-micro.ts.net/forgejo-bot/hooks`); na etapie 009A wystarczy wygenerowany sekret w `host_vars`.
+Webhook URL (009B): `https://t630.colobus-micro.ts.net/forgejo-bot/hooks` — rejestracja przez Ansible lub Forgejo UI.
 
 ---
 
@@ -182,9 +182,29 @@ curl -sS -o /dev/null -w "pulls/1: %{http_code}\n" \
 
 ---
 
+## 7. Deploy 009B (serwis + Caddy)
+
+```bash
+# Bot (homeserver-services)
+APPROVE_DEPLOY=yes ansible-playbook playbooks/t630.yml -l t630 --tags forgejo-bot
+
+# Caddy ingress (life-platform)
+cd life-platform/domains/home/ansible
+ansible-playbook playbooks/t630.yml -l t630 --tags caddy
+```
+
+Smoke:
+
+```bash
+ssh t630 'curl -sS http://127.0.0.1:8091/health | jq .'
+ssh t630 'docker logs openclaw-forgejo-bot --tail 20'
+# Forgejo → repo → Settings → Webhooks — delivery 200 (po evencie PR/komentarz)
+```
+
+---
+
 ## Następny krok
 
-- [SPEC-009B](../../specs/SPEC-009B-forgejo-bot-service-webhook.md): rola `forgejo-bot`, kontener `:8091`, Caddy `/forgejo-bot/`, webhook w `KERQ/homeserver-services`.
 - [SPEC-009C](../../specs/SPEC-009C-forgejo-bot-commands-openclaw.md): komendy `/openclaw …` → OpenClaw `/v1`.
 - [SPEC-009D](../../specs/SPEC-009D-forgejo-bot-smoke-runbook.md): status check, pełny smoke PR.
 

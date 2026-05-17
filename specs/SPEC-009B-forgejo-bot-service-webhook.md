@@ -1,7 +1,7 @@
 # SPEC-009B: Serwis `openclaw-forgejo-bot` + webhook
 
 Parent: [EPIC-009](epics/EPIC-009-forgejo-bot.md)
-Status: planned
+Status: done
 Zależy od: [SPEC-009A](SPEC-009A-forgejo-bot-user-token.md)
 
 ## Zakres

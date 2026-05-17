@@ -38,7 +38,7 @@ Po epiku:
 | SPEC | Status | Opis |
 |------|--------|------|
 | [SPEC-009A](../SPEC-009A-forgejo-bot-user-token.md) | done | Użytkownik `openclaw-bot`, PAT, webhook secret w host_vars — [runbook](../docs/runbooks/t630-forgejo-openclaw-bot.md) |
-| [SPEC-009B](../SPEC-009B-forgejo-bot-service-webhook.md) | planned | Obraz/compose, webhook receiver, Caddy `/forgejo-bot/` |
+| [SPEC-009B](../SPEC-009B-forgejo-bot-service-webhook.md) | done | Obraz/compose, webhook receiver, Caddy `/forgejo-bot/` |
 | [SPEC-009C](../SPEC-009C-forgejo-bot-commands-openclaw.md) | planned | Handlery zdarzeń + komendy → `/v1` + komentarze |
 | [SPEC-009D](../SPEC-009D-forgejo-bot-smoke-runbook.md) | planned | Status check, smoke PR, runbook, contracts |
 
