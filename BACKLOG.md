@@ -86,7 +86,7 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 - [ ] EPIC-013: domenowe backlogi dla `life-platform`, `investment-research`, `openclaw-control-plane`
   - Dodać tylko po osobnych analizach w `docs/ideas/`.
   - `investment-research` zachowuje hard privacy i nie dostaje domyślnego GitHub mirror.
-- [ ] Przegląd zainstalowanych/działając usług i aplikacji na T630 i G2. Weryfikacja/przygotowanie dashboardu (one-pager) pokazującego linki do uruchomienia jeśli webowa oraz stan palikacji/suługi. 
+- [x] [SPEC-015](specs/SPEC-015-t630-g2-service-dashboard.md): przegląd usług T630/G2 + one-pager dashboard ([runbook](docs/runbooks/t630-g2-service-dashboard.md))
 
 ## Icebox
 
