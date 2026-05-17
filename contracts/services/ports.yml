@@ -41,7 +41,7 @@ services:
     default_host: t630
     port: 8091
     url: "https://t630.colobus-micro.ts.net/forgejo-bot/hooks"
-    note: "Webhook receiver; loopback + Caddy handle_path"
+    note: "Webhook receiver; loopback + Caddy; PR commands + status check OpenClaw Review (0.3.0)"
     exposure: tailnet_only
     auth_required: true
     status: active

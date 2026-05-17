@@ -2,7 +2,7 @@
 
 **EPIC:** [EPIC-009](../../specs/epics/EPIC-009-forgejo-bot.md)  
 **SPEC:** [SPEC-009A](../../specs/SPEC-009A-forgejo-bot-user-token.md)  
-**Status:** 009A–009C done; 009D (status check + pełny smoke PR) — w toku
+**Status:** EPIC-009 done (009A–009D)
 
 ## Kontekst
 
@@ -15,7 +15,7 @@
 | Użytkownik bota | `openclaw-bot` |
 | OpenClaw (009C) | `http://127.0.0.1:18789/v1/chat/completions` |
 
-**Guardrails:** bot **nie** pushuje do repo, **nie** merge’uje, **nie** deployuje. Token tylko read PR + komentarze (status check — osobny scope w 009C/009D jeśli potrzebny).
+**Guardrails:** kod bota **nie** pushuje, **nie** merge’uje, **nie** deployuje, **nie** wywołuje `POST …/contents`. PAT może mieć `write:repository` wyłącznie pod status check `OpenClaw Review`.
 
 ## Preflight
 
@@ -75,12 +75,11 @@ Zaloguj się **jako `openclaw-bot`** (jednorazowo, tylko do wygenerowania tokenu
    | `read:repository` | Odczyt PR, diff, metadanych repo |
    | `read:issue` | Odczyt komentarzy issue/PR |
    | `write:issue` | Komentarze na PR (`/openclaw …`) |
+   | `write:repository` | Status check `OpenClaw Review` (`POST …/statuses/{sha}`) — **wymagane od 009D** |
 
-   **Nie zaznaczaj** w MVP:
-   - `write:repository` (push plików, tworzenie PR przez API — poza polityką bota)
-   - `write:admin`, `write:organization`, `write:user`, itd.
+   **Nie zaznaczaj:** `write:admin`, `write:organization`, `write:user`, itd.
 
-   **Uwaga (009C/009D):** status check `OpenClaw Review` (`POST …/statuses/{sha}`) może wymagać dodatkowego scope — prawdopodobnie `write:repository` na wybranym repo. Dodaj go dopiero po smoke negatywnym na zapis plików i świadomej akceptacji ryzyka; alternatywa: osobny token tylko do statusów.
+   **Uwaga:** `write:repository` technicznie umożliwia też `POST …/contents` — kod bota tego **nie** robi. Po dodaniu scope negatywny test z §5 (POST contents) może zwrócić `201`; weryfikuj guardrails przez kod i audyt logów, nie tylko przez scope PAT.
 
 5. **Generate token** — skopiuj token **od razu** (Forgejo nie pokaże go ponownie).
 
@@ -240,8 +239,47 @@ Zmienne (`.env` bota): `FORGEJO_BOT_AUTO_SUMMARY=0` (domyślnie), `FORGEJO_BOT_D
 
 ---
 
-## Następny krok
+## 9. Smoke 009D (status check + E2E)
 
-- [SPEC-009D](../../specs/SPEC-009D-forgejo-bot-smoke-runbook.md): status check `OpenClaw Review`, pełny smoke PR, contracts.
+```bash
+APPROVE_DEPLOY=yes ansible-playbook playbooks/t630.yml -l t630 --tags forgejo-bot \
+  -e forgejo_bot_force_rebuild=true
 
-Powiązane: [t630-forgejo-deploy.md](t630-forgejo-deploy.md), [t630-openclaw-gateway-librechat.md](t630-openclaw-gateway-librechat.md).
+ssh t630@192.168.1.20 'curl -sS http://127.0.0.1:8091/health | jq .'
+# Oczekiwane: "version": "0.3.0"
+```
+
+Na otwartym PR:
+
+1. Komentarz `/openclaw review` (nie `summarize` — bez status check).
+2. W UI PR: status **`OpenClaw Review`** — żółty (pending) → zielony (success) lub czerwony (failure).
+3. Komentarz od `openclaw-bot`.
+4. Bot **nie** dodaje commitów na branch PR (tylko komentarz + status).
+
+Weryfikacja statusu (loopback):
+
+```bash
+ssh t630@192.168.1.20 bash -s <<'EOF'
+set -euo pipefail
+TOKEN=$(grep FORGEJO_BOT_TOKEN /opt/homeserver-services/t630-config/forgejo-bot/.env | cut -d= -f2)
+PR=2   # numer testowego PR
+SHA=$(curl -sS "http://127.0.0.1:3030/api/v1/repos/KERQ/homeserver-services/pulls/${PR}" \
+  -H "Authorization: token ${TOKEN}" | jq -r .head.sha)
+curl -sS "http://127.0.0.1:3030/api/v1/repos/KERQ/homeserver-services/commits/${SHA}/status" \
+  -H "Authorization: token ${TOKEN}" | jq '{statuses: [.statuses[] | select(.context=="OpenClaw Review") | {state, description}]}'
+EOF
+```
+
+Rotacja PAT z scope (admin CLI, T630):
+
+```bash
+docker exec forgejo forgejo admin user generate-access-token \
+  -u openclaw-bot -t openclaw-bot-YYYY-MM-DD --raw \
+  --scopes "read:repository,read:issue,write:issue,write:repository"
+```
+
+Zaktualizuj `forgejo_bot_token` w `host_vars/t630.yml` i redeploy `forgejo-bot`.
+
+---
+
+Powiązane: [t630-forgejo-deploy.md](t630-forgejo-deploy.md), [t630-openclaw-gateway-librechat.md](t630-openclaw-gateway-librechat.md), [SPEC-009D](../../specs/SPEC-009D-forgejo-bot-smoke-runbook.md).

@@ -1,6 +1,6 @@
 # EPIC-009: Forgejo bot — read/comment/review
 
-Status: planned
+Status: done
 Owner: karolkurek
 Risk: medium
 Repos: homeserver-services, workspace (opcjonalnie life-platform ingress)
@@ -29,7 +29,7 @@ Po epiku:
 | OpenClaw | `http://127.0.0.1:18789/v1/chat/completions` + gateway token |
 | Bot HTTP | `127.0.0.1:8091` — webhook tylko z loopback / Caddy internal (brak publicznego internetu) |
 | Webhook URL | `https://t630.colobus-micro.ts.net/forgejo-bot/hooks` (Caddy → :8091) lub Serve — w 009B |
-| Tokeny | read + comment (jeden PAT MVP wystarczy jeśli scope obejmuje oba) |
+| Tokeny | read + comment + `write:repository` (status check); kod bota nie zapisuje plików |
 | `/openclaw fix` | **out of scope** |
 | Write repo / merge / deploy | **zakazane** |
 
@@ -40,7 +40,7 @@ Po epiku:
 | [SPEC-009A](../SPEC-009A-forgejo-bot-user-token.md) | done | Użytkownik `openclaw-bot`, PAT, webhook secret w host_vars — [runbook](../docs/runbooks/t630-forgejo-openclaw-bot.md) |
 | [SPEC-009B](../SPEC-009B-forgejo-bot-service-webhook.md) | done | Obraz/compose, webhook receiver, Caddy `/forgejo-bot/` |
 | [SPEC-009C](../SPEC-009C-forgejo-bot-commands-openclaw.md) | done | Handlery zdarzeń + komendy → `/v1` + komentarze |
-| [SPEC-009D](../SPEC-009D-forgejo-bot-smoke-runbook.md) | planned | Status check, smoke PR, runbook, contracts |
+| [SPEC-009D](../SPEC-009D-forgejo-bot-smoke-runbook.md) | done | Status check, smoke PR, runbook, contracts |
 
 ## Kolejność
 
@@ -54,7 +54,7 @@ Po epiku:
 ## Guardrails
 
 ```text
-- NO write repo / NO merge / NO deploy przez bota
+- NO push/merge/deploy/contents przez **kod bota** (PAT może mieć write:repository pod status)
 - NO /openclaw fix w MVP
 - NO secrets w Git
 - Webhook secret weryfikowany (HMAC Forgejo)

@@ -17,4 +17,4 @@
 
 ## Następny
 
-SPEC-009D — status check `OpenClaw Review`, pełny smoke PR w UI, contracts.
+SPEC-009D done — [worklog](SPEC-009D-2026-05-17-forgejo-bot-status-smoke.md).
