@@ -1,7 +1,7 @@
 # SPEC-009A: Forgejo — użytkownik `openclaw-bot` + tokeny
 
 Parent: [EPIC-009](epics/EPIC-009-forgejo-bot.md)
-Status: planned
+Status: done
 
 ## Zakres
 
@@ -10,7 +10,7 @@ Status: planned
 3. Sekrety w `inventory/host_vars/t630.yml` (gitignored):
    - `forgejo_bot_token`
    - `forgejo_webhook_secret` (losowy, min. 32 znaki)
-4. Dokumentacja ręcznego kroku w runbooku (Forgejo UI → Settings → Applications).
+4. Dokumentacja ręcznego kroku w runbooku (Forgejo UI → Settings → Applications) → [`docs/runbooks/t630-forgejo-openclaw-bot.md`](../docs/runbooks/t630-forgejo-openclaw-bot.md).
 
 ## Poza zakresem
 

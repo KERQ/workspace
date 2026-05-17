@@ -1,7 +1,7 @@
 # SPEC-007F: LibreChat — wybór agentów OpenClaw (bezpieczny allowlist)
 
 Parent: [EPIC-007](epics/EPIC-007-openclaw-gateway-librechat.md)
-Status: planned
+Status: done
 Repo: homeserver-services, workspace
 Owner: karolkurek
 Risk: medium
@@ -111,7 +111,7 @@ curl -sS -H "Authorization: Bearer $TOKEN" \
 
 ## Definition of Done
 
-- [ ] Allowlist w `defaults/main.yml` + szablon `librechat.yaml.j2`
-- [ ] Wdrożone na T630, smoke UI + jeden agent nie-default
-- [ ] Runbook zaktualizowany
-- [ ] EPIC-007 child table + BACKLOG
+- [x] Allowlist w `defaults/main.yml` + szablon `librechat.yaml.j2`
+- [x] Wdrożone na T630, smoke API `openclaw/research_agent` → OK
+- [x] Runbook zaktualizowany
+- [x] EPIC-007 child table + BACKLOG

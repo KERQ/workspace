@@ -84,8 +84,15 @@ sudo systemctl restart openclaw-gateway
 
 1. URL: `https://t630.colobus-micro.ts.net/chat/`
 2. Zaloguj się (rejestracja włączona na tailnecie — po utworzeniu konta rozważ `ALLOW_REGISTRATION=false`).
-3. Model: **OpenClaw** / **`openclaw/default`** (jedyny w MVP).
+3. **Model (agent):** wybierz z listy (SPEC-007F):
+   - **OpenClaw** → `openclaw/default` (orchestrator, domyślny)
+   - **Research** → `openclaw/research_agent`
+   - **Personal** → `openclaw/personal_agent`
+   - **Finance** → `openclaw/finance_agent`
+   - **Smart Home** → `openclaw/smart_home_agent`
 4. Wyślij krótki prompt.
+
+**Nie ma w UI:** `coding_agent`, `infra_agent`, `ha_config_agent` (deploy / `group:fs` / `group:runtime`).
 
 ## Troubleshooting
 
@@ -106,10 +113,10 @@ journalctl -u openclaw-gateway -n 50 --no-pager
 
 ## Polityki narzędzi (delegacja UI)
 
-- UI LibreChat → wyłącznie **`openclaw/default`** (= agent `orchestrator`).
-- Bez `ops_deploy`, `group:fs`, `group:runtime` w allow dla orchestratora.
-- Agent `coding_agent` **nie** jest w selektorze LibreChat (deploy/fs w allow).
-- Pełna konfiguracja: `homeserver-services/roles/openclaw/defaults/main.yml`.
+- UI LibreChat → allowlist **`librechat_openclaw_models`** (007F): orchestrator, research, personal, finance, smart home.
+- Bez `ops_deploy`, `group:fs`, `group:runtime` dla agentów w UI.
+- `coding_agent` / `infra_agent` / `ha_config_agent` / `main` — **poza** selektorem (audyt w SPEC-007F).
+- Konfiguracja: `homeserver-services/roles/librechat/defaults/main.yml`, polityki narzędzi: `roles/openclaw/defaults/main.yml`.
 
 ## OCP runtime (zarchiwizowany EPIC-OCP-1)
 

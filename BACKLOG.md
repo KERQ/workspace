@@ -11,7 +11,7 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 ## Now
 
 - [ ] [EPIC-009](specs/epics/EPIC-009-forgejo-bot.md): Forgejo bot read/comment/review
-  - [ ] [SPEC-009A](specs/SPEC-009A-forgejo-bot-user-token.md) — `openclaw-bot`, PAT, webhook secret
+  - [x] [SPEC-009A](specs/SPEC-009A-forgejo-bot-user-token.md) — `openclaw-bot`, PAT, webhook secret — [runbook](docs/runbooks/t630-forgejo-openclaw-bot.md)
   - [ ] [SPEC-009B](specs/SPEC-009B-forgejo-bot-service-webhook.md) — serwis `:8091`, Caddy, webhook
   - [ ] [SPEC-009C](specs/SPEC-009C-forgejo-bot-commands-openclaw.md) — `/openclaw summarize|review*`, `/v1`
   - [ ] [SPEC-009D](specs/SPEC-009D-forgejo-bot-smoke-runbook.md) — status check, smoke, runbook
@@ -19,7 +19,10 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 
 ## Next
 
-- [ ] [SPEC-007F](specs/SPEC-007F-librechat-openclaw-agent-picker.md): LibreChat — wybór agentów OpenClaw (orchestrator, research, personal, finance, smart home; bez coding/infra)
+- [ ] [SPEC-007G](specs/SPEC-007G-librechat-openclaw-llm-picker.md): LibreChat — wybór wariantu LLM (np. Sonnet vs Opus, Codex vs Gemini) per agent lub preset
+  - Poza 007F (tam tylko agent, nie model). Wymaga mapowania preset → `claude-cli/sonnet` vs `claude-cli/opus` (lub LiteLLM alias) + audyt kosztów/uprawnień.
+  - Alternatywa krótkoterminowa: zmiana `openclaw_agent_model_overrides` w Ansible + deploy `openclaw`.
+- [x] [SPEC-007F](specs/SPEC-007F-librechat-openclaw-agent-picker.md): LibreChat — wybór agentów OpenClaw (orchestrator, research, personal, finance, smart home; bez coding/infra)
 - [ ] **Dashboard web (T630/G2)** — aplikacja WWW, stan usług na żywo *(nie one-pager z SPEC-015)*
   - Szkic SPEC: **SPEC-017** (do utworzenia) — read-only MVP; źródła: `docker ps`, porty, health HTTP; hosty T630 + G2.
   - Wejście: [SPEC-015](specs/SPEC-015-t630-g2-service-dashboard.md) (audyt), [runbook](docs/runbooks/t630-g2-service-dashboard.md).
