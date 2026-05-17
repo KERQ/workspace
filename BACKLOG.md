@@ -10,35 +10,27 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 
 ## Now
 
-- [ ] [EPIC-007](specs/epics/EPIC-007-openclaw-gateway-librechat.md): OpenClaw Gateway `/v1` + LibreChat/LobeChat *(zastępuje zarchiwizowany EPIC-OCP-1 / `apps/ui`)*
-  - [x] [SPEC-007A](specs/SPEC-007A-openclaw-audit-and-plan.md) — audyt OpenClaw + plan; gateway `/v1` smoke PASS; OCP tylko PG/Redis
-  - [x] [SPEC-007B](specs/SPEC-007B-openclaw-caddy-ingress.md) — Caddy `/chat/` → :3080 wdrożony (502 do 007C); regresja OK
-  - [x] [SPEC-007C](specs/SPEC-007C-librechat-compose.md) — LibreChat na :3080, `/chat/` → 200
-  - [ ] SPEC-007D — LobeChat (opcjonalnie)
-  - [ ] SPEC-007E — tool policies, runbook, contracts
-  - Gateway już na T630 (`:18789`, `chatCompletions` w szablonie); Caddy `/v1*` istnieje — epic domyka LibreChat + auth + dokumentację.
+- [ ] [EPIC-009](specs/epics/EPIC-009-forgejo-bot.md): Forgejo bot read/comment/review
+  - [ ] [SPEC-009A](specs/SPEC-009A-forgejo-bot-user-token.md) — `openclaw-bot`, PAT, webhook secret
+  - [ ] [SPEC-009B](specs/SPEC-009B-forgejo-bot-service-webhook.md) — serwis `:8091`, Caddy, webhook
+  - [ ] [SPEC-009C](specs/SPEC-009C-forgejo-bot-commands-openclaw.md) — `/openclaw summarize|review*`, `/v1`
+  - [ ] [SPEC-009D](specs/SPEC-009D-forgejo-bot-smoke-runbook.md) — status check, smoke, runbook
+  - Zakazy MVP: no write repo, no merge, no deploy, no `/openclaw fix`.
 
 ## Next
 
+- [ ] [SPEC-007F](specs/SPEC-007F-librechat-openclaw-agent-picker.md): LibreChat — wybór agentów OpenClaw (orchestrator, research, personal, finance, smart home; bez coding/infra)
 - [ ] **Dashboard web (T630/G2)** — aplikacja WWW, stan usług na żywo *(nie one-pager z SPEC-015)*
   - Szkic SPEC: **SPEC-017** (do utworzenia) — read-only MVP; źródła: `docker ps`, porty, health HTTP; hosty T630 + G2.
   - Wejście: [SPEC-015](specs/SPEC-015-t630-g2-service-dashboard.md) (audyt), [runbook](docs/runbooks/t630-g2-service-dashboard.md).
   - Auth: Tailscale + Caddy; bez deployu/restartu z UI.
   - Ingress: [SPEC-016](specs/SPEC-016-t630-caddy-unify-docker.md) done — jeden Caddy na T630.
   - **Nie blokuje** EPIC-014 / EPIC-006; po stabilnym backupie lub równolegle.
-- [ ] EPIC-008: worktree + `difit` preview przed commitem
-  - Ustalić `/srv/worktrees` albo lokalny odpowiednik w workspace.
-  - Procedura worktree per task.
-  - Pinned `difit` image.
-  - Ręczny preview na testowym worktree.
-  - Diff przez Tailscale + Basic Auth.
-  - Flow approve / reject / modify.
-- [ ] EPIC-009: Forgejo bot read/comment/review
-  - Użytkownik `openclaw-bot` i token read/comment.
-  - Webhook repo/org -> bot.
-  - Komendy `/openclaw summarize`, `/openclaw review`, `/openclaw review tests`, `/openclaw review privacy`.
-  - Komentarze i status check `OpenClaw Review`.
-  - Zakazy MVP: no write repo, no merge, no deploy, no `/openclaw fix`.
+- [x] [EPIC-008](specs/epics/EPIC-008-worktree-difit.md): worktree + `difit` preview przed commitem — **done**
+  - [x] [SPEC-008A](specs/SPEC-008A-worktree-layout-scripts.md) — `/srv/repos`, `/srv/worktrees`, skrypty
+  - [x] [SPEC-008B](specs/SPEC-008B-difit-docker-image.md) — obraz `homeserver-difit:5.0.1`
+  - [x] [SPEC-008C](specs/SPEC-008C-difit-tailscale-serve.md) — Tailscale Serve TCP `:4966` (bez Caddy `/diff/`)
+  - [x] [SPEC-008D](specs/SPEC-008D-smoke-runbook-contracts.md) — runbook, contracts
 - [ ] EPIC-010: approval-first commit/push/PR workflow
   - Flow: SPEC ready -> worktree -> tests -> patch -> test results -> `difit` preview.
   - Commit dopiero po approval.

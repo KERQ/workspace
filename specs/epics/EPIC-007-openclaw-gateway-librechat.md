@@ -1,6 +1,6 @@
 # EPIC-007: OpenClaw Gateway `/v1` + LibreChat/LobeChat (delegation UI)
 
-Status: draft
+Status: done
 Owner: karolkurek
 Risk: high
 Repos: homeserver-services, life-platform, workspace (docs/contracts/runbooks)
@@ -235,7 +235,9 @@ curl -sS "https://t630.colobus-micro.ts.net/v1/chat/completions" \
 | [SPEC-007B](../SPEC-007B-openclaw-caddy-ingress.md) | life-platform | done | Caddy `/chat/` → :3080 wdrożony; 502 do 007C; regresja OK |
 | [SPEC-007C](../SPEC-007C-librechat-compose.md) | homeserver-services | done | LibreChat Compose + OpenClaw endpoint; `/chat/` 200 |
 | SPEC-007D | homeserver-services | draft (optional) | LobeChat — ten sam endpoint OpenClaw; anulowalny |
-| SPEC-007E | workspace + homeserver-services | draft | Tool policies, runbook, contracts; opcj. decommission OCP Postgres/UI na T630 |
+| [SPEC-007E](../SPEC-007E-openclaw-tool-policies-contracts.md) | workspace + homeserver-services | done | Tool policies, runbook, OCP stop; tylko `openclaw/default` w LC |
+| [SPEC-007F](../SPEC-007F-librechat-openclaw-agent-picker.md) | homeserver-services + workspace | planned | LibreChat: wybór agentów (allowlist bez coding/infra) |
+| SPEC-007D | homeserver-services | cancelled (optional) | LobeChat — nie wymagany po LibreChat MVP |
 
 > Child SPECs utworzymy po akceptacji tego EPIC (kolejność: 007A → 007E).
 

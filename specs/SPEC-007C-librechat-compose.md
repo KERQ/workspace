@@ -20,7 +20,7 @@ Wdrożyć **LibreChat** na T630 (`127.0.0.1:3080`) z custom endpoint **OpenClaw*
 | Obraz | `ghcr.io/danny-avila/librechat:latest` |
 | MongoDB | `mongo:7`, volume `/srv/ai-stack/librechat/mongo` |
 | Compose | `/opt/homeserver-services/t630-config/librechat/` |
-| Gateway z kontenera | `http://host.docker.internal:18789/v1` + `extra_hosts: host-gateway` |
+| Gateway z LibreChat | `http://127.0.0.1:18789/v1` — `network_mode: host` (gateway tylko loopback; patrz 007E) |
 | `DOMAIN_CLIENT` / `DOMAIN_SERVER` | `https://t630.colobus-micro.ts.net/chat` |
 | Rejestracja | `ALLOW_REGISTRATION=true` (tailnet); wyłączyć po utworzeniu konta |
 | RAG / memory LC | wyłączone (brak `RAG_API_URL`) |

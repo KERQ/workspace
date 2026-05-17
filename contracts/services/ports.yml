@@ -40,9 +40,11 @@ services:
     owner_repo: homeserver-services
     default_host: t630
     port: 4966
+    url: "http://t630.colobus-micro.ts.net:4966/ (on-demand, Tailscale Serve TCP; http nie https)"
+    note: "difit-preview włącza serve; difit-stop wyłącza; fallback SSH -L 4966"
     exposure: tailnet_only
     auth_required: true
-    status: planned
+    status: active
 
   home_assistant:
     owner_repo: life-platform
