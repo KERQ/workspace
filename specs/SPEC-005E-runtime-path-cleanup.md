@@ -1,7 +1,7 @@
 # SPEC-005E: Cleanup runtime path (G2) + dokumentacja
 
 Parent: [EPIC-005](epics/EPIC-005-runtime-path-migration.md)  
-Status: draft (gotowy do startu)  
+Status: in_progress (E1 done — E2 host cleanup pending)  
 Repos: workspace, homeserver-services (runbooki), homeserver-core (opcjonalnie `all.yml`)  
 Host: g2@192.168.1.19  
 Owner: karolkurek  
@@ -12,7 +12,7 @@ Type: cleanup + docs
 
 - [x] [SPEC-005D](SPEC-005D-deploy-new-runtime-path.md) — deploy OK, compose na `/opt/homeserver-services`
 - [x] Smoke G2 PASS (trading 13/13)
-- [ ] Akceptacja tego SPEC → implementacja
+- [x] Akceptacja tego SPEC → E1 implementacja (2026-05-16)
 
 ## Cel
 
@@ -78,14 +78,14 @@ Sekwencja ([runbook](../docs/runbooks/g2-runtime-path-cleanup.md)):
 
 ## Definition of Done
 
-- [ ] Runbooki operacyjne G2: brak ` /opt/homeserver-ansible-repo` w komendach SSH (poza notatką historyczną)
-- [ ] G2: brak symlinków `homeserver-ansible-repo` / `homeserver-ansible/infisical`
-- [ ] `.bak-*` zarchiwizowane na Seagate, usunięte z `/opt`
-- [ ] Stale `homeserver-ansible/g2-config` usunięte lub w archiwum
-- [ ] `all.yml` w obu repo Ansible — domyślne ścieżki = kanon
-- [ ] Smoke PASS po cleanup
-- [ ] ADR workspace `accepted`
-- [ ] EPIC-005 → **done**
+- [x] Runbooki operacyjne G2: komendy SSH → `/opt/homeserver-services` (ADR historyczne bez zmian)
+- [ ] G2: brak symlinków `homeserver-ansible-repo` / `homeserver-ansible/infisical` (E2)
+- [ ] `.bak-*` zarchiwizowane na Seagate, usunięte z `/opt` (E2)
+- [ ] Stale `homeserver-ansible/g2-config` usunięte lub w archiwum (E2)
+- [x] `all.yml` w obu repo Ansible — domyślne ścieżki = kanon
+- [ ] Smoke PASS po cleanup (E2)
+- [x] ADR workspace `accepted`
+- [ ] EPIC-005 → **done** (po E2)
 
 ## Test plan
 

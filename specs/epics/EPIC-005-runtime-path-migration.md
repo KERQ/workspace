@@ -1,6 +1,6 @@
 # EPIC-005: Migracja runtime path na hostach (G2)
 
-Status: draft
+Status: done_pending_005e_host_cleanup
 Owner: karolkurek
 Risk: high
 Repos: homeserver-core, homeserver-services, workspace (docs/contracts)
@@ -158,8 +158,8 @@ Deploy warstwami na G2 (`contracts/deploy/g2-deploy-order.yml`):
 | SPEC-005B-host-path-migration-g2 | 2 | done |
 | ~~SPEC-005C-host-path-migration-t630~~ | — | **cancelled** (brak ścieżek na T630) |
 | SPEC-005D-deploy-new-runtime-path | 3 | done |
-| SPEC-005E-runtime-path-cleanup | 4 | draft (spec ready) |
+| SPEC-005E-runtime-path-cleanup | 4 | in_progress (E1 done) |
 
 ## Następny krok
 
-**SPEC-005E** — [spec start](SPEC-005E-runtime-path-cleanup.md): cleanup G2 + runbooki + ADR.
+**SPEC-005E E2** — cleanup symlinków na G2: `cleanup-g2-runtime-path.sh` + `APPROVE_DEPLOY=yes`.
