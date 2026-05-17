@@ -18,6 +18,8 @@ services:
     owner_repo: homeserver-services
     default_host: t630
     port: 3000
+    host_port: 3030
+    note: "Container HTTP 3000; host bind 127.0.0.1:3030 (3000 used by openclaw-studio)"
     exposure: tailnet_only
     auth_required: true
     status: planned

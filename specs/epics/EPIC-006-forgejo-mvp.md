@@ -35,8 +35,9 @@ Po zakończeniu epiku:
 | Baza Forgejo | PostgreSQL (nie SQLite) | Zgodnie z dokumentem architektonicznym |
 | Web UI | port `3000`, domena `git.t630.<tailnet>` | Caddy reverse proxy + auth |
 | Git SSH | port `2222` | `git@t630 -p 2222` / tailnet |
-| Layout danych | `/srv/ai-stack/forgejo/` lub równoważnik w istniejącym stacku | Do ustalenia w 006A względem obecnego Ansible |
-| Właściciel compose/Ansible | **TBD** — `homeserver-core` vs `homeserver-services` | Caddy w core; usługi kontenerowe często w services |
+| Layout danych | `/srv/ai-stack/forgejo/{data,postgres}` | Compose w `/opt/homeserver-services/t630-config/forgejo/` |
+| Właściciel compose/Ansible | **homeserver-services** (`roles/forgejo`) | Caddy vhost w **life-platform** (006B) |
+| Web port (host) | **3030** loopback | `:3000` zajęty przez OpenClaw Studio |
 
 ## Repo impact matrix
 
@@ -174,8 +175,8 @@ Pełny rollback hosta poza zakresem — osobny runbook disaster recovery.
 
 | SPEC | Repo | Status | Opis |
 |------|------|--------|------|
-| SPEC-006A | homeserver-services (+ core jeśli wspólny stack) | planned | Compose Forgejo + PostgreSQL, zmienne Ansible, `--syntax-check` |
-| SPEC-006B | life-platform (+ homeserver-services dla backend URL) | planned | Vhost `git.*` w `life-platform/.../caddy/Caddyfile`; Forgejo backend w sieci Docker/host — bez drugiego Caddy na `:80` |
+| SPEC-006A | homeserver-services | draft | [`SPEC-006A`](../SPEC-006A-forgejo-compose-postgres.md) — Compose + PostgreSQL, port 3030/2222 |
+| SPEC-006B | life-platform | draft | [`SPEC-006B`](../SPEC-006B-forgejo-caddy-ingress.md) — vhost `git.*` → `127.0.0.1:3030` |
 | SPEC-006C | workspace + manual ops | planned | Org `KERQ`, import `homeserver-services`, ustawienia instancji |
 | SPEC-006D | workspace runbook | planned | `origin`/`github` remotes, SSH smoke, branch testowy + PR |
 | SPEC-006E | workspace + homeserver-services | planned | Backup DB+data, runbook, aktualizacja `contracts/services/ports.yml` |
