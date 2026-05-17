@@ -13,7 +13,7 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 - [ ] [EPIC-009](specs/epics/EPIC-009-forgejo-bot.md): Forgejo bot read/comment/review
   - [x] [SPEC-009A](specs/SPEC-009A-forgejo-bot-user-token.md) — `openclaw-bot`, PAT, webhook secret — [runbook](docs/runbooks/t630-forgejo-openclaw-bot.md)
   - [x] [SPEC-009B](specs/SPEC-009B-forgejo-bot-service-webhook.md) — serwis `:8091`, Caddy, webhook
-  - [ ] [SPEC-009C](specs/SPEC-009C-forgejo-bot-commands-openclaw.md) — `/openclaw summarize|review*`, `/v1`
+  - [x] [SPEC-009C](specs/SPEC-009C-forgejo-bot-commands-openclaw.md) — `/openclaw summarize|review*`, `/v1`
   - [ ] [SPEC-009D](specs/SPEC-009D-forgejo-bot-smoke-runbook.md) — status check, smoke, runbook
   - Zakazy MVP: no write repo, no merge, no deploy, no `/openclaw fix`.
 

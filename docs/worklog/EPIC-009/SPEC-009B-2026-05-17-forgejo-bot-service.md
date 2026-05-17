@@ -18,4 +18,4 @@
 
 ## Następny
 
-SPEC-009C — komendy `/openclaw` + OpenClaw `/v1`.
+SPEC-009D — status check + pełny smoke (009C done — [worklog](SPEC-009C-2026-05-17-forgejo-bot-commands.md)).

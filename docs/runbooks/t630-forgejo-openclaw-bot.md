@@ -2,7 +2,7 @@
 
 **EPIC:** [EPIC-009](../../specs/epics/EPIC-009-forgejo-bot.md)  
 **SPEC:** [SPEC-009A](../../specs/SPEC-009A-forgejo-bot-user-token.md)  
-**Status:** 009A done, 009B (serwis `:8091` + Caddy) — patrz sekcja Deploy 009B
+**Status:** 009A–009C done; 009D (status check + pełny smoke PR) — w toku
 
 ## Kontekst
 
@@ -13,7 +13,7 @@
 | Org pilotażowa | `KERQ` |
 | Repo pilotażowe | `KERQ/homeserver-services` (private) |
 | Użytkownik bota | `openclaw-bot` |
-| OpenClaw (później, 009C) | `http://127.0.0.1:18789/v1/chat/completions` |
+| OpenClaw (009C) | `http://127.0.0.1:18789/v1/chat/completions` |
 
 **Guardrails:** bot **nie** pushuje do repo, **nie** merge’uje, **nie** deployuje. Token tylko read PR + komentarze (status check — osobny scope w 009C/009D jeśli potrzebny).
 
@@ -119,7 +119,9 @@ forgejo_webhook_secret: "<openssl rand -hex 32 — min. 32 bajty losowe>"
 | `forgejo_bot_token` | PAT użytkownika `openclaw-bot` (nagłówek `Authorization: token …`) |
 | `forgejo_webhook_secret` | Wspólny sekret webhooka Forgejo ↔ bot; min. 32 znaki losowe |
 
-Istniejące klucze w tym pliku (np. `forgejo_db_password`, `openclaw_gateway_token`) **nie usuwaj** — dopisz powyższe.
+Dla 009C wymagany jest także `openclaw_gateway_token` (Bearer do OpenClaw `/v1`).
+
+Istniejące klucze w tym pliku (np. `forgejo_db_password`) **nie usuwaj** — dopisz powyższe.
 
 Polityka sekretów: [`contracts/secrets/scopes.yml`](../../contracts/secrets/scopes.yml) (`forgejo_bot_token` w `homeserver-services`).
 
@@ -203,9 +205,43 @@ ssh t630 'docker logs openclaw-forgejo-bot --tail 20'
 
 ---
 
+## 8. Deploy 009C (komendy + OpenClaw)
+
+```bash
+APPROVE_DEPLOY=yes ansible-playbook playbooks/t630.yml -l t630 --tags forgejo-bot \
+  -e forgejo_bot_force_rebuild=true
+```
+
+W `host_vars/t630.yml` (nie commitować): `openclaw_gateway_token` obok `forgejo_bot_token` i `forgejo_webhook_secret`.
+
+### Komendy w PR
+
+| Komentarz | Efekt |
+|-----------|--------|
+| `/openclaw summarize` | Podsumowanie PR |
+| `/openclaw review` | Code review |
+| `/openclaw review tests` | Review testów |
+| `/openclaw review privacy` | Sekrety / PII |
+
+Bot ignoruje własne komentarze i komentarze na zwykłych issue (bez `pull_request`).
+
+### Smoke 009C
+
+```bash
+ssh t630@192.168.1.20 'curl -sS http://127.0.0.1:8091/health | jq .'
+# Oczekiwane: "version": "0.2.0"
+```
+
+Na żywym PR: dodaj komentarz `/openclaw summarize` → w ciągu ~2 min komentarz od `openclaw-bot`.
+
+Alternatywa (zamknięty PR #1): symulacja webhooka z podpisem HMAC — patrz [worklog SPEC-009C](../worklog/EPIC-009/SPEC-009C-2026-05-17-forgejo-bot-commands.md).
+
+Zmienne (`.env` bota): `FORGEJO_BOT_AUTO_SUMMARY=0` (domyślnie), `FORGEJO_BOT_DIFF_MAX_CHARS=80000`, `OPENCLAW_MODEL=openclaw/default`.
+
+---
+
 ## Następny krok
 
-- [SPEC-009C](../../specs/SPEC-009C-forgejo-bot-commands-openclaw.md): komendy `/openclaw …` → OpenClaw `/v1`.
-- [SPEC-009D](../../specs/SPEC-009D-forgejo-bot-smoke-runbook.md): status check, pełny smoke PR.
+- [SPEC-009D](../../specs/SPEC-009D-forgejo-bot-smoke-runbook.md): status check `OpenClaw Review`, pełny smoke PR, contracts.
 
 Powiązane: [t630-forgejo-deploy.md](t630-forgejo-deploy.md), [t630-openclaw-gateway-librechat.md](t630-openclaw-gateway-librechat.md).
