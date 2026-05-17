@@ -187,7 +187,7 @@ restic check
 | SPEC | Repo | Status | Opis |
 |------|------|--------|------|
 | SPEC-014A | homeserver-core | done | Zwolnienie miejsca — **55G avail** — [`SPEC-014A`](../SPEC-014A-t630-disk-reclaim-phase0.md) |
-| SPEC-014B | homeserver-core (+ G2 MinIO) | planned | Bucket, użytkownik MinIO, sieć T630→G2 |
+| SPEC-014B | homeserver-services (+ homeserver-core creds) | draft | [`SPEC-014B`](../SPEC-014B-restic-minio-bucket-access.md) — bucket, user, LAN T630→G2 |
 | SPEC-014C | homeserver-core | planned | `restic` install, init repo, pierwszy manual backup |
 | SPEC-014D | homeserver-core | planned | Cron, polityka retencji, zestawy ścieżek |
 | SPEC-014E | workspace + homeserver-core | planned | Restore drill, skrócenie lokalnej retencji, runbook |

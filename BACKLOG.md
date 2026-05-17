@@ -15,6 +15,7 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
   - Audyt: ~91% `/`, ~44G w `/opt/backups` (HA ~40G), ~16G reclaimable Docker images.
   - **Faza 0:** retencja HA, opcj. prune/legacy — cel **≥20 GB wolne** na `/`.
   - **Faza 1:** Restic → MinIO na G2 (`/mnt/seagate`), restore drill, potem skrócenie lokalnej retencji.
+  - [ ] [SPEC-014B](specs/SPEC-014B-restic-minio-bucket-access.md) — bucket `restic-backups`, user `restic-t630`, LAN T630→G2 *(draft)*
 - [ ] [EPIC-006](specs/epics/EPIC-006-forgejo-mvp.md): Forgejo MVP / lokalny Git system of record dla jednego repo *(draft, cutover po EPIC-014 + SPEC-016)*
   - Forgejo + PostgreSQL przez Tailscale/Caddy.
   - Organizacja `KERQ`, wyłączona publiczna rejestracja.
@@ -33,10 +34,12 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 
 ## Next
 
-- [ ] **Dashboard web (T630/G2):** aplikacja WWW ze stanem usług (nie one-pager)
-  - Wejście z audytu [SPEC-015](specs/SPEC-015-t630-g2-service-dashboard.md) — dane: `docker ps`, porty, health, host T630+G2.
-  - Read-only MVP; auth przez Tailscale/Caddy; bez deployu z UI.
-  - Osobny SPEC po SPEC-016 (ingress pod jednym Caddy).
+- [ ] **Dashboard web (T630/G2)** — aplikacja WWW, stan usług na żywo *(nie one-pager z SPEC-015)*
+  - Szkic SPEC: **SPEC-017** (do utworzenia) — read-only MVP; źródła: `docker ps`, porty, health HTTP; hosty T630 + G2.
+  - Wejście: [SPEC-015](specs/SPEC-015-t630-g2-service-dashboard.md) (audyt), [runbook](docs/runbooks/t630-g2-service-dashboard.md).
+  - Auth: Tailscale + Caddy; bez deployu/restartu z UI.
+  - Ingress: [SPEC-016](specs/SPEC-016-t630-caddy-unify-docker.md) done — jeden Caddy na T630.
+  - **Nie blokuje** EPIC-014 / EPIC-006; po stabilnym backupie lub równolegle.
 - [ ] EPIC-008: worktree + `difit` preview przed commitem
   - Ustalić `/srv/worktrees` albo lokalny odpowiednik w workspace.
   - Procedura worktree per task.
