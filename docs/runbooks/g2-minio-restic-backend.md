@@ -39,12 +39,13 @@ APPROVE_DEPLOY=yes ansible-playbook playbooks/t630.yml -l t630 --tags restic-min
 
 ```bash
 ssh g2@192.168.1.19 'set -a; . /opt/homeserver-services/g2-config/minio/.env; set +a; \
-  mc alias set local http://127.0.0.1:19000 "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD" && \
+  mc alias set local http://192.168.1.19:19000 "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD" && \
   mc ls local/restic-backups'
 
-ssh t630@192.168.1.20 'set -a; . /etc/restic/credentials.env; set +a; \
-  mc alias set g2restic http://192.168.1.19:19000 "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" && \
-  mc ls g2restic/restic-backups'
+# credentials.env jest root:600 — użyj sudo na T630
+ssh t630@192.168.1.20 'sudo bash -c "set -a; . /etc/restic/credentials.env; set +a; \
+  mc alias set g2restic http://192.168.1.19:19000 \"\$AWS_ACCESS_KEY_ID\" \"\$AWS_SECRET_ACCESS_KEY\" && \
+  mc ls g2restic/restic-backups"'
 ```
 
 ## Rollback

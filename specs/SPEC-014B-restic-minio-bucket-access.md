@@ -1,7 +1,7 @@
 # SPEC-014B: G2 MinIO — bucket Restic i dostęp z T630
 
 Parent: [EPIC-014](epics/EPIC-014-restic-minio-offbox-backup.md)
-Status: draft
+Status: done
 Repo: homeserver-services (+ homeserver-core: zmienne T630, connectivity)
 Owner: karolkurek
 Risk: medium
@@ -79,31 +79,31 @@ Przygotować **backend S3** dla Restic na istniejącym MinIO G2: dedykowany buck
 
 ## Do zrobienia
 
-- [ ] SPEC-014B zaakceptowany (decyzja sieci: LAN vs Tailscale)
-- [ ] Dodać bucket `restic-backups` (mc)
-- [ ] Utworzyć użytkownika `restic-t630` + policy (mc `admin user` / `mc iam`)
-- [ ] Zmienić bind API MinIO na LAN (jeśli wybrano wariant LAN)
-- [ ] Wdrożyć credentials template na T630 (puste/w Vault)
-- [ ] Test z T630: health + S3 list (bez logowania haseł)
-- [ ] Runbook + worklog
-- [ ] Zaktualizować EPIC-014 (status 014B)
+- [x] Decyzja sieci: **LAN** (`192.168.1.19:19000`)
+- [x] Bucket `restic-backups` (mc)
+- [x] Użytkownik `restic-t630` + policy `restic-t630-rw`
+- [x] Bind API MinIO na LAN
+- [x] `/etc/restic/credentials.env` na T630 (mode 600, sudo do odczytu)
+- [x] Testy connectivity z T630
+- [x] Runbook + worklog
+- [x] EPIC-014 zaktualizowany
 
 ## Definition of Ready
 
 - [x] SPEC-014A done
-- [ ] Decyzja: LAN bind vs Tailscale vs Caddy-only
-- [ ] Hasła `restic-t630` i przyszły `RESTIC_REPOSITORY_PASSWORD` przygotowane poza Git (Vault / lokalne)
-- [ ] Approval na deploy G2 (`APPROVE_DEPLOY=yes`) i ewent. restart MinIO
+- [x] Decyzja: LAN bind
+- [x] Sekret `restic-t630` w `inventory/.secrets/` (kontroler, gitignored)
+- [x] Deploy G2 + T630 wykonany
 
 ## Definition of Done
 
-- [ ] Bucket `restic-backups` istnieje na G2 (`mc ls local/restic-backups`)
-- [ ] Użytkownik `restic-t630` nie ma dostępu do bucketów trading (test negatywny)
-- [ ] Z T630: `curl -fsS http://192.168.1.19:19000/minio/health/live` → OK
-- [ ] Z T630: operacja S3 z creds `restic-t630` (np. `mc` alias lub `aws s3 ls`) — sukces na `restic-backups`
-- [ ] Plik na T630 `/etc/restic/credentials.env` (mode `600`) — szablon wdrożony; wartości nie w repo
-- [ ] Runbook opublikowany
-- [ ] Worklog w `docs/worklog/EPIC-014/`
+- [x] Bucket `restic-backups` na G2
+- [x] Test negatywny: `raw-gdelt` → Access Denied
+- [x] T630 → health LAN OK
+- [x] T630 → `mc ls g2restic/restic-backups` (sudo + creds)
+- [x] `/etc/restic/credentials.env` wdrożony
+- [x] Runbook opublikowany
+- [x] Worklog: [SPEC-014B-2026-05-17](../docs/worklog/EPIC-014/SPEC-014B-2026-05-17-restic-minio-bucket-access.md)
 
 ## Test plan
 
@@ -188,9 +188,7 @@ export RESTIC_REPOSITORY=s3:http://192.168.1.19:19000/restic-backups
 
 ## Work log
 
-<!-- docs/worklog/EPIC-014/SPEC-014B-YYYY-MM-DD-*.md -->
-
--
+- [2026-05-17 — Restic MinIO bucket access](../docs/worklog/EPIC-014/SPEC-014B-2026-05-17-restic-minio-bucket-access.md)
 
 ## Prompt plan
 
