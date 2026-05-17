@@ -30,11 +30,14 @@ Oczekiwane: `created restic repository` lub informacja że repo już istnieje.
 
 ## 3. Pierwszy backup P0 (`/opt/backups`)
 
-Uruchom w oknie maintenance (może trwać długo):
+Uruchom w oknie maintenance (~8–90 min zależnie od rozmiaru):
 
 ```bash
-ssh t630@192.168.1.20 'sudo /usr/local/bin/restic-backup-p0.sh'
+ssh t630@192.168.1.20 'sudo nohup /usr/local/bin/restic-backup-p0.sh </dev/null &>/tmp/restic-p0.nohup.out &'
+# log: /var/log/restic/backup-p0-*.log
 ```
+
+Lub Ansible: `-e restic_run_backup_p0=true --tags restic` (poll do 2h).
 
 Alternatywa ad-hoc:
 

@@ -1,7 +1,7 @@
 # SPEC-014C: T630 — instalacja Restic, init repo i pierwszy backup (P0)
 
 Parent: [EPIC-014](epics/EPIC-014-restic-minio-offbox-backup.md)
-Status: draft
+Status: done
 Repo: homeserver-core (+ workspace: runbook)
 Owner: karolkurek
 Risk: medium
@@ -116,32 +116,31 @@ restic_password: "<vault>"
 
 ## Do zrobienia
 
-- [ ] SPEC-014B done (connectivity + creds na T630)
-- [ ] Rola `restic` + tag w playbooku
-- [ ] `ansible-playbook playbooks/t630.yml --syntax-check`
-- [ ] Deploy roli (`APPROVE_DEPLOY=yes`)
-- [ ] `restic init` (Ansible task lub runbook — `no_log`)
-- [ ] Ręczny pierwszy backup P0 (`restic-backup-p0.sh` lub ad-hoc)
-- [ ] `restic snapshots` ≥ 1 snapshot z tagiem `t630-backups`
-- [ ] Worklog + wyniki rozmiaru/czasu
-- [ ] Oznaczyć SPEC-014C done w EPIC/BACKLOG
+- [x] SPEC-014B done
+- [x] Rola `restic` rozszerzona (init, skrypt P0, excludes)
+- [x] syntax-check OK
+- [x] Deploy `--tags restic,restic-minio`
+- [x] `restic init` (Ansible)
+- [x] Pierwszy backup P0 (`restic-backup-p0.sh`, ~8 min)
+- [x] Snapshot `t630-backups` + `restic check` OK
+- [x] Worklog
+- [x] EPIC/BACKLOG zaktualizowany
 
 ## Definition of Ready
 
-- [ ] SPEC-014B Definition of Done spełnione
-- [ ] `RESTIC_PASSWORD` wygenerowane i zapisane poza Git (Vault + kopia recovery użytkownika)
-- [ ] `/etc/restic/credentials.env` na T630 kompletne (`RESTIC_REPOSITORY`, AWS keys)
-- [ ] Okno maintenance (pierwszy backup P0 może zająć >30 min)
-- [ ] Approval: `APPROVE_DEPLOY=yes` + explicit na pierwszy backup
+- [x] SPEC-014B done
+- [x] `RESTIC_PASSWORD` w `homeserver-core/inventory/.secrets/restic_repository_password`
+- [x] credentials.env kompletne na T630
+- [x] Backup wykonany
 
 ## Definition of Done
 
-- [ ] `restic version` na T630 OK
-- [ ] `restic -r $RESTIC_REPOSITORY snapshots` pokazuje ≥1 snapshot (`t630-backups`)
-- [ ] `restic check` (quick lub full — wynik w worklog; exit 0)
-- [ ] Na G2: dane w bucket `restic-backups` (rozmiar > 0; `mc du` lub console)
-- [ ] Lokalna retencja `/opt/backups` **bez zmian** względem stanu po 014A
-- [ ] Runbook opublikowany; brak sekretów w logach worklog
+- [x] `restic 0.18.0` na T630
+- [x] 1 snapshot `t630-backups` (~18 GiB)
+- [x] `restic check` — no errors
+- [x] G2 bucket ~17 GiB
+- [x] Lokalnie `/opt/backups` 19G — bez skracania retencji
+- [x] Runbook; worklog bez sekretów
 
 ## Test plan
 
@@ -239,9 +238,7 @@ Jeśli backup trwa zbyt długo: rozważyć pierwszy run w nocy; **nie** przerywa
 
 ## Work log
 
-<!-- docs/worklog/EPIC-014/SPEC-014C-YYYY-MM-DD-*.md -->
-
--
+- [2026-05-17 — init + backup P0](../docs/worklog/EPIC-014/SPEC-014C-2026-05-17-restic-init-first-backup.md)
 
 ## Prompt plan
 
