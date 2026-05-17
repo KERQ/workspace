@@ -21,13 +21,10 @@ runtime_paths:
 
   g2_on_host:
     canonical_root: /opt/homeserver-services
-    backward_symlinks_until_005e:
-      - /opt/homeserver-ansible-repo -> /opt/homeserver-services
-      - /opt/homeserver-ansible/infisical -> /opt/homeserver-services/infisical
-    cutover_bak_dirs_pending_cleanup:
-      - /opt/homeserver-ansible-repo.bak-20260516-211434
-      - /opt/homeserver-ansible-infisical.bak-20260516-211434
-    seagate_backups: /mnt/seagate/backups/epic-005-g2-runtime-path
+    backward_symlinks: removed
+    cleanup_archives:
+      - /mnt/seagate/backups/epic-005-g2-runtime-path/cleanup-archive-20260517-084410
+      - /mnt/seagate/backups/epic-005-g2-runtime-path/cleanup-stale-g2-config-*
 
   t630:
     homeserver_ansible_paths: absent
@@ -37,12 +34,13 @@ runtime_paths:
     note: EPIC-005 nie migruje life-platform-t630 ani openclaw-control-plane
 
 migration:
-  epic_status: done_pending_host_cleanup
+  epic_status: done
+  completed: "2026-05-17"
   phases:
     "005A": ansible_variable_refactor
     "005B": g2_cutover_with_symlinks
     "005D": ansible_deploy_canonical_paths
-    "005E": docs_done_host_cleanup_pending
+    "005E": docs_and_host_cleanup
   strategy: phased_with_backward_symlink
   primary_host: g2
   hosts_in_scope: [g2]

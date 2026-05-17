@@ -1,6 +1,6 @@
 # EPIC-005: Migracja runtime path na hostach (G2)
 
-Status: done_pending_005e_host_cleanup
+Status: done
 Owner: karolkurek
 Risk: high
 Repos: homeserver-core, homeserver-services, workspace (docs/contracts)
@@ -135,12 +135,12 @@ Deploy warstwami na G2 (`contracts/deploy/g2-deploy-order.yml`):
 
 ## Global Definition of Done
 
-- [ ] G2: Docker stacki działają z `/opt/homeserver-services/...`
-- [ ] Brak hardcoded `/opt/homeserver-ansible-repo` w Ansible (poza ADR)
-- [ ] Infisical pod `/opt/homeserver-services/infisical`
-- [ ] Stary `/opt/homeserver-ansible/g2-config` usunięty lub zarchiwizowany
-- [ ] T630 bez regresji (life-platform, openclaw-control-plane nietknięte)
-- [ ] ADR accepted
+- [x] G2: Docker stacki działają z `/opt/homeserver-services/...`
+- [x] Brak hardcoded `/opt/homeserver-ansible-repo` w Ansible operacyjnym (poza ADR historycznymi)
+- [x] Infisical pod `/opt/homeserver-services/infisical`
+- [x] Stary `/opt/homeserver-ansible/g2-config` zarchiwizowany
+- [x] T630 bez regresji (life-platform, openclaw-control-plane nietknięte)
+- [x] ADR accepted
 
 ## Approval gates
 
@@ -158,8 +158,8 @@ Deploy warstwami na G2 (`contracts/deploy/g2-deploy-order.yml`):
 | SPEC-005B-host-path-migration-g2 | 2 | done |
 | ~~SPEC-005C-host-path-migration-t630~~ | — | **cancelled** (brak ścieżek na T630) |
 | SPEC-005D-deploy-new-runtime-path | 3 | done |
-| SPEC-005E-runtime-path-cleanup | 4 | in_progress (E1 done) |
+| SPEC-005E-runtime-path-cleanup | 4 | done |
 
 ## Następny krok
 
-**SPEC-005E E2** — cleanup symlinków na G2: `cleanup-g2-runtime-path.sh` + `APPROVE_DEPLOY=yes`.
+EPIC-005 zamknięty (005A–005E). Kolejne prace infra poza tym EPIC-em — osobne SPECy.

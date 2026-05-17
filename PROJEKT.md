@@ -66,7 +66,7 @@ BACKLOG → EPIC → SPEC → PROMPT → PATCH → TEST → REVIEW → ADR / RUN
 
 - **Faza 1 (done):** standard pracy — workspace, specs, contracts MVP, templates.
 - **Deploy orchestration (done):** `deploy/` w workspace (EPIC-002).
-- **Runtime path G2:** kanon `/opt/homeserver-services` (EPIC-005: 005A–005D done; 005E cleanup hosta opcjonalnie — symlinki wsteczne do usunięcia).
+- **Runtime path G2:** kanon `/opt/homeserver-services` (EPIC-005 done, 2026-05-17).
 - **Później:** Forgejo MVP, OpenClaw `/v1`, difit, bot Forgejo — każdy etap osobno, z approval.
 
 ## Dokumenty nadrzędne

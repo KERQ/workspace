@@ -1,7 +1,7 @@
 # SPEC-005E: Cleanup runtime path (G2) + dokumentacja
 
 Parent: [EPIC-005](epics/EPIC-005-runtime-path-migration.md)  
-Status: in_progress (E1 done — E2 host cleanup pending)  
+Status: done  
 Repos: workspace, homeserver-services (runbooki), homeserver-core (opcjonalnie `all.yml`)  
 Host: g2@192.168.1.19  
 Owner: karolkurek  
@@ -79,13 +79,18 @@ Sekwencja ([runbook](../docs/runbooks/g2-runtime-path-cleanup.md)):
 ## Definition of Done
 
 - [x] Runbooki operacyjne G2: komendy SSH → `/opt/homeserver-services` (ADR historyczne bez zmian)
-- [ ] G2: brak symlinków `homeserver-ansible-repo` / `homeserver-ansible/infisical` (E2)
-- [ ] `.bak-*` zarchiwizowane na Seagate, usunięte z `/opt` (E2)
-- [ ] Stale `homeserver-ansible/g2-config` usunięte lub w archiwum (E2)
+- [x] G2: brak symlinków `homeserver-ansible-repo` / `homeserver-ansible/infisical` (2026-05-17)
+- [x] `.bak-*` zarchiwizowane na Seagate (`cleanup-archive-20260517-084410`)
+- [x] Stale `homeserver-ansible/g2-config` zarchiwizowane (`cleanup-stale-g2-config-*`)
 - [x] `all.yml` w obu repo Ansible — domyślne ścieżki = kanon
-- [ ] Smoke PASS po cleanup (E2)
+- [x] Smoke PASS po cleanup (trading 13/13)
 - [x] ADR workspace `accepted`
-- [ ] EPIC-005 → **done** (po E2)
+- [x] EPIC-005 → **done**
+
+## Uwagi operacyjne (E2)
+
+- Preflight: ścieżki compose rozwiązywane przez `readlink -f` (symlinki wsteczne OK przed usunięciem).
+- Po `remove-symlinks`: `docker compose up -d` z kanonicznych ścieżek (odświeżenie labeli).
 
 ## Test plan
 

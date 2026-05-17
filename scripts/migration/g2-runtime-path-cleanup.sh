@@ -21,18 +21,41 @@ require_approve_host() {
   [[ "${APPROVE_DEPLOY:-no}" == "yes" ]] || die "host-changing steps require APPROVE_DEPLOY=yes"
 }
 
-compose_uses_canon() {
-  local bad=0 name
+compose_config_resolves_to_canon() {
+  local cfg="$1"
+  [[ -z "${cfg}" ]] && return 0
+  local resolved
+  resolved="$(readlink -f "${cfg}" 2>/dev/null || echo "${cfg}")"
+  [[ "${resolved}" == "${CANON}"* ]]
+}
+
+compose_labels_ok() {
+  local bad=0 name cfg
   while IFS= read -r name; do
     [[ -z "${name}" ]] && continue
-    local cfg
     cfg="$(docker inspect "${name}" --format '{{ index .Config.Labels "com.docker.compose.project.config_files" }}' 2>/dev/null || true)"
-    if [[ -n "${cfg}" && "${cfg}" != *"${CANON}"* ]]; then
-      log "WARN container ${name} compose config not under ${CANON}: ${cfg}"
+    if [[ -n "${cfg}" ]] && ! compose_config_resolves_to_canon "${cfg}"; then
+      log "WARN container ${name} compose path outside ${CANON}: ${cfg}"
       bad=$((bad + 1))
     fi
-  done < <(docker ps -q | xargs -r docker inspect --format '{{.Name}}' 2>/dev/null | sed 's#^/##' || true)
+  done < <(docker ps -q 2>/dev/null | xargs -r -I{} docker inspect --format '{{.Name}}' {} 2>/dev/null | sed 's#^/##' || true)
   [[ "${bad}" -eq 0 ]]
+}
+
+compose_recreate_all() {
+  local d
+  for d in \
+    "${CANON}/infisical" \
+    "${CANON}/g2-config" \
+    "${CANON}/g2-config/minio" \
+    "${CANON}/g2-config/airflow" \
+    "${CANON}/g2-config/jupyter" \
+    "${CANON}/g2-config/plane"; do
+    if [[ -f "${d}/docker-compose.yml" ]]; then
+      log "compose up (canonical): ${d}"
+      (cd "${d}" && docker compose up -d) || die "compose up failed: ${d}"
+    fi
+  done
 }
 
 cmd_preflight() {
@@ -46,7 +69,7 @@ cmd_preflight() {
   else
     log "OK: ${SYMLINK_REPO} already absent"
   fi
-  compose_uses_canon || die "some containers still use non-canonical compose paths"
+  compose_labels_ok || die "some containers have compose paths outside ${CANON}"
   log "preflight OK"
 }
 
@@ -65,7 +88,7 @@ cmd_archive_bak() {
 
 cmd_remove_symlinks() {
   require_approve_host
-  compose_uses_canon || die "refusing to remove symlinks — compose not on ${CANON}"
+  compose_labels_ok || die "refusing to remove symlinks — compose paths do not resolve under ${CANON}"
   if [[ -L "${SYMLINK_REPO}" ]]; then
     run_priv rm -f "${SYMLINK_REPO}"
     log "removed ${SYMLINK_REPO}"
@@ -75,6 +98,8 @@ cmd_remove_symlinks() {
     log "removed ${SYMLINK_INFISICAL}"
   fi
   [[ -d "${CANON}" ]] || die "canonical path missing after symlink removal"
+  log "recreate stacks from ${CANON} (refresh compose labels)"
+  compose_recreate_all
   log "remove-symlinks OK"
 }
 
