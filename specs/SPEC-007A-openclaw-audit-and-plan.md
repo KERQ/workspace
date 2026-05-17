@@ -1,7 +1,7 @@
 # SPEC-007A: Audyt OpenClaw + plan rozwoju (post OCP-1 archive)
 
 Parent: [EPIC-007](epics/EPIC-007-openclaw-gateway-librechat.md)
-Status: draft
+Status: done
 Repo: workspace (+ read-only: homeserver-services, openclaw-control-plane, life-platform)
 Owner: karolkurek
 Risk: low (audyt read-only); medium jeśli smoke wymaga restartu gateway
@@ -164,11 +164,11 @@ Minimalna treść:
 
 ## Definition of Done
 
-- [ ] Checklist A–G wykonany; wyniki w worklogu (bez sekretów).
-- [ ] Smoke `/v1` loopback + tailnet — PASS lub jawny FAIL z akcją naprawczą.
-- [ ] `docs/plans/openclaw-007-development-plan.md` istnieje i zaakceptowany przez ownera.
-- [ ] Worklog SPEC-007A w `docs/worklog/EPIC-007/`.
-- [ ] Brak zmian deployowych w tym SPEC (tylko dokumentacja + ewent. poprawki draft SPEC-007B jeśli wynik audytu Caddy).
+- [x] Checklist A–G wykonany; wyniki w worklogu (bez sekretów).
+- [x] Smoke `/v1` loopback + tailnet — PASS.
+- [x] `docs/plans/openclaw-007-development-plan.md` istnieje i uzupełniony po audycie.
+- [x] Worklog SPEC-007A w `docs/worklog/EPIC-007/`.
+- [x] Brak zmian deployowych w tym SPEC.
 
 ## Rollback
 

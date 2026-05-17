@@ -1,8 +1,9 @@
 # Plan rozwoju OpenClaw (EPIC-007) — post archiwum EPIC-OCP-1
 
-**Status:** draft (szkielet — uzupełnić wynikami [SPEC-007A](../specs/SPEC-007A-openclaw-audit-and-plan.md))  
+**Status:** accepted (po audycie SPEC-007A, 2026-05-17)  
 **Data:** 2026-05-17  
-**Owner:** karolkurek
+**Owner:** karolkurek  
+**Worklog:** [SPEC-007A audyt](../worklog/EPIC-007/SPEC-007A-2026-05-17-openclaw-audit.md)
 
 ## 1. Decyzja strategiczna
 
@@ -74,18 +75,22 @@ Sekrety: Infisical → `homeserver-services/inventory/host_vars/t630.yml` (git-c
 007E  tool policies, runbook, contracts, decommission OCP runtime
 ```
 
-## 7. Wyniki audytu (SPEC-007A — do uzupełnienia)
+## 7. Wyniki audytu (SPEC-007A, 2026-05-17)
 
 | Obszar | Status | Uwagi |
 |--------|--------|-------|
-| Gateway systemd | _TBD_ | |
-| `/v1` smoke loopback | _TBD_ | |
-| `/v1` smoke tailnet | _TBD_ | |
-| Auth Bearer wymagany | _TBD_ | |
-| Config drift Ansible vs runtime | _TBD_ | |
-| OCP kontenery na T630 | _TBD_ | |
-| `openclaw_enabled` w inventory | _TBD_ | |
+| Gateway systemd | **OK** | OpenClaw 2026.5.3-1, `127.0.0.1:18789` |
+| `/v1` smoke loopback | **PASS** | models + chat `openclaw/default` |
+| `/v1` smoke tailnet | **PASS** | przez `t630.colobus-micro.ts.net` |
+| Auth Bearer wymagany | **TAK** | 401 bez tokena (loopback i tailnet) |
+| Config drift Ansible vs runtime | **Niski** | auth + chatCompletions włączone; pełny diff pominięty |
+| OCP kontenery na T630 | **Częściowe** | Postgres + Redis; **brak** UI/API |
+| `openclaw_enabled` w inventory | **true** | `host_vars/t630.yml` |
+
+Inne porty: 3000 OpenClaw Studio, 3002 ClawSuite, 3030 Forgejo — bez kolizji z LibreChat `:3080` (plan).
 
 ## 8. Rekomendacja OCP runtime na T630
 
-_TBD po audycie — opcje: (a) zostawić wyłączone, (b) stop compose, (c) usunąć po backupie. Wykonanie tylko w 007E z APPROVE_DEPLOY._
+**Rekomendacja:** **(b) stop compose** `openclaw-control-plane-postgres` + `openclaw-control-plane-redis` w **SPEC-007E**, po udanym smoke LibreChat (007C). UI/API OCP i tak nie działają — zostają tylko DB/cache bez konsumenta.
+
+**Nie usuwać** wolumenów w 007E bez osobnego backupu/approval. **Nie** restartować `openclaw-gateway` w ramach audytu.

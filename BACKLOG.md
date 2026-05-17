@@ -11,7 +11,7 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 ## Now
 
 - [ ] [EPIC-007](specs/epics/EPIC-007-openclaw-gateway-librechat.md): OpenClaw Gateway `/v1` + LibreChat/LobeChat *(zastępuje zarchiwizowany EPIC-OCP-1 / `apps/ui`)*
-  - [ ] [SPEC-007A](specs/SPEC-007A-openclaw-audit-and-plan.md) — audyt OpenClaw + plan; gateway `/v1` smoke; inwentaryzacja OCP runtime
+  - [x] [SPEC-007A](specs/SPEC-007A-openclaw-audit-and-plan.md) — audyt OpenClaw + plan; gateway `/v1` smoke PASS; OCP tylko PG/Redis
   - [ ] SPEC-007B — Caddy ingress (`/v1` audit, `/chat/` pod LibreChat)
   - [ ] SPEC-007C — LibreChat Compose → `openclaw/default`, RAG/memory OFF
   - [ ] SPEC-007D — LobeChat (opcjonalnie)
