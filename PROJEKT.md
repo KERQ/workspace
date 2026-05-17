@@ -2,7 +2,7 @@
 
 ## Cel workspace
 
-`~/repos/workspace/` to wspólny punkt wejścia dla człowieka i agentów AI pracujących nad systemem multi-repo. Workspace daje jeden kontekst (specs, contracts, ADR, runbooki, backlog), podczas gdy wykonanie zmian pozostaje w osobnych repozytoriach domenowych.
+`~/repos/workspace/` to wspólny punkt wejścia dla człowieka i agentów AI pracujących nad systemem multi-repo. Workspace daje jeden kontekst (ideas, backlog, specs, contracts, ADR, runbooki), podczas gdy wykonanie zmian pozostaje w osobnych repozytoriach domenowych.
 
 ## Dlaczego nie big-bang monorepo
 
@@ -27,10 +27,12 @@ Lokalne checkouty są podpięte symlinkami w katalogu workspace (bez zmiany remo
 
 ## Zasady spec-first
 
-1. Każda sensowna zmiana zaczyna się od SPEC (lub od child SPEC w ramach EPIC).
-2. Bez zaakceptowanego SPEC nie implementujemy „na oko”.
-3. Jeden agent realizuje **jeden SPEC** naraz.
-4. Zmiana obejmująca wiele repo: najpierw **EPIC**, potem osobne **child SPEC** per repo/faza.
+1. Luźne analizy i rozpisane pomysły trafiają najpierw do `docs/ideas/`.
+2. Do `BACKLOG.md` trafiają tylko pomysły gotowe do priorytetyzacji.
+3. Każda sensowna zmiana zaczyna się od SPEC (lub od child SPEC w ramach EPIC).
+4. Bez zaakceptowanego SPEC nie implementujemy „na oko”.
+5. Jeden agent realizuje **jeden SPEC** naraz.
+6. Zmiana obejmująca wiele repo: najpierw **EPIC**, potem osobne **child SPEC** per repo/faza.
 
 ## Zasady test-first
 
@@ -49,11 +51,12 @@ Lokalne checkouty są podpięte symlinkami w katalogu workspace (bez zmiany remo
 ## Architektura pracy
 
 ```text
-BACKLOG → EPIC → SPEC → PROMPT → PATCH → TEST → REVIEW → ADR / RUNBOOK
+IDEA → BACKLOG → EPIC → SPEC → PROMPT → PATCH → TEST → REVIEW → ADR / RUNBOOK
 ```
 
 | Artefakt | Rola |
 |----------|------|
+| `docs/ideas/` | Inkubator analiz, hipotez i rozpisanych pomysłów przed priorytetyzacją |
 | `BACKLOG.md` | Priorytetyzacja idei |
 | `specs/epics/` | Koordynacja multi-repo |
 | `specs/` | Konkretna zmiana do wykonania |
@@ -67,12 +70,13 @@ BACKLOG → EPIC → SPEC → PROMPT → PATCH → TEST → REVIEW → ADR / RUN
 - **Faza 1 (done):** standard pracy — workspace, specs, contracts MVP, templates.
 - **Deploy orchestration (done):** `deploy/` w workspace (EPIC-002).
 - **Runtime path G2:** kanon `/opt/homeserver-services` (EPIC-005 done, 2026-05-17).
-- **Później:** Forgejo MVP, OpenClaw `/v1`, difit, bot Forgejo — każdy etap osobno, z approval.
+- **Następnie:** Forgejo MVP, OpenClaw `/v1`, worktree + `difit`, bot Forgejo, approval-first PR flow, selektywny GitHub mirror — każdy etap osobno, z approval.
 
 ## Dokumenty nadrzędne
 
 - [`README.md`](README.md) — mapa workspace
 - [`AGENTS.md`](AGENTS.md) — reguły dla agentów
+- [`docs/ideas/`](docs/ideas/) — analizy i pomysły przed backlogiem (m.in. plany AI-Native i OpenClaw/Forgejo)
 - [`BACKLOG.md`](BACKLOG.md) — kolejka pracy
 
 `PLAN.md` w tym katalogu to starszy dokument eksploracyjny (meta-repo/submodules). Źródłem prawdy operacyjnego jest ten plik oraz `AGENTS.md`.

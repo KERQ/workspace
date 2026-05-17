@@ -7,6 +7,7 @@ Wspólny kontekst pracy nad systemem domowym i research bez scalania repozytori�
 `~/repos/workspace/` łączy:
 
 - **specs** — co i jak zmieniamy (EPIC, SPEC)
+- **docs/ideas** — analizy i rozpisane pomysły przed backlogiem
 - **contracts** — techniczne umowy między repo
 - **docs/adr** — decyzje architektoniczne
 - **docs/runbooks** — procedury operacyjne
@@ -28,6 +29,7 @@ Wspólny kontekst pracy nad systemem domowym i research bez scalania repozytori�
 |----------|---------|
 | Cel i zasady projektu | [`PROJEKT.md`](PROJEKT.md) |
 | Reguły agenta | [`AGENTS.md`](AGENTS.md) |
+| Analizy przed backlogiem | [`docs/ideas/`](docs/ideas/) |
 | Kolejka pracy | [`BACKLOG.md`](BACKLOG.md) |
 | Specyfikacje | [`specs/`](specs/) |
 | Kontrakty między repo | [`contracts/`](contracts/) |
@@ -40,21 +42,22 @@ Wspólny kontekst pracy nad systemem domowym i research bez scalania repozytori�
 
 1. Otwórz Cursor w **`~/repos/workspace`** (nie tylko w jednym repo).
 2. Przeczytaj `PROJEKT.md` i `AGENTS.md`.
-3. Sprawdź `BACKLOG.md` — wybierz element z sekcji **Now** lub **Next**.
-4. Dla większej zmiany: utwórz lub otwórz **EPIC** w `specs/epics/`.
-5. Dla implementacji: jeden **SPEC** w `specs/` (szablon: `SPEC-000-template.md`).
-6. Po zatwierdzeniu SPEC → prompt → patch w repo domenowym → test → review.
-7. W razie potrzeby: ADR lub runbook.
+3. Jeśli pomysł jest jeszcze luźny, opisz go w `docs/ideas/`.
+4. Sprawdź `BACKLOG.md` — wybierz element z sekcji **Now** lub **Next**.
+5. Dla większej zmiany: utwórz lub otwórz **EPIC** w `specs/epics/`.
+6. Dla implementacji: jeden **SPEC** w `specs/` (szablon: `SPEC-000-template.md`).
+7. Po zatwierdzeniu SPEC → prompt → patch w repo domenowym → test → review.
+8. W razie potrzeby: ADR lub runbook.
 
 ## Flow pracy
 
 ```text
-BACKLOG → EPIC → SPEC → PROMPT → PATCH → TEST → REVIEW → ADR/RUNBOOK
+IDEA → BACKLOG → EPIC → SPEC → PROMPT → PATCH → TEST → REVIEW → ADR/RUNBOOK
 ```
 
-## EPIC w toku
+## Najbliższe EPIC
 
-- [`specs/epics/EPIC-001-ai-native-workspace-foundation.md`](specs/epics/EPIC-001-ai-native-workspace-foundation.md) — Faza 1: fundament workspace (bez deployu).
+Aktualna kolejka jest w [`BACKLOG.md`](BACKLOG.md). Najbliższe prace to Forgejo MVP, OpenClaw Gateway `/v1`, worktree + `difit` oraz approval-first PR workflow.
 
 ## Uwaga o PLAN.md
 

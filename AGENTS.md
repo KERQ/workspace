@@ -9,11 +9,12 @@ Ten plik jest głównym kontekstem dla agentów uruchamianych z root workspace (
 ## Przed rozpoczęciem pracy
 
 1. Przeczytaj [`PROJEKT.md`](PROJEKT.md).
-2. Sprawdź [`BACKLOG.md`](BACKLOG.md) — czy zadanie ma priorytet i kontekst.
-3. Sprawdź relevant [`specs/`](specs/) — EPIC, SPEC, templates.
-4. Sprawdź relevant [`contracts/`](contracts/) — deploy, ansible, services, secrets, repos.
-5. Jeśli zmiana dotyczy operacji — sprawdź [`docs/runbooks/`](docs/runbooks/).
-6. Jeśli zmiana architektoniczna — sprawdź [`docs/adr/`](docs/adr/).
+2. Sprawdź [`docs/ideas/`](docs/ideas/) — jeśli zadanie wynika z analizy jeszcze przed backlogiem.
+3. Sprawdź [`BACKLOG.md`](BACKLOG.md) — czy zadanie ma priorytet i kontekst.
+4. Sprawdź relevant [`specs/`](specs/) — EPIC, SPEC, templates.
+5. Sprawdź relevant [`contracts/`](contracts/) — deploy, ansible, services, secrets, repos.
+6. Jeśli zmiana dotyczy operacji — sprawdź [`docs/runbooks/`](docs/runbooks/).
+7. Jeśli zmiana architektoniczna — sprawdź [`docs/adr/`](docs/adr/).
 
 ## Zakazy bez explicit approval
 
@@ -60,7 +61,7 @@ Ten plik jest głównym kontekstem dla agentów uruchamianych z root workspace (
 ## Flow (skrót)
 
 ```text
-BACKLOG → EPIC → SPEC → PROMPT → PATCH → TEST → REVIEW → ADR/RUNBOOK
+IDEA → BACKLOG → EPIC → SPEC → PROMPT → PATCH → TEST → REVIEW → ADR/RUNBOOK
 ```
 
 ## Hosty i deploy (informacyjnie)
