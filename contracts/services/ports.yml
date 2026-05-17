@@ -6,6 +6,7 @@ services:
     port: 18789
     exposure: tailnet_only
     auth_required: true
+    status: active
 
   litellm:
     owner_repo: homeserver-services
@@ -29,9 +30,11 @@ services:
     owner_repo: homeserver-services
     default_host: t630
     port: 3080
+    url: "https://t630.colobus-micro.ts.net/chat/"
+    note: "Loopback :3080; Caddy /chat/; OpenClaw custom endpoint"
     exposure: tailnet_only
     auth_required: true
-    status: planned
+    status: active
 
   difit:
     owner_repo: homeserver-services

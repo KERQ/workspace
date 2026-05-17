@@ -233,7 +233,7 @@ curl -sS "https://t630.colobus-micro.ts.net/v1/chat/completions" \
 |------|------|--------|------|
 | [SPEC-007A](../SPEC-007A-openclaw-audit-and-plan.md) | workspace + homeserver-services | done | Audyt T630 2026-05-17; `/v1` PASS; plan rozwoju; OCP tylko PG/Redis |
 | [SPEC-007B](../SPEC-007B-openclaw-caddy-ingress.md) | life-platform | done | Caddy `/chat/` → :3080 wdrożony; 502 do 007C; regresja OK |
-| SPEC-007C | homeserver-services | draft | LibreChat Compose + `librechat.yaml` → `openclaw/default`, RAG/memory OFF |
+| [SPEC-007C](../SPEC-007C-librechat-compose.md) | homeserver-services | done | LibreChat Compose + OpenClaw endpoint; `/chat/` 200 |
 | SPEC-007D | homeserver-services | draft (optional) | LobeChat — ten sam endpoint OpenClaw; anulowalny |
 | SPEC-007E | workspace + homeserver-services | draft | Tool policies, runbook, contracts; opcj. decommission OCP Postgres/UI na T630 |
 

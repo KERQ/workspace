@@ -1,7 +1,7 @@
 # Runbook: OpenClaw Gateway + LibreChat (T630)
 
 **EPIC:** [EPIC-007](../specs/epics/EPIC-007-openclaw-gateway-librechat.md)  
-**Status:** szkic (ingress w SPEC-007B; LibreChat w 007C)
+**Status:** aktywny (007B ingress, 007C LibreChat wdrożony 2026-05-17)
 
 ## Działające URL-e (tailnet)
 
@@ -39,4 +39,14 @@ docker compose -f domains/home/configs/docker-compose.yml up -d --force-recreate
 
 ## LibreChat
 
-→ [SPEC-007C](../specs/SPEC-007C-librechat-compose.md) *(planowany)*
+URL: `https://t630.colobus-micro.ts.net/chat/`
+
+Deploy:
+
+```bash
+APPROVE_DEPLOY=yes ansible-playbook playbooks/t630.yml -l t630 --tags librechat
+```
+
+Pierwsza wizyta: utwórz konto (rejestracja włączona). Endpoint **OpenClaw**, model `openclaw/default`.
+
+Sekrety w `inventory/host_vars/t630.yml`: `librechat_jwt_*`, `librechat_creds_*`, `openclaw_gateway_token`.
