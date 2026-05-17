@@ -175,7 +175,7 @@ Pełny rollback hosta poza zakresem — osobny runbook disaster recovery.
 
 | SPEC | Repo | Status | Opis |
 |------|------|--------|------|
-| SPEC-006A | homeserver-services | draft | [`SPEC-006A`](../SPEC-006A-forgejo-compose-postgres.md) — Compose + PostgreSQL, port 3030/2222 |
+| SPEC-006A | homeserver-services | done | [`SPEC-006A`](../SPEC-006A-forgejo-compose-postgres.md) — Compose + PostgreSQL, port 3030/2222 |
 | SPEC-006B | life-platform | draft | [`SPEC-006B`](../SPEC-006B-forgejo-caddy-ingress.md) — vhost `git.*` → `127.0.0.1:3030` |
 | SPEC-006C | workspace + manual ops | planned | Org `KERQ`, import `homeserver-services`, ustawienia instancji |
 | SPEC-006D | workspace runbook | planned | `origin`/`github` remotes, SSH smoke, branch testowy + PR |

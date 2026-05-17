@@ -1,7 +1,7 @@
 # SPEC-006A: T630 — Forgejo + PostgreSQL (Compose + Ansible)
 
 Parent: [EPIC-006](epics/EPIC-006-forgejo-mvp.md)
-Status: draft
+Status: done
 Repo: homeserver-services (+ workspace: runbook, contracts draft)
 Owner: karolkurek
 Risk: medium
@@ -110,14 +110,13 @@ forgejo_db_password: "<generated>"
 
 ## Do zrobienia
 
-- [ ] SPEC-006A zaakceptowany
-- [ ] Rola `forgejo` + szablony compose/env
-- [ ] `ansible-playbook playbooks/t630.yml --syntax-check`
-- [ ] `docker compose config` (lokalnie lub na hoście po sync)
-- [ ] Deploy T630 `--tags forgejo` (`APPROVE_DEPLOY=yes`)
-- [ ] Smoke: kontenery Up, `curl 127.0.0.1:3030`
-- [ ] Worklog
-- [ ] EPIC-006 child table → draft/done
+- [x] Rola `forgejo` + szablony compose/env (`homeserver-services` `6a5d9e6`)
+- [x] syntax-check OK
+- [x] `docker compose config` OK (w roli Ansible)
+- [x] Deploy T630 `--tags forgejo`
+- [x] Smoke: kontenery Up, HTTP 127.0.0.1:3030
+- [x] Worklog
+- [x] EPIC-006 child → done
 
 ## Definition of Ready
 
@@ -128,13 +127,13 @@ forgejo_db_password: "<generated>"
 
 ## Definition of Done
 
-- [ ] Katalogi `/srv/ai-stack/forgejo/{data,postgres}` istnieją, owner UID 1000
-- [ ] `docker ps`: `forgejo`, `forgejo-db` **Up** (healthy)
-- [ ] `curl -sS -o /dev/null -w "%{http_code}" http://127.0.0.1:3030/` → `200` lub redirect Forgejo (`303`/`302`)
-- [ ] `ss -lntp` pokazuje `127.0.0.1:3030` i `*:2222` (ssh)
-- [ ] `docker compose config` bez błędów
-- [ ] Brak sekretów w Git
-- [ ] Runbook opublikowany
+- [x] Katalogi `/srv/ai-stack/forgejo/{data,postgres}` — UID 1000
+- [x] `forgejo`, `forgejo-db` Up (healthy)
+- [x] HTTP loopback 3030 OK
+- [x] `:3030` loopback, `:2222` nasłuch
+- [x] compose config OK
+- [x] Sekrety poza Git
+- [x] Runbook opublikowany
 
 ## Test plan
 
@@ -192,7 +191,7 @@ ssh t630@192.168.1.20 'cd /opt/homeserver-services/t630-config/forgejo && docker
 
 ## Work log
 
--
+- [2026-05-17 — deploy T630](../docs/worklog/EPIC-006/SPEC-006A-2026-05-17-forgejo-compose-deploy.md)
 
 ## Prompt plan
 

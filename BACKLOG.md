@@ -11,7 +11,7 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
 ## Now
 
 - [ ] [EPIC-006](specs/epics/EPIC-006-forgejo-mvp.md): Forgejo MVP / lokalny Git system of record dla jednego repo *(draft; EPIC-014 + SPEC-016 done)*
-  - [ ] [SPEC-006A](specs/SPEC-006A-forgejo-compose-postgres.md) — Compose Forgejo + PostgreSQL, port **3030**/2222 *(draft)*
+  - [x] [SPEC-006A](specs/SPEC-006A-forgejo-compose-postgres.md) — Compose Forgejo + PostgreSQL ([worklog](docs/worklog/EPIC-006/SPEC-006A-2026-05-17-forgejo-compose-deploy.md))
   - Forgejo + PostgreSQL przez Tailscale/Caddy.
   - Organizacja `KERQ`, wyłączona publiczna rejestracja.
   - Repo pilotażowe: `homeserver-services`.
