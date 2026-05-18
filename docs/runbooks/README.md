@@ -22,5 +22,12 @@ Runbook mówi: kroki, komendy (bez sekretów), kryteria sukcesu, eskalacja.
 
 - Kolejność deploy: [`../../contracts/deploy/`](../../contracts/deploy/)
 - Porty i exposure: [`../../contracts/services/ports.yml`](../../contracts/services/ports.yml)
+- Approval-first task workflow: [`../../contracts/approvals/`](../../contracts/approvals/)
+
+## Runbooki agentowe
+
+- [`agent-skills-authoring.md`](agent-skills-authoring.md) — lokalny standard pisania skilli.
+- [`receiving-code-review.md`](receiving-code-review.md) — jak obsługiwać feedback z review.
+- [`t630-approval-pr-flow.md`](t630-approval-pr-flow.md) — worktree → approval → commit → PR → review.
 
 Szczegółowe runbooki w repo domenowych (np. `homeserver-services/docs/runbooks/`) pozostają — workspace agreguje cross-repo widok w miarę potrzeb.

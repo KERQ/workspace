@@ -54,7 +54,7 @@ ssh t630 worktree-remove homeserver-services my-task-123
 - **Tailnet (008C):** `difit-preview` włącza `tailscale serve --tcp 4966`; `difit-stop` wyłącza. Bez Caddy `/diff/` (difit bez base path).
 - **Wyłączenie Serve:** `DIFIT_TAILSCALE_SERVE=0 difit-preview …`
 - **Jeden preview naraz** — kontener `difit-preview` na porcie `4966`.
-- **investment-research** — poza pilotem worktree.
+- Każde repo dodane do workflow musi mieć własny kontrakt smoke i zasady sekretów; `homeserver-services` jest konfiguracją referencyjną, nie ograniczeniem automatyzacji.
 
 ## Smoke
 

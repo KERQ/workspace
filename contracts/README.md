@@ -22,6 +22,7 @@ To nie jest implementacja, backlog ani miejsce na sekrety.
 | `storage/` | Buckety, ścieżki (później) |
 | `models/` | Modele ML / routing (później) |
 | `data/` | Schematy danych (później) |
+| `approvals/` | Stany taska, bramki, eventy approval-first ([EPIC-010](../specs/epics/EPIC-010-approval-pr-flow.md)) |
 
 ## MVP (Faza 1)
 
@@ -32,6 +33,7 @@ Obecnie utrzymujemy tylko:
 - [`services/`](services/)
 - [`secrets/`](secrets/)
 - [`repos/`](repos/)
+- [`approvals/`](approvals/) — draft [SPEC-010A](../specs/SPEC-010A-approval-state-contracts.md)
 
 Rozszerzenia (EPIC-005):
 

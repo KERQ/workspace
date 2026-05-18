@@ -63,6 +63,12 @@ Type: feature | fix | refactor | docs | infra | chore
 
 1.
 
+## Test plan (wykonany)
+
+| Komenda/scenariusz | Kiedy | Oczekiwany wynik | Wynik rzeczywisty | Dowód/link | Wyjątki/notatki |
+|--------------------|-------|------------------|-------------------|------------|-----------------|
+|                    |       |                  |                   |            |                 |
+
 ## Work log
 
 <!-- Linki do dziennika wykonania w docs/worklog/<EPIC>/<SPEC>-YYYY-MM-DD-*.md -->

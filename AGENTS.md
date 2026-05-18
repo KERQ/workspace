@@ -52,6 +52,13 @@ Sekwencja w trakcie SPEC (zgodnie z `PROJEKT.md` §test-first):
 
 Bez testu/check przed zmianą — nie commitujemy.
 
+## Verification before completion
+
+- Agent nie może twierdzić, że zmiana działa, test przechodzi albo problem jest naprawiony bez świeżo uruchomionej komendy weryfikacyjnej w bieżącej sesji.
+- W odpowiedzi końcowej i w SPEC/worklog zapisz: komendę, wynik (`exit code` albo status), datę/czas wykonania oraz istotne wyjątki.
+- Jeśli weryfikacja nie była możliwa, powiedz to wprost i nie zastępuj jej deklaracją „powinno działać”.
+- Dla dokumentów/kontraktów minimalna weryfikacja to co najmniej check składni/linków albo jawny przegląd plików wskazany w `Test plan (wykonany)`.
+
 ## EPIC vs SPEC
 
 | Sytuacja | Artefakt |

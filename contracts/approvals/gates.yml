@@ -1,0 +1,48 @@
+# draft — approval gates vs allowed actions (SPEC-010A)
+
+version: "1"
+
+gates:
+  - id: diff_review
+    description: Operator zaakceptował diff (difit / git diff)
+    unlocks_transition: awaiting_diff_review → awaiting_commit_approval
+    does_not_allow: [git_commit, git_push, forgejo_create_pr]
+
+  - id: commit
+    description: Operator zezwolił na commit w worktree
+    unlocks_action: git_commit
+    required_state: awaiting_commit_approval
+    does_not_allow: [git_push, forgejo_create_pr, forgejo_merge]
+
+  - id: push_pr
+    description: Operator zezwolił na push i otwarcie PR
+    unlocks_actions: [git_push, forgejo_create_pr]
+    required_state: awaiting_push_approval
+    does_not_allow: [forgejo_merge]
+
+# Akcje zawsze zabronione dla agentów (brak gate)
+forbidden_without_human_in_forgejo:
+  - forgejo_merge
+  - deploy
+  - service_restart
+
+# Szablon opisu PR (010D wypełnia placeholdery)
+pr_body_template: |
+  ## SPEC
+  {spec_ref}
+
+  ## Task
+  - **task-id:** `{task_id}`
+  - **branch:** `{branch}`
+  - **worktree:** `{worktree_path}`
+
+  ## Testy
+  {test_summary}
+
+  ## Approval
+  - diff_review: `{approval_diff_id}`
+  - commit: `{approval_commit_id}`
+  - push_pr: `{approval_push_id}`
+
+  ---
+  *PR utworzony przez approval-first workflow (EPIC-010).*

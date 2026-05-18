@@ -1,0 +1,72 @@
+# draft — how gates are enforced (SPEC-010B)
+# contract_version aligns with task-states.yml / gates.yml
+
+version: "1"
+
+layers:
+  - id: librechat_orchestrator
+    description: LibreChat exposes openclaw/default → orchestrator without fs/runtime
+    spec: SPEC-007E
+    blocks: [git_commit, git_push, forgejo_create_pr, ops_deploy]
+
+  - id: openclaw_tool_policy
+    description: coding_agent on T630 approval pilot — no ops_deploy
+    spec: SPEC-010B
+    agent: coding_agent
+    blocks: [ops_deploy]
+    allows: [group:fs, group:runtime, git_status]
+    path_guidance: "/srv/worktrees/<repo>-<task-id>/ only (AGENTS.md)"
+
+  - id: approval_bin_scripts
+    description: Only blessed scripts perform commit/push after events.jsonl check
+    spec: SPEC-010B
+    scripts:
+      approval-check: { validates: approval_granted }
+      task-git-commit: { requires_gate: commit, records: commit_recorded }
+      approval-push: { requires_gate: push_pr, records: [push_recorded, pr_opened] }
+    bin_dir: /opt/homeserver-services/bin
+
+  - id: forgejo_bot
+    description: openclaw-bot never pushes (EPIC-009)
+    spec: SPEC-009C
+    blocks: [git_push, forgejo_create_pr, forgejo_merge]
+
+  - id: human_forgejo_ui
+    description: Merge only in Forgejo UI
+    blocks: [forgejo_merge]
+    actor: human
+
+gate_enforcement:
+  diff_review:
+    enforced_by: [approval_bin_scripts]
+    allows_transition_only: true
+    scripts: []
+
+  commit:
+    enforced_by: [approval_bin_scripts, openclaw_tool_policy]
+    required_event: approval_granted
+    allowed_script: task-git-commit
+    forbidden_shell_commands: ["git commit", "git commit -m"]
+
+  push_pr:
+    enforced_by: [approval_bin_scripts, forgejo_bot]
+    required_event: approval_granted
+    allowed_script: approval-push
+    forbidden_shell_commands: ["git push", "git push -u"]
+
+actions:
+  git_commit:
+    gate: commit
+    required_state: awaiting_commit_approval
+  git_push:
+    gate: push_pr
+    required_state: awaiting_push_approval
+  forgejo_create_pr:
+    gate: push_pr
+    bundled_in: approval-push
+  forgejo_merge:
+    gate: null
+    actor: human
+  ops_deploy:
+    gate: null
+    requires: APPROVE_DEPLOY

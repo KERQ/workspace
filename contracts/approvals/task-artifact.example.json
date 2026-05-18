@@ -1,0 +1,23 @@
+{
+  "contract_version": "1",
+  "task_id": "010a-approval-contracts",
+  "repo": "homeserver-services",
+  "spec_ref": "workspace/specs/SPEC-010A-approval-state-contracts.md",
+  "state": "awaiting_commit_approval",
+  "branch": "task/010a-approval-contracts",
+  "worktree_path": "/srv/worktrees/homeserver-services-010a-approval-contracts",
+  "created_at": "2026-05-17T18:00:00Z",
+  "updated_at": "2026-05-17T18:15:00Z",
+  "diff_preview_url": "http://t630.colobus-micro.ts.net:4966/",
+  "test_summary": {
+    "command": "ansible-playbook playbooks/t630.yml --syntax-check",
+    "exit_code": 0,
+    "log_path": "/srv/worktrees/.tasks/010a-approval-contracts/test.log"
+  },
+  "approvals": {
+    "diff_review": "apr-010a-approval-contracts-diff_review-1",
+    "commit": null,
+    "push_pr": null
+  },
+  "pr": null
+}

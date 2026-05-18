@@ -1,0 +1,106 @@
+# draft — task state machine (EPIC-010 / SPEC-010A)
+# Wersja kontraktu; pole task.json: "contract_version": "1"
+
+version: "1"
+initial: created
+terminal:
+  - merged
+  - closed
+  - rejected
+
+states:
+  - id: created
+    description: Task zarejestrowany, worktree może nie istnieć
+  - id: planning
+    description: Agent/operator planuje zakres (opcjonalnie)
+  - id: running
+    description: Patch i testy w toku w worktree
+  - id: awaiting_diff_review
+    description: difit uruchomiony; czeka na approval diff_review
+  - id: awaiting_commit_approval
+    description: Diff zaakceptowany; czeka na approval commit
+  - id: committed
+    description: git commit wykonany na branchu task/*
+  - id: awaiting_push_approval
+    description: Czeka na approval push_pr
+  - id: pr_opened
+    description: Branch na Forgejo, PR utworzony
+  - id: awaiting_pr_review
+    description: PR otwarty; review bota / człowieka
+  - id: merged
+    description: PR zmergowany ręcznie w Forgejo
+  - id: closed
+    description: Zakończony bez merge (np. porzucony po review)
+  - id: rejected
+    description: Odrzucony na bramce approval
+
+transitions:
+  - from: created
+    to: planning
+    event: state_changed
+    actor: any
+
+  - from: created
+    to: running
+    event: worktree_ready
+    actor: any
+
+  - from: planning
+    to: running
+    event: worktree_ready
+    actor: any
+
+  - from: running
+    to: awaiting_diff_review
+    event: diff_preview_ready
+    actor: any
+
+  - from: awaiting_diff_review
+    to: awaiting_commit_approval
+    event: approval_granted
+    required_gate: diff_review
+
+  - from: awaiting_diff_review
+    to: rejected
+    event: approval_denied
+    required_gate: diff_review
+
+  - from: awaiting_commit_approval
+    to: committed
+    event: commit_recorded
+    requires_prior_gate: commit
+
+  - from: awaiting_commit_approval
+    to: rejected
+    event: approval_denied
+    required_gate: commit
+
+  - from: committed
+    to: awaiting_push_approval
+    event: state_changed
+    actor: any
+
+  - from: awaiting_push_approval
+    to: pr_opened
+    event: pr_opened
+    requires_prior_gate: push_pr
+
+  - from: awaiting_push_approval
+    to: rejected
+    event: approval_denied
+    required_gate: push_pr
+
+  - from: pr_opened
+    to: awaiting_pr_review
+    event: state_changed
+    actor: any
+
+  - from: awaiting_pr_review
+    to: merged
+    event: pr_merged
+    actor: human
+
+  - from: [awaiting_diff_review, awaiting_commit_approval, awaiting_push_approval, pr_opened, awaiting_pr_review]
+    to: closed
+    event: task_closed
+    actor: any

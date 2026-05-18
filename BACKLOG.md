@@ -34,11 +34,12 @@ Priorytetyzacja pracy w workspace. Elementy przechodzą przez `docs/ideas/` → 
   - [x] [SPEC-008B](specs/SPEC-008B-difit-docker-image.md) — obraz `homeserver-difit:5.0.1`
   - [x] [SPEC-008C](specs/SPEC-008C-difit-tailscale-serve.md) — Tailscale Serve TCP `:4966` (bez Caddy `/diff/`)
   - [x] [SPEC-008D](specs/SPEC-008D-smoke-runbook-contracts.md) — runbook, contracts
-- [ ] EPIC-010: approval-first commit/push/PR workflow
-  - Flow: SPEC ready -> worktree -> tests -> patch -> test results -> `difit` preview.
-  - Commit dopiero po approval.
-  - Push/PR dopiero po osobnym approval.
-  - Bot robi summary/review; człowiek merge'uje.
+- [ ] [EPIC-010](specs/epics/EPIC-010-approval-pr-flow.md): approval-first commit/push/PR workflow *(draft)*
+  - Flow: SPEC ready → worktree → testy → `difit` → approval → commit → approval → push/PR.
+  - [ ] [SPEC-010A](specs/SPEC-010A-approval-state-contracts.md) — kontrakty `contracts/approvals/` *(draft)*
+  - [ ] [SPEC-010B](specs/SPEC-010B-openclaw-write-gates.md) — polityki OpenClaw + enforcement git *(draft)*
+  - Child SPECs: 010C (commit) → 010D (push/PR) → 010E (smoke).
+  - Bot: summary/review; merge zawsze ręcznie.
 
 ## Done (ostatnio)
 

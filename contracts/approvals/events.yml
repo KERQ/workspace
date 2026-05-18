@@ -1,0 +1,64 @@
+# draft — event types for events.jsonl (SPEC-010A)
+# Każda linia = jeden JSON object z polem "event" (typ poniżej).
+
+version: "1"
+
+common_fields:
+  - at          # ISO-8601 UTC, wymagane
+  - task_id     # wymagane
+  - actor       # np. karol.kurek | agent:openclaw | script:task-approve
+  - contract_version  # opcjonalne, domyślnie "1"
+
+event_types:
+  task_created:
+    required: [repo, spec_ref]
+    optional: [worktree_path, branch]
+
+  worktree_ready:
+    required: [worktree_path, branch]
+
+  state_changed:
+    required: [from, to]
+    optional: [note]
+
+  diff_preview_ready:
+    required: [diff_preview_url]
+    optional: [difit_pid]
+
+  tests_recorded:
+    required: [exit_code]
+    optional: [command, log_path, summary]
+
+  approval_granted:
+    required: [approval_id, gate]
+    gate_enum: [diff_review, commit, push_pr]
+    optional: [note, channel]   # channel: librechat | cli | cursor
+
+  approval_denied:
+    required: [gate, reason]
+    optional: [approval_id]
+
+  commit_recorded:
+    required: [commit_sha, branch]
+    optional: [message]
+
+  push_recorded:
+    required: [remote, branch]
+    optional: [commit_sha]
+
+  pr_opened:
+    required: [pr_number, pr_url]
+    optional: [forgejo_repo]
+
+  pr_merged:
+    required: [pr_number, merge_commit_sha]
+    actor_constraint: human   # nie agent, nie openclaw-bot
+
+  task_closed:
+    optional: [reason]
+
+rules:
+  - events_jsonl_append_only: true
+  - approval_id_unique_per_task: true
+  - no_secret_fields: true   # zakaz pól matching /token|password|secret/i w wartościach
+  - merge_only_via_pr_merged_event: true
