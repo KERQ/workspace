@@ -237,6 +237,7 @@ curl -sS "https://t630.colobus-micro.ts.net/v1/chat/completions" \
 | SPEC-007D | homeserver-services | draft (optional) | LobeChat — ten sam endpoint OpenClaw; anulowalny |
 | [SPEC-007E](../SPEC-007E-openclaw-tool-policies-contracts.md) | workspace + homeserver-services | done | Tool policies, runbook, OCP stop; tylko `openclaw/default` w LC |
 | [SPEC-007F](../SPEC-007F-librechat-openclaw-agent-picker.md) | homeserver-services + workspace | done | LibreChat: wybór agentów (allowlist bez coding/infra) |
+| [SPEC-007H](../SPEC-007H-librechat-coding-agent-full-config.md) | homeserver-services + openclaw-control-plane + workspace | in_progress | LibreChat: pełna konfiguracja `coding_agent` + skills + smoke/guardrails |
 | SPEC-007D | homeserver-services | cancelled (optional) | LobeChat — nie wymagany po LibreChat MVP |
 
 > Child SPECs utworzymy po akceptacji tego EPIC (kolejność: 007A → 007E).
