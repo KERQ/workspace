@@ -1,7 +1,7 @@
 # SPEC-007H: LibreChat — pełna konfiguracja `coding_agent` + skills
 
 Parent: [EPIC-007](epics/EPIC-007-openclaw-gateway-librechat.md)
-Status: in_progress
+Status: done
 Repo: homeserver-services, openclaw-control-plane, workspace
 Owner: karolkurek
 Risk: high
@@ -68,30 +68,30 @@ Umożliwić wybór `coding_agent` bezpośrednio w LibreChat (`/chat/`) oraz zape
 
 ## Do zrobienia
 
-- [ ] Dodać preset LibreChat `openclaw/coding_agent` do `librechat_openclaw_models` z jednoznaczną etykietą ryzyka (np. „Coding (FS/Runtime/Deploy)”).
-- [ ] Usunąć `openclaw/coding_agent` z `librechat_openclaw_models_forbidden`.
-- [ ] Zachować `modelSpecs.enforce: true` i statyczny allowlist (bez dynamicznego fetch z `/v1/models`).
-- [ ] Zweryfikować, że `openclaw_agent_tool_policies` dla `coding_agent` zawiera wymagane narzędzia developerskie (`git_status`, `docker_status`, `ai_dev`, `openclaw_tool_bridge`) i nie otwiera `group:messaging`.
-- [ ] Potwierdzić, że `openclaw_commands_native_skills: true` pozostaje aktywne.
-- [ ] Udokumentować mapę „repo skills -> runtime behavior” dla `coding_agent` (co jest kanonem i jak utrzymać spójność).
-- [ ] Zaktualizować runbook LibreChat o procedurę wyboru `coding_agent` i warning operacyjny.
-- [ ] Wykonać smoke testy API/UI i test negatywny dla agentów nadal zablokowanych.
+- [x] Dodać preset LibreChat `openclaw/coding_agent` do `librechat_openclaw_models` z jednoznaczną etykietą ryzyka (np. „Coding (FS/Runtime/Deploy)”).
+- [x] Usunąć `openclaw/coding_agent` z `librechat_openclaw_models_forbidden`.
+- [x] Zachować `modelSpecs.enforce: true` i statyczny allowlist (bez dynamicznego fetch z `/v1/models`).
+- [x] Zweryfikować, że `openclaw_agent_tool_policies` dla `coding_agent` zawiera wymagane narzędzia developerskie (`git_status`, `docker_status`, `ai_dev`, `openclaw_tool_bridge`) i nie otwiera `group:messaging`.
+- [x] Potwierdzić, że `openclaw_commands_native_skills: true` pozostaje aktywne.
+- [x] Udokumentować mapę „repo skills -> runtime behavior” dla `coding_agent` (co jest kanonem i jak utrzymać spójność).
+- [x] Zaktualizować runbook LibreChat o procedurę wyboru `coding_agent` i warning operacyjny.
+- [x] Wykonać smoke testy API/UI i test negatywny dla agentów nadal zablokowanych.
 
 ## Definition of Ready
 
-- [ ] Cel i zakres są jasne
-- [ ] Repo i ryzyko określone
-- [ ] Test plan zdefiniowany
-- [ ] Rollback opisany
-- [ ] Approval użytkownika na start implementacji
+- [x] Cel i zakres są jasne
+- [x] Repo i ryzyko określone
+- [x] Test plan zdefiniowany
+- [x] Rollback opisany
+- [x] Approval użytkownika na start implementacji
 
 ## Definition of Done
 
-- [ ] Wszystkie punkty „Do zrobienia” zamknięte
-- [ ] Test plan wykonany (wyniki udokumentowane)
-- [ ] Brak nieplanowanych zmian poza zakresem
-- [ ] Review użytkownika (jeśli wymagane)
-- [ ] ADR/runbook zaktualizowane (jeśli dotyczy)
+- [x] Wszystkie punkty „Do zrobienia” zamknięte
+- [x] Test plan wykonany (wyniki udokumentowane)
+- [x] Brak nieplanowanych zmian poza zakresem
+- [x] Review użytkownika (jeśli wymagane)
+- [x] ADR/runbook zaktualizowane (jeśli dotyczy)
 
 ## Test plan
 
@@ -123,11 +123,15 @@ Umożliwić wybór `coding_agent` bezpośrednio w LibreChat (`/chat/`) oraz zape
 
 | Komenda/scenariusz | Kiedy | Oczekiwany wynik | Wynik rzeczywisty | Dowód/link | Wyjątki/notatki |
 |--------------------|-------|------------------|-------------------|------------|-----------------|
-| do uzupełnienia po implementacji | — | — | — | — | — |
+| `ansible-playbook playbooks/tests/openclaw-coding-agent-smoke.yml -i inventory/hosts.yml --syntax-check` | 2026-05-23 11:44 CEST | `exit 0` | `exit 0` | sesja terminala | syntaks smoke OK |
+| `docker exec librechat grep -n "openclaw/coding_agent\\|enforce:" /app/librechat.yaml` | 2026-05-23 11:44 CEST | `enforce: true`, model obecny | obecne (`enforce: true`, `openclaw/coding_agent`) | sesja terminala | config runtime potwierdzony |
+| `curl /v1/chat/completions model=openclaw/default` (z hosta T630) | 2026-05-23 11:44 CEST | HTTP 200 | HTTP 200 | sesja terminala | smoke bazowy OK |
+| `curl /v1/chat/completions model=openclaw/coding_agent` (z hosta T630) | 2026-05-23 11:44 CEST | HTTP 200 | HTTP 200 | sesja terminala | smoke coding OK |
+| `grep "openclaw/infra_agent\\|openclaw/main" /app/librechat.yaml` | 2026-05-23 11:45 CEST | brak wpisów | brak wpisów | sesja terminala | negatywny guardrail OK |
 
 ## Work log
 
-- dodać wpis: `docs/worklog/EPIC-007/SPEC-007H-YYYY-MM-DD-coding-agent-librechat.md`
+- `docs/worklog/EPIC-007/SPEC-007H-2026-05-23-coding-agent-librechat.md`
 
 ## Rollback
 
